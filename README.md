@@ -16,6 +16,12 @@ This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each o
 
 ## Case Studies
 
+**[Third-Party Risk Management: Building a Risk-Tiered Vendor Program Under NIST CSF 2.0](https://josephkamara.github.io/audit-defense-portfolio/projects/third-party-risk-management/)**
+
+A benefits administrator treats every vendor the same: one questionnaire, filed once, never revisited. This program redesigns vendor risk management under NIST CSF 2.0's supply chain risk category, with assessment depth, contract terms, and monitoring cadence scaled to how much risk each vendor actually carries.
+
+`NIST CSF` `GRC Engineering` `Third-Party Risk`
+
 **[SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control](https://josephkamara.github.io/audit-defense-portfolio/projects/soc2-access-review-automation/)**
 
 A manual quarterly access review gets redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.
