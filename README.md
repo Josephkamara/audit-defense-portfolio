@@ -16,6 +16,12 @@ This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each o
 
 ## Case Studies
 
+**[EU AI Act High-Risk Classification: Why a Workforce Monitoring Feature Can't Claim the Narrow-Task Exemption](https://josephkamara.github.io/audit-defense-portfolio/projects/eu-ai-act-high-risk-classification/)**
+
+A talent platform vendor classified its recruitment screening tool high-risk without argument, then waved its employee monitoring feature through as exempt. The exemption claim fails because the feature profiles workers, and profiling closes the exemption regardless of how narrow the task looks. Builds the classification a regulator would actually run.
+
+`EU AI Act` `AI Governance` `GRC Engineering`
+
 **[PCI DSS Network Segmentation: Defending the CDE Boundary Under QSA Scrutiny](https://josephkamara.github.io/audit-defense-portfolio/projects/pci-dss-network-segmentation/)**
 
 A payment platform has renewed the same segmentation attestation every year without testing the parts that don't show up on the architecture diagram. This report builds the testing scope a QSA will actually run and names the boundary that fails before an auditor finds it first.
