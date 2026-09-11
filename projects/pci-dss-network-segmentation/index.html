@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCI DSS Network Segmentation: Defending the CDE Boundary Under QSA Scrutiny</title>
+<style>
+body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+header { background:#002147; padding:20px 24px; }
+header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
+h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
+strong { color:#002147; }
+table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
+th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
+td { border:1px solid #ccc; padding:8px; vertical-align:top; }
+hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+em { color:#555; }
+.split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
+.split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
+.split-col.automate { border-top:4px solid #7a8a99; }
+.split-col.judge { border-top:4px solid #C5A55A; }
+.split-col h3 { margin-top:0; }
+.split-col ul { margin:0; padding-left:20px; }
+.split-col li { margin-bottom:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
+<main>
+<h1>PCI DSS Network Segmentation: Defending the CDE Boundary Under QSA Scrutiny</h1>
+<p>A payment platform's security team built network segmentation two years ago and has renewed the same one-page attestation every year since: "the cardholder data environment is segmented from the corporate network." The attestation was never wrong exactly. It was also never tested against the parts of the environment that don't show up on the architecture diagram: a shared log pipeline, a jump box used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document builds the segmentation testing scope a QSA will actually run, and states plainly which claimed boundaries hold up and which do not.</p>
+<p><em>The company below is built for this walkthrough. The PCI DSS v4.0.1 requirement numbers and testing cadences cited are real and current, verified against the published standard and independent technical summaries of it.</em></p>
+<hr />
+<h2>Segmentation Testing Information</h2>
+<p><strong>Report ID:</strong> PCI-SEG-2026-02<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>Program Owner:</strong> Director of Payment Security<br/>
+<strong>Framework:</strong> PCI DSS v4.0.1, Requirement 1 (Network Security Controls and CDE Scoping); Requirement 11.4.5 through 11.4.7 (Segmentation Penetration Testing)<br/>
+<strong>Status:</strong> Design sample, not a completed assessment<br/>
+<strong>Review Cycle:</strong> Every six months under 11.4.6, and after any change to segmentation controls</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>Meridian Payments processes card transactions for roughly 200 merchant clients on a shared, multi-tenant platform. Because Meridian stores, processes, and transmits cardholder data on behalf of other entities, it is a PCI DSS service provider, not a merchant, and that distinction changes the testing clock. Requirement 11.4.6 requires Meridian to test its segmentation controls at least once every six months, not the twelve-month cycle that applies to a typical merchant under 11.4.5. Meridian's most recent segmentation test is eleven months old.</p>
+<p>This document rebuilds the segmentation testing scope around what actually connects to the cardholder data environment, not what the architecture diagram says connects to it. Three boundaries are examined. Two hold up. One does not, and the reason it does not is the kind of finding that expands a PCI DSS assessment's scope rather than shrinking it.</p>
+<h2>Why Service Providers Get a Shorter Clock</h2>
+<p>Most companies treat "segmentation testing" as a single annual line item. It is not, and getting the cadence wrong is itself a finding. Requirement 11.4.5 sets a twelve-month testing cycle for an entity using segmentation to reduce the scope of its own PCI DSS assessment. Requirement 11.4.6 sets a six-month cycle specifically for service providers, entities that store, process, or transmit cardholder data on behalf of other organizations. Requirement 11.4.7 adds a further obligation for multi-tenant service providers: supporting a customer's own external penetration test of the shared environment and providing remediation evidence when asked.</p>
+<p>Meridian's platform is multi-tenant by design. Every merchant client's transactions pass through shared processing infrastructure before settlement. That is precisely the profile Requirement 11.4.6 was written for, and it means the twelve-month clock some of Meridian's own engineers assumed applied is the wrong clock. An assessment built on the wrong testing cadence does not just risk a finding. It risks a QSA treating every other date in the assessment as unverified until proven otherwise.</p>
+<h2>What the CDE Actually Includes</h2>
+<p>Meridian's cardholder data environment is the transaction processing environment: the payment API, the tokenization service that replaces raw card numbers with tokens immediately on intake, and the settlement batch processor that reconciles daily totals with each merchant's acquiring bank. Everything else, HR systems, the marketing site, the engineering sandbox used for feature development, sits on a separate corporate network segment. That separation is the whole premise the segmentation testing scope has to confirm, not assume.</p>
+<h2>Claimed Segmentation Boundaries</h2>
+<table>
+<thead><tr><th>Boundary</th><th>Control in Place</th><th>Claim</th></tr></thead>
+<tbody>
+<tr><td>CDE to Corporate Network</td><td>Stateful firewall, default-deny, with a narrow allow list for specific internal API calls</td><td>Fully isolated</td></tr>
+<tr><td>CDE to Analytics Environment</td><td>One-way scheduled export of settlement summaries over SFTP, tokens only, no raw card numbers by design</td><td>Fully isolated, no live connectivity</td></tr>
+<tr><td>CDE to Shared Logging and Monitoring</td><td>All CDE system logs forwarded to a central SIEM that also ingests logs from every non-CDE system</td><td>Isolated at the network layer, monitored centrally</td></tr>
+<tr><td>Administrative Access to the CDE</td><td>A single bastion host provides SSH access to CDE systems for the payments engineering team</td><td>Controlled and audited</td></tr>
+</tbody>
+</table>
+<h2>Where the Claim Holds, and Where It Doesn't</h2>
+<table>
+<thead><tr><th>Boundary</th><th>Does the Segmentation Hold?</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>CDE to Corporate Network</td><td>Holds</td><td>Ninety days of firewall change logs show no ad hoc rule additions, and the last segmentation penetration test confirmed no reachable path from the corporate network into the CDE's allow-listed ports.</td></tr>
+<tr><td>CDE to Analytics Environment</td><td>Holds, conditionally</td><td>The boundary depends entirely on tokenization happening before data leaves the CDE. That is a data-handling claim, not a network claim, and it needs its own verification, a review of the export job's actual output, not just confirmation that the network path exists.</td></tr>
+<tr><td>CDE to Shared Logging and Monitoring</td><td>Does not hold as claimed</td><td>Web server access logs can carry card numbers in query strings when a client misconfigures a request. If those raw logs reach a SIEM that also holds non-CDE data, without a masking step in front of it, the SIEM is not outside the CDE. It is inside it, whatever the network diagram says, and every system that reads from that SIEM inherits the same scope.</td></tr>
+<tr><td>Administrative Access to the CDE</td><td>Conditionally holds</td><td>The claim is only as strong as the bastion host's own hardening. A shared jump box with standing credentials, no per-session multi-factor prompt, or access from unmanaged laptops is a more direct path into the CDE than the firewall rule the rest of this table is built around.</td></tr>
+</tbody>
+</table>
+<h2>What an Auditor Will Push Back On</h2>
+<p>A network diagram and a tested boundary are not the same evidence, and a QSA is trained to ask for the second one specifically.</p>
+<div class="split">
+<div class="split-col automate">
+<h3>What the network diagram shows</h3>
+<ul>
+<li>A firewall rule set configured to deny traffic between zones</li>
+<li>A VLAN boundary drawn between the CDE and everything else</li>
+<li>A stated CDE scope in the scoping document or SAQ</li>
+<li>A calendar entry showing when the last segmentation test ran</li>
+</ul>
+</div>
+<div class="split-col judge">
+<h3>What segmentation testing has to prove</h3>
+<ul>
+<li>That denied traffic is actually denied under active testing, not only configured that way on paper</li>
+<li>That log aggregation and administrative access paths don't quietly pull a system back into scope that the diagram shows as external</li>
+<li>That a masking or tokenization step a boundary depends on is verified directly, not assumed from the network path alone</li>
+<li>That every segmentation control in use is covered by the test, not a convenient sample of them</li>
+</ul>
+</div>
+</div>
+<h2>Residual Risk Statement</h2>
+<p>Fixing the SIEM boundary removes the clearest scope-expansion risk in this assessment. It does not remove everything. The bastion host remains a single point through which all administrative access to the CDE flows, and a compromised engineer's laptop or a leaked credential there bypasses the network segmentation entirely, since the traffic it carries is already inside the allow list. Second, Meridian's platform adds new merchant clients and new microservices on a rolling basis. Each addition is a potential new path into or out of the CDE, and this testing scope reflects the environment as it exists in September 2026, not as it will exist after the next feature launch.</p>
+<h2>Recommendation</h2>
+<p>Insert a masking step in front of the shared SIEM so that CDE-originated logs are scrubbed of any card data before they reach infrastructure shared with non-CDE systems, or bring the SIEM itself under full CDE-level controls if masking cannot be guaranteed. Formally classify the bastion host as an in-scope CDE system, requiring per-session multi-factor authentication and eliminating standing credentials. Schedule the next full segmentation penetration test within six months of the last one, per 11.4.6, and add a standing requirement that any new microservice or merchant onboarding affecting network topology triggers a boundary review before launch, not at the next scheduled test.</p>
+<h2>Decision and Sign-off</h2>
+<table>
+<thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>Program Owner (Director of Payment Security)</td><td></td><td>Approve / Reject</td><td></td></tr>
+<tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
+<tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
+</tbody>
+</table>
+<hr />
+<h2>Why This Segmentation Testing Scope Is Built This Way</h2>
+<p>Most segmentation assessments redraw the network diagram, confirm the firewall rules match it, and call the boundary proven. That approach finds what it expects to find and nothing else, because the diagram only shows the connections someone thought to draw. It does not show a logging pipeline built two systems and one migration ago, or a bastion host that started as a temporary fix and never got revisited.</p>
+<p>This scope names the boundary that fails, the SIEM ingestion path, before a QSA finds it independently. That is the difference an auditor actually credits. A company that discloses its own scope-expansion risk and has a fix already planned reads as one that understands its environment. A company whose QSA finds the same issue unprompted reads as one that does not, and the size of that gap is not about the SIEM. It is about whether anything else in the assessment can be trusted at face value.</p>
+</main>
+</body>
+</html>
