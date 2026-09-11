@@ -16,6 +16,12 @@ This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each o
 
 ## Case Studies
 
+**[PCI DSS Network Segmentation: Defending the CDE Boundary Under QSA Scrutiny](https://josephkamara.github.io/audit-defense-portfolio/projects/pci-dss-network-segmentation/)**
+
+A payment platform has renewed the same segmentation attestation every year without testing the parts that don't show up on the architecture diagram. This report builds the testing scope a QSA will actually run and names the boundary that fails before an auditor finds it first.
+
+`PCI DSS` `Cybersecurity` `GRC Engineering`
+
 **[ISO/IEC 27001 Statement of Applicability: Justifying Control Exclusions for a Remote-First SaaS Company](https://josephkamara.github.io/audit-defense-portfolio/projects/iso27001-statement-of-applicability/)**
 
 A consultant-built Statement of Applicability marks all 93 Annex A controls applicable. This document rebuilds it from the actual infrastructure up: which controls apply in full, which apply with the scope narrowed to what the company really operates, and which do not apply at all, with reasoning an auditor can test.
