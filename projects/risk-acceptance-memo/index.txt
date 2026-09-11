@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Acceptance Memorandum: Legacy EDI Gateway TLS Encryption Gap</title>
+<style>
+  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+  header { background:#002147; padding:20px 24px; }
+  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.6em; }
+  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+  strong { color:#002147; }
+  table { border-collapse: collapse; width:100%; margin-top:12px; }
+  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.9em; }
+  td { border:1px solid #ccc; padding:8px; }
+  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+  em { color:#555; }
+</style>
+</head>
+<body>
+<header><a href="../../">← Back to Portfolio</a></header>
+<main>
+<h1>Risk Acceptance Memorandum: Legacy EDI Gateway TLS Encryption Gap</h1>
+<p><em>Portfolio note: This memo describes a fictional company, vendor, and system. It illustrates the reasoning and structure behind a real risk acceptance decision. No client, employer, or engagement information appears anywhere in this document.</em></p>
+<hr />
+<h2>Memo Header</h2>
+<p><strong>Risk ID:</strong> RA-2026-014<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>Business Owner:</strong> VP, Claims Operations<br/>
+<strong>System / Process:</strong> Legacy EDI Gateway (837/835 claims transaction exchange with external clearinghouse)<br/>
+<strong>Frameworks Impacted:</strong> HIPAA Security Rule (45 CFR 164.312(e)(1), Transmission Security), SOC 2 Common Criteria (CC6.7, Data Transmission Controls)<br/>
+<strong>Review / Expiration Date:</strong> 180 days from approval, or upon vendor platform migration completion, whichever comes first</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>Meridian Health Partners exchanges claims data with an external clearinghouse through a legacy EDI gateway. The gateway currently supports TLS 1.0, a protocol version that no longer meets current encryption standards. The clearinghouse vendor cannot support TLS 1.2 or higher until its own platform migration completes, expected in the first quarter of 2027.</p>
+<p>Cutting the connection today would stop claims processing for roughly 40,000 members. Waiting for the vendor's migration means operating a known encryption gap for up to 180 days. This memo recommends accepting that risk for a fixed period, under compensating controls, rather than disrupting claims payment for members who depend on it.</p>
+<h2>Vulnerability</h2>
+<p>The EDI gateway's TLS configuration is limited to TLS 1.0 and 1.1. Both versions have known cryptographic weaknesses (including BEAST and POODLE-class attacks) and are excluded from PCI DSS and most current security baselines. The limitation sits on the vendor's side of the connection, not Meridian's. Meridian's own systems support TLS 1.2 and 1.3.</p>
+<h2>Risk</h2>
+<p>The vulnerability itself is a protocol weakness. The risk is what that weakness exposes: claims data in transit, including member names, dates of birth, diagnosis codes, and provider identifiers, protected health information under HIPAA, traveling over an encryption standard vulnerable to interception on a compromised or adversarial network path.</p>
+<p>This is a confidentiality risk, not an availability or integrity risk. The data is still accurate and the connection is still reliable. The exposure is to a network-level interception scenario, which requires an attacker with access to the transmission path, a materially harder bar than an internet-facing vulnerability.</p>
+<h2>Risk Rating</h2>
+<p><strong>Likelihood: Low.</strong> The connection runs over a dedicated point-to-point circuit, not the open internet. An attacker would need physical or logical access to that circuit, or to a compromised intermediate network device, to intercept traffic.</p>
+<p><strong>Impact: High.</strong> A successful interception would expose PHI for the full claims volume moving through this gateway, triggering HIPAA breach notification obligations and SOC 2 control exceptions.</p>
+<p><strong>Overall: Medium.</strong> Low likelihood, high impact. This is not a risk to leave unmanaged, and not one that justifies halting claims payment today.</p>
+<h2>Business Constraint</h2>
+<p>The clearinghouse vendor confirmed in writing that TLS 1.2 support depends on a platform migration currently scheduled to complete in Q1 2027. Meridian is one of the vendor's smaller accounts and cannot accelerate that timeline unilaterally. Terminating the connection immediately would require re-platforming claims exchange with a new clearinghouse, a project estimated at 4 to 6 months, during which claims for approximately 40,000 members would need a manual workaround or would not process.</p>
+<h2>Compensating Controls</h2>
+<p>Four controls reduce the likelihood of interception while the underlying protocol gap exists:</p>
+<p>The circuit is a dedicated point-to-point connection, not routed over the public internet, which removes the most common interception path.</p>
+<p>Network access to the circuit endpoint is restricted to a named list of systems, enforced at the firewall, and reviewed monthly instead of the standard quarterly cycle for the duration of this risk acceptance.</p>
+<p>All traffic on the circuit is logged and forwarded to Meridian's SIEM, with an alert configured for any new source or destination address touching the endpoint.</p>
+<p>The vendor contract has been amended to add a data handling addendum making the vendor contractually liable for any breach traceable to its infrastructure during the transition period.</p>
+<h2>Residual Risk Statement</h2>
+<p>After these controls, the residual risk is that a sophisticated attacker with existing access to the dedicated circuit or an intermediate carrier device could intercept claims data in transit, undetected until the monthly access review or a SIEM alert fires. This is not a theoretical zero. It is a real, bounded exposure, accepted for a defined period because the alternative, an immediate and disorderly cutover, carries a higher and more certain cost to members and to the business.</p>
+<h2>Options Presented to Business</h2>
+<p><strong>Option A: Accept the risk for 180 days under the compensating controls above.</strong> Lowest cost, lowest disruption, bounded and time-limited exposure.</p>
+<p><strong>Option B: Force immediate vendor cutover to a TLS 1.2-capable clearinghouse.</strong> Eliminates the exposure immediately. Costs an estimated $180,000 in re-platforming and creates a 4 to 6 month window of claims processing risk of its own, a different and arguably larger risk than the one being avoided.</p>
+<p><strong>Option C: Continue the connection with no additional controls, accepting the vendor's original timeline as-is.</strong> Not recommended. This is the version of risk acceptance that says "risk is low, controls are in place" without specifying which controls or why. It is the failure mode this memo exists to avoid.</p>
+<h2>Recommendation</h2>
+<p>Option A. Accept the risk for a fixed 180-day period under the four compensating controls, with a mandatory re-review at 90 days to confirm the vendor's migration remains on schedule. If the vendor timeline slips past Q1 2027, this acceptance expires and the business must revisit Option B rather than allow the acceptance to renew automatically.</p>
+<h2>Decision and Sign-off</h2>
+<table>
+<thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>Business Owner (VP, Claims Operations)</td><td></td><td>Approve / Reject</td><td></td></tr>
+<tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
+<tr><td>Executive Sponsor (required for High-impact risk)</td><td></td><td>Approve / Reject</td><td></td></tr>
+</tbody>
+</table>
+<p><strong>This acceptance expires 180 days from the last signature date above, or immediately upon vendor migration completion. It does not renew automatically.</strong></p>
+<hr />
+<h2>Why This Memo Is Built This Way</h2>
+<p>Most risk acceptance documents fail in one of three ways. They bury the real risk in technical language the business owner cannot evaluate. They describe the vulnerability but never state the actual business consequence in plain terms. Or they round to "risk is low, controls in place" without naming the controls, which gives the signer nothing real to approve.</p>
+<p>This memo separates the vulnerability (a protocol weakness) from the risk (PHI exposure and breach notification exposure) because a business owner cannot sign off on a risk they cannot picture. It names four specific, verifiable controls instead of asserting that controls exist. It states the residual risk honestly, including what still could go wrong after those controls are in place, instead of implying the risk drops to zero. And it gives the business a real choice between three options with real costs attached, rather than a single yes-or-no on the vendor's terms.</p>
+<p>The expiration date matters as much as the acceptance itself. A risk acceptance without a forced re-review date is not a decision. It is a permanent exception wearing the paperwork of a temporary one.</p>
+</main>
+</body>
+</html>
