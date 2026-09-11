@@ -16,6 +16,12 @@ This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each o
 
 ## Case Studies
 
+**[ISO/IEC 27001 Statement of Applicability: Justifying Control Exclusions for a Remote-First SaaS Company](https://josephkamara.github.io/audit-defense-portfolio/projects/iso27001-statement-of-applicability/)**
+
+A consultant-built Statement of Applicability marks all 93 Annex A controls applicable. This document rebuilds it from the actual infrastructure up: which controls apply in full, which apply with the scope narrowed to what the company really operates, and which do not apply at all, with reasoning an auditor can test.
+
+`ISO 27001` `GRC Engineering` `Cybersecurity`
+
 **[Third-Party Risk Management: Building a Risk-Tiered Vendor Program Under NIST CSF 2.0](https://josephkamara.github.io/audit-defense-portfolio/projects/third-party-risk-management/)**
 
 A benefits administrator treats every vendor the same: one questionnaire, filed once, never revisited. This program redesigns vendor risk management under NIST CSF 2.0's supply chain risk category, with assessment depth, contract terms, and monitoring cadence scaled to how much risk each vendor actually carries.
