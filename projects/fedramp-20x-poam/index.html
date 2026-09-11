@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FedRAMP 20x Transition POA&M: Closing the Machine-Readable Evidence Gap</title>
+<style>
+  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+  header { background:#002147; padding:20px 24px; }
+  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+  main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
+  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+  strong { color:#002147; }
+  table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
+  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
+  td { border:1px solid #ccc; padding:8px; vertical-align:top; }
+  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+  em { color:#555; }
+  code { background:#F4F6F8; padding:1px 5px; border-radius:3px; font-size:0.9em; }
+</style>
+</head>
+<body>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
+<main>
+<h1>FedRAMP 20x Transition: Plan of Action &amp; Milestones for the Machine-Readable Evidence Gap</h1>
+<p><em>Portfolio note: This POA&amp;M describes a fictional cloud service provider. Every framework fact, rule number, date, and requirement cited is real and current as of September 2026. No client or employer information appears anywhere in this document.</em></p>
+<hr />
+<h2>POA&amp;M Header</h2>
+<p><strong>POA&amp;M ID:</strong> POAM-2026-041<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>System Owner:</strong> VP, Compliance and Security<br/>
+<strong>System / Authorization Path:</strong> Meridian Claims Platform, existing FedRAMP Rev5 Moderate authorization, transitioning to FedRAMP 20x<br/>
+<strong>Frameworks Referenced:</strong> FedRAMP 20x (RFC-0014, RFC-0022, RFC-0024, Notice 0004, Notice 0009), NIST SP 800-53 Rev. 5<br/>
+<strong>Next Review:</strong> 60 days from approval, or immediately upon any FedRAMP RFC update affecting the items below</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>Meridian holds an existing FedRAMP Rev5 Moderate authorization for its claims processing platform. FedRAMP 20x replaces Rev5's document-based control catalog with roughly 61 to 63 Key Security Indicators (KSIs) for Moderate, validated through machine-readable OSCAL evidence instead of narrative Word and Excel packages. The Consolidated Rules for 2026 (CR26) take mandatory effect for all stakeholders on January 1, 2027. RFC-0024 sets a September 30, 2026 deadline for machine-readable authorization packages, now enforced through a two-speed submission pipeline rather than outright rejection, per FedRAMP's July 13, 2026 clarification.</p>
+<p>This POA&amp;M documents five gaps between Meridian's current Rev5 posture and 20x readiness, rates each by likelihood and impact, and sets remediation milestones against FedRAMP's published phase dates rather than internal guesses. The goal is not to chase every 20x requirement at once. It is to close the gaps that carry a hard external deadline first, and sequence the rest behind them.</p>
+<h2>Background</h2>
+<p>FedRAMP 20x launched in March 2025 to fix a bottleneck that had produced fewer than 500 total authorizations across the program's history. Phase 1 authorized 12 of 13 reviewed submissions, a 92.3% success rate once capacity-constrained submissions are excluded. Phase 2 tested the Moderate baseline across thirteen pilot participants. Phase 3, opening in the second half of 2026, formalizes Low and Moderate requirements for wide-scale adoption. Authorization timelines under 20x drop from Rev5's 12 to 24 months to under two months, and initial costs fall by roughly 75 to 90 percent.</p>
+<p>The shift is not a smaller version of the same requirement. Rev5 asked an organization to write that a control works. FedRAMP 20x asks the system to prove it, through continuous telemetry submitted as SUM (implementation summary with pass/fail criteria), MAS (Minimum Assessment Scope documentation), and ORD (criticality ordering) for each KSI.</p>
+<h2>Findings and Remediation Items</h2>
+<table>
+<thead><tr><th>ID</th><th>Weakness</th><th>Basis</th><th>Risk Rating</th><th>Remediation</th><th>Milestone</th></tr></thead>
+<tbody>
+<tr>
+<td>POAM-041-1</td>
+<td>Authorization evidence remains in Word and Excel narrative form. No OSCAL-format package exists for the current Rev5 authorization.</td>
+<td>RFC-0024 requires machine-readable submissions for new provider packages (LMR-GEN-ICR) and annual-assessment compliance for existing providers (LMR-GEN-OAR) starting September 30, 2026. Industry-wide OSCAL adoption in the Rev5 pipeline was effectively zero through mid-2026.</td>
+<td><strong>High.</strong> Likelihood: High (near-certain enforcement pressure by the CR26 mandatory date of January 1, 2027). Impact: High (annual assessment continuity).</td>
+<td>Stand up OSCAL tooling evaluation now. Convert the current SSP control narrative to OSCAL JSON in phases, starting with the highest-risk control families.</td>
+<td>Tooling selected by end of Q4 2026. First OSCAL-formatted annual assessment package submitted ahead of the January 1, 2027 CR26 effective date.</td>
+</tr>
+<tr>
+<td>POAM-041-2</td>
+<td>Automated evidence coverage for existing controls is estimated at 35 to 40 percent. FedRAMP guidance and pilot feedback point to a 70 percent or higher automated-evidence target for KSI validation.</td>
+<td>The KSI evidence hierarchy ranks machine-generated telemetry highest, automated validation second, human-verified attestation lowest. MFA enforcement, patch status, and access reviews are all expected to come from system-generated evidence, not policy statements or screenshots.</td>
+<td><strong>Medium-High.</strong> Likelihood: Medium (gap is known and being tracked, not hidden). Impact: High (directly affects submission quality once 20x becomes the operative pathway).</td>
+<td>Inventory every control currently documented by narrative description. For each, identify whether telemetry already exists in cloud provider logs, SIEM, or endpoint tooling, and build automation for the gap.</td>
+<td>Control inventory and telemetry mapping complete within 45 days. Automated evidence ratio raised to 60 percent within 120 days, 70 percent within 180 days.</td>
+</tr>
+<tr>
+<td>POAM-041-3</td>
+<td>No documented coverage for AC-23 (Data Mining Protection) or AT-6 (Training Feedback), the two controls newly required under FedRAMP 20x baselines that were not required under prior FedRAMP baselines.</td>
+<td>Both controls exist in NIST SP 800-53 Rev. 5 but were not previously part of FedRAMP's control set. Their addition reflects cloud-specific threat patterns the earlier baseline did not prioritize.</td>
+<td><strong>Medium.</strong> Likelihood: High (confirmed gap, not a possibility). Impact: Medium (two controls, not a systemic finding).</td>
+<td>Assign control owners for AC-23 and AT-6. Document current data-mining-protection posture and training-feedback mechanism, or build them if they do not exist.</td>
+<td>Control owners assigned within 15 days. Implementation evidence documented within 90 days.</td>
+</tr>
+<tr>
+<td>POAM-041-4</td>
+<td>System Security Plan and customer-facing materials still reference the retired "FedRAMP Low / Moderate / High" impact-level labels instead of the new Class A through D system.</td>
+<td>Notice 0004 (Initial Outcome from RFC-0020, published February 25, 2026) replaces impact-level labels with a single "FedRAMP Certified" designation and a Class A to D scheme. Class C maps to the former Moderate baseline Meridian holds today.</td>
+<td><strong>Low.</strong> Likelihood: High (a documentation gap, not a technical one). Impact: Low (no security exposure, but a credibility gap with agency reviewers who know the new terminology).</td>
+<td>Update the SSP, marketing collateral, and the FedRAMP Marketplace listing to Class C terminology.</td>
+<td>Documentation updated within 30 days.</td>
+</tr>
+<tr>
+<td>POAM-041-5</td>
+<td>No defined continuous monitoring cadence per KSI. Current monitoring follows the Rev5 annual assessment model.</td>
+<td>FedRAMP 20x moves from annual assessment to continuous monitoring, with cadence varying by KSI category rather than a single fixed schedule.</td>
+<td><strong>Medium.</strong> Likelihood: Medium (depends on Phase 3 finalization). Impact: Medium (operational readiness, not an immediate compliance failure).</td>
+<td>Map each of the 10 KSI categories (Change Management, Cybersecurity Education, Identity and Access Management, Incident Response, Monitoring/Logging/Auditing, Network and Architecture, Planning/Inventory/Objectives, Resilience and Disaster Recovery, Service Hardening, Third-Party Resources) to a monitoring cadence and an owner.</td>
+<td>Cadence mapping complete within 60 days, ahead of Phase 3's wide-scale adoption opening in the second half of 2026.</td>
+</tr>
+</tbody>
+</table>
+<h2>Sequencing Rationale</h2>
+<p>POAM-041-1 and POAM-041-2 come first because they share the same September 30, 2026 and January 1, 2027 external dates and because the automated-evidence work directly feeds the OSCAL conversion: telemetry that already exists in machine-readable form is telemetry that does not need to be re-documented by hand. POAM-041-3 and POAM-041-4 are lower-effort, bounded fixes that a small team can close in parallel without competing for the same engineering time. POAM-041-5 depends on Phase 3 finalizing the Moderate KSI specification, so it is scoped now and executed once that specification is stable.</p>
+<h2>Residual Risk Statement</h2>
+<p>Even after every item above closes, Meridian's authorization will run on a framework two years into its own build-out, with a federal program office operating on a reduced headcount. FedRAMP's own Phase 2 experience shows a 44-day review delay caused by a government shutdown. A future shutdown or staffing change could slow review timelines regardless of how ready Meridian's submission is. That risk sits outside Meridian's control and is not remediated by this plan. It is tracked, not eliminated.</p>
+<h2>Recommendation</h2>
+<p>Approve this POA&amp;M and fund the OSCAL tooling evaluation (POAM-041-1) and automated-evidence build-out (POAM-041-2) as the two priority workstreams for Q4 2026, ahead of the January 1, 2027 CR26 mandatory date. Track POAM-041-3 and POAM-041-4 as parallel, lower-effort items. Hold POAM-041-5 for Phase 3 finalization rather than building against a specification that has not stabilized.</p>
+<h2>Decision and Sign-off</h2>
+<table>
+<thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>System Owner (VP, Compliance and Security)</td><td></td><td>Approve / Reject</td><td></td></tr>
+<tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
+<tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
+</tbody>
+</table>
+<hr />
+<h2>Why This Memo Is Built This Way</h2>
+<p>Most FedRAMP transition plans either restate the RFCs without translating them into a specific organization's gaps, or list gaps without tying each one to the rule that creates it. A reviewer cannot tell from a generic gap list whether the author read the actual RFC text or is pattern-matching from a conference talk.</p>
+<p>Every basis column above cites a specific RFC, Notice, or published fact rather than a paraphrase. The sequencing section exists because a POA&amp;M that lists five items with no order of operations is not a plan, it is an inventory. And the residual risk statement says plainly that closing every internal gap does not remove the external risk of a federal program running on reduced staff. A memo that implies full risk elimination after remediation is not honest about what remediation can and cannot control.</p>
+</main>
+</body>
+</html>
