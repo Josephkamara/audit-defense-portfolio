@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EU AI Act High-Risk Classification: Why a Workforce Monitoring Feature Can't Claim the Narrow-Task Exemption</title>
+<style>
+body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+header { background:#002147; padding:20px 24px; }
+header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
+h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
+strong { color:#002147; }
+table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
+th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
+td { border:1px solid #ccc; padding:8px; vertical-align:top; }
+hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+em { color:#555; }
+.split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
+.split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
+.split-col.automate { border-top:4px solid #7a8a99; }
+.split-col.judge { border-top:4px solid #C5A55A; }
+.split-col h3 { margin-top:0; }
+.split-col ul { margin:0; padding-left:20px; }
+.split-col li { margin-bottom:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
+<main>
+<h1>EU AI Act High-Risk Classification: Why a Workforce Monitoring Feature Can't Claim the Narrow-Task Exemption</h1>
+<p>A talent platform vendor built two AI features into the same product and classified them differently. The recruitment screening tool got flagged high-risk without argument. The workforce monitoring feature got waved through as exempt, on the theory that it only flags deviations for a manager to review and never decides anything itself. That theory has one problem: the feature profiles workers, and profiling closes the exemption regardless of how narrow the task looks. This document builds the classification a regulator would actually run, and states which claim holds.</p>
+<p><em>The company below is built for this walkthrough. The EU AI Act article numbers, Annex III language, and compliance dates cited are real and current as of September 2026, verified against the regulation's own text and the Digital Omnibus amendment that changed the compliance timeline.</em></p>
+<hr />
+<h2>Classification Assessment Information</h2>
+<p><strong>Report ID:</strong> AIA-CLASS-2026-03<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>Product Owner:</strong> Head of Product, Talent Platform<br/>
+<strong>Framework:</strong> Regulation (EU) 2024/1689 (the AI Act), Article 6 (Classification Rules for High-Risk AI Systems) and Annex III, point 4 (Employment, Workers' Management and Access to Self-Employment), as amended by Regulation (EU) 2026/1744 (the Digital Omnibus)<br/>
+<strong>Status:</strong> Design sample, not a completed regulatory filing<br/>
+<strong>Review Cycle:</strong> Before each new feature release, and again ahead of the 2 December 2027 compliance date</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>Meridian Talent Systems sells a talent management platform to corporate HR departments. Two features are under review. Candidate Screening Assistant ranks and filters job applications for recruiters. Workforce Signals watches employee activity patterns after hire and flags people it scores as flight risks or performance concerns, feeding that flag into manager decisions on task assignment and contract renewal.</p>
+<p>Both features sit inside Annex III, point 4, which the AI Act treats as high-risk by default. Meridian's compliance team accepted that classification for Candidate Screening Assistant without dispute. For Workforce Signals, they argued the narrow-task exemption in Article 6(3): the feature only detects deviations from prior patterns and does not replace the manager's own judgment. That argument fails on its own terms, because Workforce Signals profiles the workers it scores, and the AI Act closes the exemption to any Annex III system that performs profiling, regardless of how the other four conditions read.</p>
+<h2>The Two Ways Annex III Reaches This Product</h2>
+<p>Annex III, point 4 lists two separate triggers for employment-related AI, and Meridian's product hits both. Point 4(a) covers AI systems intended to be used for the recruitment or selection of natural persons, including systems that place targeted job advertisements, analyze and filter job applications, or evaluate candidates. That is Candidate Screening Assistant, without qualification.</p>
+<p>Point 4(b) covers AI systems intended to be used to make decisions affecting terms of work-related relationships, the promotion or termination of work-related contracts, to allocate tasks based on individual behavior or personal traits, or to monitor and evaluate the performance and behavior of people in those relationships. That is Workforce Signals. The fact that a human manager makes the final call on renewal or reassignment does not remove the system from point 4(b). The provision covers AI used to make or influence those decisions, and a flag that feeds a manager's renewal decision is doing exactly that.</p>
+<h2>What Article 6(3) Actually Exempts, and What It Does Not</h2>
+<p>Article 6(3) lets a provider treat an Annex III system as not high-risk if it does not pose a significant risk of harm to health, safety, or fundamental rights, and it meets one of four conditions: the system performs a narrow procedural task, it improves the result of a previously completed human activity, it detects deviations from prior decision-making patterns without replacing or influencing the prior human assessment, or it performs a preparatory task to a later assessment.</p>
+<p>Meridian's argument for Workforce Signals reached for the third condition. The argument does not survive the article's own final clause: "Notwithstanding the first subparagraph, an AI system referred to in Annex III shall always be considered to be high-risk where the AI system performs profiling of natural persons." Profiling carries the definition the AI Act imports from GDPR Article 4(4): automated processing of personal data used to evaluate a person's characteristics, expressly including performance at work and behavior. Workforce Signals scores workers on exactly those two things. Once that is true, the four conditions above stop mattering. The system is high-risk because it profiles, not because of how narrow its task is.</p>
+<h2>Meridian's Features Against Annex III, Point 4</h2>
+<table>
+<thead><tr><th>Feature</th><th>Annex III Trigger</th><th>Provider's Original Position</th><th>Classification</th></tr></thead>
+<tbody>
+<tr><td>Candidate Screening Assistant</td><td>Point 4(a): recruitment and candidate evaluation</td><td>High-risk, no exemption claimed</td><td>High-risk</td></tr>
+<tr><td>Workforce Signals</td><td>Point 4(b): monitoring performance and behavior, informing task allocation and renewal decisions</td><td>Exempt under Article 6(3)(c), deviation detection only</td><td>High-risk. The profiling carve-out in Article 6(3) closes the exemption regardless of the deviation-detection argument.</td></tr>
+</tbody>
+</table>
+<h2>Where the Exemption Claim Fails</h2>
+<p>The deviation-detection condition in Article 6(3)(c) was written for tools like anomaly flags in a quality-control line, where the system points at something unusual and a person decides what it means with no data held about the individual being scored. Workforce Signals does not fit that pattern. It builds an ongoing behavioral and performance profile of each named worker, scores that profile against peers, and outputs a risk label attached to that person. That is profiling under the AI Act's own imported definition, and the exemption clause says so explicitly: profiling systems in Annex III are always high-risk, full stop, with no route back through the other three conditions either.</p>
+<h2>What a Regulator or Notified Body Will Push Back On</h2>
+<p>A compliance memo that cites the right article is not the same as an argument that survives the article's own exceptions to itself.</p>
+<div class="split">
+<div class="split-col automate">
+<h3>What the compliance memo shows</h3>
+<ul>
+<li>A citation to Article 6(3)(c) and a description of the feature as "deviation detection"</li>
+<li>A statement that a human manager makes the final renewal or reassignment decision</li>
+<li>A product description that avoids the word "score" in favor of "signal" or "flag"</li>
+<li>No mention of Article 6(3)'s own profiling carve-out</li>
+</ul>
+</div>
+<div class="split-col judge">
+<h3>What the classification has to prove</h3>
+<ul>
+<li>Whether the feature builds and stores an evaluative profile tied to a named individual, which is the GDPR Article 4(4) test the AI Act imports</li>
+<li>Whether the human "review" is a real point of judgment or a rubber stamp on a pre-computed score</li>
+<li>Whether renaming the output changes what the system actually does with the worker's data</li>
+<li>Whether the provider checked the profiling carve-out before relying on any of the other three conditions</li>
+</ul>
+</div>
+</div>
+<h2>What This Means for Meridian and Its Clients</h2>
+<p>As the provider, Meridian carries the Article 16 obligations for both features: a conformity assessment under Article 43, technical documentation under Article 18, a quality management system under Article 17, retained system logs under Article 19, and registration in the EU database under Article 49 before either feature goes live for a client in a way the Act treats as market placement.</p>
+<p>Meridian's clients, the corporate HR departments deploying these features, are not automatically required to run a Fundamental Rights Impact Assessment under Article 27. That obligation is scoped to deployers that are public bodies, private entities providing public services, or deployers of the specific credit and insurance systems in Annex III, points 5(b) and 5(c). A private employer deploying Workforce Signals sits outside that mandatory list. Recommending a FRIA to every client anyway, as a matter of practice rather than legal mandate, is defensible risk management. Telling a client it is legally required is a claim this classification does not support, and a client's own counsel will find that gap.</p>
+<h2>The Compliance Date Actually in Effect</h2>
+<p>The original deadline for Annex III high-risk obligations was 2 August 2026. Regulation (EU) 2026/1744, the Digital Omnibus, deferred that date to 2 December 2027 for standalone Annex III systems. The Omnibus was published in the Official Journal on 24 July 2026 and entered into force on 27 July 2026, so the deferral is current law, not a pending proposal. Other AI Act obligations on a separate track, including the Article 50 transparency duties for AI-generated content, were not moved by this deferral and keep their original dates. Meridian's own project plan had targeted August 2026 for both features. The deferral gives it roughly sixteen additional months, and the practical failure mode in a delay like this one is a team that quietly stops working rather than one that keeps the original schedule and treats the extra time as margin.</p>
+<h2>Residual Risk Statement</h2>
+<p>Reclassifying Workforce Signals as high-risk removes the exemption argument that would not have held up under examination. It does not resolve the underlying design question, which is whether a behavioral risk score attached to a named worker's personnel file is a feature Meridian's clients can operate under Article 26's deployer obligations, including human oversight that is real rather than nominal. A second, ongoing risk is scope creep within the same feature: today Workforce Signals flags attrition and performance risk, and a later release that adds compensation recommendations or termination scoring would need its own classification review rather than inheriting this one.</p>
+<h2>Recommendation</h2>
+<p>Reclassify Workforce Signals as high-risk and route it through the same Article 16 conformity process already planned for Candidate Screening Assistant. Correct any client-facing material that describes Workforce Signals as exempt from the AI Act. Build a standing rule that any Annex III feature claiming an Article 6(3) exemption must document, in writing, why it does not perform profiling under the GDPR Article 4(4) definition, before the exemption is relied on. Target internal readiness for both features well ahead of the 2 December 2027 date rather than treating the deferral as time recovered.</p>
+<h2>Decision and Sign-off</h2>
+<table>
+<thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>Product Owner (Talent Platform)</td><td></td><td>Approve / Reject</td><td></td></tr>
+<tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
+<tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
+</tbody>
+</table>
+<hr />
+<h2>Why This Classification Is Built This Way</h2>
+<p>Most AI Act classification memos stop at the first article that sounds like it fits, cite it, and move on. Article 6(3) is written as an exception to a default, and an exception to a default usually carries its own exception back to the default. The profiling carve-out is exactly that: a condition that overrides the other four regardless of how well an argument satisfies them individually. A classification that quotes 6(3)(c) and never mentions the sentence right after it has not finished the analysis.</p>
+<p>This document reclassifies a feature Meridian's own team had already cleared, before a regulator or a client's legal team does it first. That is the difference that matters here. A vendor that finds its own exemption argument does not hold reads as one that understands the statute past the first paragraph that looked favorable. A vendor whose client finds the same gap during a vendor security review reads as one that did not.</p>
+</main>
+</body>
+</html>
