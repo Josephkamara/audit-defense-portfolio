@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Third-Party Risk Management: Building a Risk-Tiered Vendor Program Under NIST CSF 2.0</title>
+<style>
+body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+header { background:#002147; padding:20px 24px; }
+header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
+h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
+strong { color:#002147; }
+table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
+th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
+td { border:1px solid #ccc; padding:8px; vertical-align:top; }
+hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+em { color:#555; }
+.split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
+.split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
+.split-col.automate { border-top:4px solid #7a8a99; }
+.split-col.judge { border-top:4px solid #C5A55A; }
+.split-col h3 { margin-top:0; }
+.split-col ul { margin:0; padding-left:20px; }
+.split-col li { margin-bottom:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
+<main>
+<h1>Third-Party Risk Management: Building a Risk-Tiered Vendor Program Under NIST CSF 2.0</h1>
+<p>A benefits administrator has been adding vendors for three years the way most mid-size companies do: whoever signs the contract sends the same questionnaire to every vendor, files the answers, and moves on. A payroll integration partner with live access to member data gets the same one-time review as a vendor that prints envelopes. This program design walks through what changes when vendor risk gets tiered by actual exposure, mapped to NIST CSF 2.0's supply chain risk category, and where a risk score can make the call and where it still needs a person.</p>
+<p><em>The company below is built for this walkthrough. The NIST CSF 2.0 subcategories and supporting guidance cited are real and current (NIST, February 2024; NIST SP 1305).</em></p>
+<hr />
+<h2>Program Information</h2>
+<p><strong>Program ID:</strong> TPRM-2026-03<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>Program Owner:</strong> Director, Vendor Risk Management<br/>
+<strong>Framework:</strong> NIST CSF 2.0, Govern Function, GV.SC (Cybersecurity Supply Chain Risk Management); NIST SP 1305 (Quick-Start Guide for Cybersecurity Supply Chain Risk Management); NIST IR 8179 (Criticality Analysis Process Model)<br/>
+<strong>Status:</strong> Design sample, not a deployed program<br/>
+<strong>Review Cycle:</strong> Annual, or upon material change to the vendor portfolio</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>Meridian Benefits Administrators manages COBRA administration, FSA and HSA claims, and dependent eligibility verification for roughly 60 self-insured employer clients. That work depends on four outside vendors: a pharmacy benefit manager integration, an identity and eligibility verification service, a print and mail vendor for COBRA notices, and an HR compliance training platform. Every one of them received the same intake questionnaire, filed once at signing, never looked at again.</p>
+<p>This document designs a third-party risk management program that tiers vendors by what they actually touch, not by how the relationship happened to start. It maps the program to NIST CSF 2.0's Govern function, specifically the GV.SC category for cybersecurity supply chain risk management, and does the harder part: deciding how much diligence each tier actually needs, and where a scoring rule stops being enough.</p>
+<h2>The Program Today: One Questionnaire, Every Vendor, Once</h2>
+<p>Meridian's current process runs the same way regardless of what a vendor does. Procurement sends a standard security questionnaire before signature, files the completed copy, and the vendor moves into an active relationship with no scheduled reassessment. A pharmacy benefit manager with a live API connection to member eligibility data completes the same eleven-question form as a vendor with no access to Meridian's systems at all.</p>
+<p>Nothing in the current process asks whether a vendor's risk changed since onboarding, whether a required document expired, or whether the vendor added a subcontractor that changes what it can now access. The questionnaire works as a one-time gate instead of the start of an ongoing relationship.</p>
+<h2>Vendor Criticality Tiering</h2>
+<p>NIST SP 1305, the CSF 2.0 quick-start guide for supply chain risk management, sets out three tiering criteria: the importance of the vendor's product or service to the business, the sensitivity of the data the vendor processes or stores, and the degree of access the vendor has to Meridian's systems. NIST IR 8179 provides a structured method for applying those criteria consistently instead of case by case.</p>
+<p>Applied to Meridian's four vendors, the criteria sort cleanly into three tiers.</p>
+<table>
+<thead><tr><th>Tier</th><th>Vendor</th><th>Basis for Tier</th></tr></thead>
+<tbody>
+<tr><td><strong>Tier 1: Critical</strong></td><td>Pharmacy Benefit Manager Integration</td><td>Live API access to member eligibility and claims data. A service outage stops prescription claims from processing for every covered member.</td></tr>
+<tr><td><strong>Tier 1: Critical</strong></td><td>Identity and Eligibility Verification Service</td><td>Processes Social Security numbers and dates of birth to verify dependent eligibility. Direct system integration with the enrollment platform.</td></tr>
+<tr><td><strong>Tier 2: Significant</strong></td><td>COBRA Notice Print and Mail Vendor</td><td>Receives member names, addresses, and coverage details by batch file transfer. No live system access, but a missed or misdirected COBRA notice is a compliance failure with its own statutory exposure.</td></tr>
+<tr><td><strong>Tier 3: Standard</strong></td><td>HR Compliance Training Platform</td><td>No access to member PHI or PII beyond employee names and email addresses. No integration with Meridian's core systems.</td></tr>
+</tbody>
+</table>
+<h2>Assessment Depth by Tier</h2>
+<table>
+<thead><tr><th>Tier</th><th>Assessment Components</th><th>Reassessment Cadence</th></tr></thead>
+<tbody>
+<tr><td><strong>Tier 1</strong></td><td>Full security questionnaire (SIG-Full or equivalent); current SOC 2 Type II report or equivalent, reviewed for exceptions relevant to the service provided; certificate of cyber liability insurance; contract security addendum; joint incident response tabletop annually</td><td>Full reassessment annually, plus continuous breach-notification monitoring between cycles</td></tr>
+<tr><td><strong>Tier 2</strong></td><td>Scoped questionnaire (SIG-Lite or equivalent); certificate of insurance; standard data protection contract clause</td><td>Annually</td></tr>
+<tr><td><strong>Tier 3</strong></td><td>Self-attestation questionnaire; standard confidentiality clause</td><td>At contract renewal only</td></tr>
+</tbody>
+</table>
+<h2>Program Design by GV.SC Subcategory</h2>
+<p>NIST CSF 2.0 added the Govern function in its 2024 revision, and GV.SC is the category built specifically for supply chain and third-party risk. Ten subcategories cover the full relationship, from the initial program charter through what happens after a vendor relationship ends. Each one maps to a specific piece of Meridian's program, not just a policy statement that references it.</p>
+<table>
+<thead><tr><th>Subcategory</th><th>NIST CSF 2.0 Text</th><th>Program Element</th></tr></thead>
+<tbody>
+<tr><td>GV.SC-01</td><td>A cybersecurity supply chain risk management program, strategy, objectives, policies, and processes are established and agreed to by organizational stakeholders</td><td>Program charter signed by GRC, Legal, Procurement, and the executive sponsor before rollout</td></tr>
+<tr><td>GV.SC-02</td><td>Cybersecurity roles and responsibilities for suppliers, customers, and partners are established, communicated, and coordinated internally and externally</td><td>Procurement owns intake, GRC owns the risk assessment and tier assignment, Legal owns the contract security addendum, the business owner owns the day-to-day relationship</td></tr>
+<tr><td>GV.SC-03</td><td>Cybersecurity supply chain risk management is integrated into cybersecurity and enterprise risk management, risk assessment, and improvement processes</td><td>A Tier 1 finding above a defined severity threshold is logged on the enterprise risk register and reviewed by the same risk committee that reviews internal findings</td></tr>
+<tr><td>GV.SC-04</td><td>Suppliers are known and prioritized by criticality</td><td>The tiering methodology above. Every vendor is scored and assigned a tier before any assessment work starts</td></tr>
+<tr><td>GV.SC-05</td><td>Requirements to address cybersecurity risks in supply chains are established, prioritized, and integrated into contracts and other types of agreements with suppliers and other relevant third parties</td><td>Contract security addendum scaled by tier, with Tier 1 requiring a 24-hour breach notification clause and a right-to-audit provision</td></tr>
+<tr><td>GV.SC-06</td><td>Planning and due diligence are performed to reduce risks before entering into formal supplier or other third-party relationships</td><td>Pre-signature gate: no Tier 1 or Tier 2 vendor is signed before its risk assessment is complete, regardless of the business timeline</td></tr>
+<tr><td>GV.SC-07</td><td>The risks posed by a supplier, their products and services, and other third parties are understood, recorded, prioritized, assessed, responded to, and monitored over the course of the relationship</td><td>Reassessment cadence by tier, plus continuous monitoring for Tier 1</td></tr>
+<tr><td>GV.SC-08</td><td>Relevant suppliers and other third parties are included in incident planning, response, and recovery activities</td><td>Tier 1 vendors are named in Meridian's incident response plan with a defined notification SLA and an annual joint tabletop</td></tr>
+<tr><td>GV.SC-09</td><td>Supply chain security practices are integrated into cybersecurity and enterprise risk management programs, and their performance is monitored throughout the technology product and service life cycle</td><td>Program KPIs reported to the risk committee quarterly</td></tr>
+<tr><td>GV.SC-10</td><td>Cybersecurity supply chain risk management plans include provisions for activities that occur after the conclusion of a partnership or service agreement</td><td>Offboarding checklist: data return or certified destruction, access revocation confirmation, and a closure memo before a relationship formally ends</td></tr>
+</tbody>
+</table>
+<h2>What a Tiering Score Can Decide, and What Still Needs an Analyst</h2>
+<p>The tiering criteria above sound like a formula, and part of it is: data sensitivity, system access, and business criticality can be scored consistently from a questionnaire's answers. The tier assignment can be automatic. What the tier assignment is supposed to trigger cannot be.</p>
+<div class="split">
+<div class="split-col automate">
+<h3>What the scoring criteria can decide</h3>
+<ul>
+<li>Whether a vendor's answers put it above the Tier 1 threshold on data sensitivity or system access</li>
+<li>Whether a required document, a SOC 2 report, an insurance certificate, a signed security addendum, is present or missing at assessment time</li>
+<li>Whether a vendor's scheduled reassessment date has passed</li>
+<li>Whether a contract is missing the security clause required for its assigned tier</li>
+</ul>
+</div>
+<div class="split-col judge">
+<h3>What still needs an analyst</h3>
+<ul>
+<li>Reading a SOC 2 report's actual exceptions and deciding whether they matter for what this vendor specifically does for Meridian, not just confirming the report exists</li>
+<li>Deciding whether a vendor's disclosed subcontractor changes its effective risk tier</li>
+<li>Weighing a business unit's urgency to sign against an incomplete Tier 1 assessment, and deciding whether an interim control is a real mitigation or delay wearing the paperwork of one</li>
+<li>Judging whether a vendor's remediation commitment is credible given its size and resources, or whether the relationship itself is the actual risk</li>
+<li>Deciding what happens when a Tier 3 vendor's real data access turns out to be broader than its questionnaire answers claimed, since the questionnaire is self-reported and only as accurate as the person who filled it out</li>
+</ul>
+</div>
+</div>
+<h2>Key Risk Indicators</h2>
+<p>A program that only produces a folder of PDFs at onboarding does not tell anyone whether it is working. These indicators are reported to the risk committee quarterly, not filed and revisited once a year.</p>
+<table>
+<thead><tr><th>Key Risk Indicator</th><th>Target</th></tr></thead>
+<tbody>
+<tr><td>Tier 1 vendors with a current SOC 2 Type II report (or equivalent) on file</td><td>100%</td></tr>
+<tr><td>Tier 1 and Tier 2 vendors with remediation items open past 90 days</td><td>0</td></tr>
+<tr><td>Active contracts carrying the security clause required for their tier</td><td>100%</td></tr>
+<tr><td>Average days from vendor intake request to completed risk assessment, Tier 1</td><td>Under 30 days</td></tr>
+<tr><td>Vendors reassessed on schedule vs. overdue, by tier</td><td>95% or higher on schedule</td></tr>
+<tr><td>Subcontractor (fourth-party) relationships disclosed by Tier 1 vendors vs. previously unknown</td><td>Tracked and trending toward full disclosure</td></tr>
+<tr><td>Vendors offboarded without a completed exit checklist</td><td>0</td></tr>
+</tbody>
+</table>
+<h2>Residual Risk Statement</h2>
+<p>Tiering focuses effort where the risk actually sits. It does not remove two exposures that stay outside this program's direct control. Every tier below Tier 1 relies partly on a vendor's own answers, and a questionnaire only reflects what the person completing it chose to disclose. A Tier 3 vendor that under-reports its data access will not be caught by this program until something else surfaces it. Second, GV.SC-07's monitoring obligation covers Meridian's direct relationship with each vendor. It does not give Meridian visibility into that vendor's own subcontractors beyond what the contract requires the vendor to disclose, so fourth-party risk is tracked at the edge of what this program can see, not eliminated by it.</p>
+<h2>Recommendation</h2>
+<p>Approve the program charter and the three-tier model above. Apply the pre-signature due diligence gate to every new Tier 1 and Tier 2 vendor starting immediately. Complete initial tiering and assessment of Meridian's existing vendor portfolio within 90 days, prioritized by tier. Report the key risk indicators to the risk committee quarterly, starting with the first full quarter after rollout.</p>
+<h2>Decision and Sign-off</h2>
+<table>
+<thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>Program Owner (Director, Vendor Risk Management)</td><td></td><td>Approve / Reject</td><td></td></tr>
+<tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
+<tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
+</tbody>
+</table>
+<hr />
+<h2>Why This Program Is Built This Way</h2>
+<p>Most third-party risk programs fail for one of two reasons. They treat every vendor identically, so Tier 1 and Tier 3 vendors get the same shallow review: real risk goes underexamined while low-risk vendors absorb effort that does not need to be spent on them. Or they run the diligence once, at onboarding, and never schedule anything after, so a vendor's risk profile from two years ago gets treated as still current.</p>
+<p>The GV.SC subcategory table above exists because citing a framework is not a control. NIST CSF 2.0 does not make a program defensible by being named in the document header. What makes it defensible is that every subcategory maps to something Meridian actually does: a tiering method applied consistently, a cadence followed on a schedule, and indicators reported whether or not the number looks good that quarter. A program that can show its work this way survives an audit. A program that can only show a stack of completed questionnaires does not.</p>
+</main>
+</body>
+</html>
