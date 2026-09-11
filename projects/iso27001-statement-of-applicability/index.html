@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISO/IEC 27001:2022 Statement of Applicability: Justifying Control Exclusions for a Remote-First SaaS Company</title>
+<style>
+body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+header { background:#002147; padding:20px 24px; }
+header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
+h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
+strong { color:#002147; }
+table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
+th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
+td { border:1px solid #ccc; padding:8px; vertical-align:top; }
+hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+em { color:#555; }
+.split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
+.split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
+.split-col.automate { border-top:4px solid #7a8a99; }
+.split-col.judge { border-top:4px solid #C5A55A; }
+.split-col h3 { margin-top:0; }
+.split-col ul { margin:0; padding-left:20px; }
+.split-col li { margin-bottom:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
+<main>
+<h1>ISO/IEC 27001:2022 Statement of Applicability: Justifying Control Exclusions for a Remote-First SaaS Company</h1>
+<p>A workflow automation company is six months into its first ISO 27001 certification push, driven by three enterprise deals that will not close without it. The draft Statement of Applicability an outside consultant delivered marks all 93 Annex A controls "Applicable." That looks thorough. It is actually the first thing a certification auditor will flag, because a company with no data center, no outsourced developers, and a single leased office does not have 93 controls that apply the same way a bank does. This document rebuilds the SoA from the actual infrastructure up: which controls apply in full, which apply with the scope narrowed to what the company actually operates, and which do not apply at all, with the reasoning an auditor can test.</p>
+<p><em>The company below is built for this walkthrough. The Annex A control numbers, titles, and Clause 6.1.3 requirements cited are real and current (ISO/IEC 27001:2022).</em></p>
+<hr />
+<h2>Statement of Applicability Information</h2>
+<p><strong>SoA ID:</strong> ISO-SOA-2026-01<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>ISMS Owner:</strong> Director of Information Security<br/>
+<strong>Framework:</strong> ISO/IEC 27001:2022, Clause 6.1.3 (Information Security Risk Treatment); Annex A, 93 controls across four themes (Organizational, People, Physical, Technological)<br/>
+<strong>Status:</strong> Design sample, not a certified ISMS<br/>
+<strong>Review Cycle:</strong> Annual, or upon material change to infrastructure, vendors, or operating model</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>Meridian Workflow Systems builds operations automation software for mid-market finance and healthcare teams, roughly 140 employees, remote-first, one leased office suite for local staff, no owned servers or data centers. All production infrastructure runs on AWS. All product development is done in-house. Three enterprise prospects have told Meridian's sales team that ISO 27001 certification is a contract requirement, not a preference.</p>
+<p>The SoA a consulting firm delivered as a starting point marks all 93 Annex A controls "Applicable," with a one-line implementation note for each. It was built from a template, not from Meridian's actual environment. This document replaces it with an SoA built the way Clause 6.1.3(d) requires: the controls that are necessary, a justification for each inclusion and exclusion, and an honest account of what changes if Meridian's infrastructure changes.</p>
+<h2>The 93/93 Problem</h2>
+<p>Marking every Annex A control "Applicable" feels safer than excluding anything. It is not. An SoA that shows 93 out of 93 applicable to a 140-person SaaS company with no physical data center tells a certification auditor one of two things: either the company operates infrastructure the auditor has not been told about, or nobody actually reviewed the list against the business before signing it. Both conclusions extend the audit and invite closer scrutiny of everything else in the ISMS.</p>
+<p>The opposite failure is just as common and just as fatal to an audit. A remote-first company excludes the entire Physical theme with a single justification: "not applicable, we operate remotely." That statement is false on its face. Employees still use laptops, in homes, at the leased office, in coffee shops. Physical risk does not disappear because there is no server room. It moves to wherever the endpoint is. Annex A already accounts for this: A.7.9 (Security of assets off-premises) and A.6.7 (Remote working) exist specifically to cover it. A blanket physical exclusion does not read as judgment. It reads as a company that has not thought through where its risk actually lives.</p>
+<h2>What Meridian's ISMS Actually Has to Cover</h2>
+<p>Three facts about Meridian's operating model drive almost every exclusion and scope modification in this SoA: production infrastructure is 100% AWS IaaS and PaaS under an enterprise agreement, no company-owned server or storage hardware exists anywhere, and all product development is performed by employees, with no outsourced development firm holding source code access as of this SoA's effective date. Where a control exists to manage a risk Meridian has moved to AWS under the shared responsibility model, or a risk that does not exist because the underlying activity does not happen at Meridian, that reasoning appears in the tables below with the specific control it replaces or the specific fact that makes it inapplicable.</p>
+<h2>Applicability Summary</h2>
+<table>
+<thead><tr><th>Theme</th><th>Total Controls</th><th>Fully Applicable</th><th>Applicable, Scope-Modified</th><th>Not Applicable</th></tr></thead>
+<tbody>
+<tr><td>Organizational (A.5)</td><td>37</td><td>37</td><td>0</td><td>0</td></tr>
+<tr><td>People (A.6)</td><td>8</td><td>8</td><td>0</td><td>0</td></tr>
+<tr><td>Physical (A.7)</td><td>14</td><td>7</td><td>5</td><td>2</td></tr>
+<tr><td>Technological (A.8)</td><td>34</td><td>33</td><td>0</td><td>1</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>93</strong></td><td><strong>85</strong></td><td><strong>5</strong></td><td><strong>3</strong></td></tr>
+</tbody>
+</table>
+<p>Three exclusions and five scope narrowings out of 93. Every Organizational and People control applies without modification, which is expected: those controls govern policy, roles, training, and accountability, none of which depend on whether infrastructure is owned or leased. The judgment calls sit almost entirely in Physical and one Technological control, which is where the tables below focus.</p>
+<h2>Controls Marked Not Applicable, and Why</h2>
+<table>
+<thead><tr><th>Control</th><th>Title</th><th>Justification</th></tr></thead>
+<tbody>
+<tr><td>A.7.11</td><td>Supporting Utilities</td><td>Meridian owns no data center or server room. Production infrastructure runs entirely on AWS under a signed enterprise agreement. Power, HVAC, and utility redundancy for that infrastructure are AWS's responsibility under the shared responsibility model, verified annually through AWS's own ISO/IEC 27001 certificate and SOC 2 Type II report, reviewed under A.5.23 (Information security for use of cloud services) and A.5.19 through A.5.22 (supplier relationship controls). The leased office suite has no computing equipment requiring dedicated utility redundancy beyond standard commercial building service.</td></tr>
+<tr><td>A.7.12</td><td>Cabling Security</td><td>No structured cabling plant exists to secure. The office network runs on a single managed ISP circuit terminating at a standard commercial demarcation point. No cable run on the premises carries production traffic, and no server or storage equipment is cabled on site. Production network security is addressed under A.8.20 through A.8.22 (Network Security, Security of Network Services, Segregation of Networks) inside AWS's virtual network layer, not through physical cabling Meridian controls.</td></tr>
+<tr><td>A.8.30</td><td>Outsourced Development</td><td>All product development is performed by Meridian's in-house engineering organization. No third-party development firm, contractor, or offshore team holds source code access as of this SoA's effective date. This exclusion is reassessed at every vendor onboarding review and at minimum annually, since it becomes invalid the day a contracted developer is granted access, not at the next scheduled SoA update.</td></tr>
+</tbody>
+</table>
+<h2>Controls Marked Applicable, Scope-Modified</h2>
+<table>
+<thead><tr><th>Control</th><th>Title</th><th>How the Scope Is Limited</th></tr></thead>
+<tbody>
+<tr><td>A.7.1</td><td>Physical security perimeter</td><td>Applies to the interior perimeter of Meridian's single leased office suite, controlled by card-key entry. The building's exterior perimeter, lobby, and shared common areas are the landlord's control, addressed through the lease agreement's security provisions rather than Meridian's ISMS.</td></tr>
+<tr><td>A.7.4</td><td>Physical security monitoring</td><td>Applies only within the leased suite. Building-wide surveillance is operated by the landlord. Meridian does not operate independent monitoring and relies on the landlord's published security standards, referenced in the lease.</td></tr>
+<tr><td>A.7.5</td><td>Protecting against physical and environmental threats</td><td>Applies to the office's standard commercial fire detection and building systems. Fire suppression, backup power, and environmental controls for production infrastructure are AWS's responsibility, addressed under A.5.23, not a facility Meridian operates.</td></tr>
+<tr><td>A.7.8</td><td>Equipment siting and protection</td><td>Applies to the office's single locked network closet, which houses a router and a network switch and nothing else. No servers, no storage arrays, no equipment requiring environmental protection beyond a standard interior room.</td></tr>
+<tr><td>A.7.14</td><td>Secure disposal or re-use of equipment</td><td>Applies to end-user devices only: laptops, monitors, and office network equipment, decommissioned through a certified IT asset disposition vendor with a certificate of destruction retained as evidence. Decommissioning of cloud compute and storage volumes is handled by AWS under its own attested data destruction procedures. Meridian's responsibility is limited to confirming deletion and retaining that confirmation.</td></tr>
+</tbody>
+</table>
+<p>One Technological control is applicable without modification but worth naming directly: A.8.33 (Test Information). Meridian's test and staging environments use synthetic data only. Production customer data is never copied into a non-production environment. That is not an exclusion. It is a control decision that makes several other risks smaller, and it is the kind of detail an SoA line item does not show unless someone writes it down.</p>
+<h2>What an Auditor Will Push Back On</h2>
+<p>A checked box and a paragraph of justification are not the same evidence, and a certification auditor is trained to tell the difference.</p>
+<div class="split">
+<div class="split-col automate">
+<h3>What the checkbox shows</h3>
+<ul>
+<li>"Applicable" or "Not Applicable" next to a control number</li>
+<li>A one-line reference to a policy document that mentions the control</li>
+<li>A control mapped to a framework name in a spreadsheet</li>
+<li>A completion percentage on a compliance dashboard</li>
+</ul>
+</div>
+<div class="split-col judge">
+<h3>What the justification text has to prove</h3>
+<ul>
+<li>Which specific piece of infrastructure, location, or process the exclusion applies to, not a general description like "cloud" or "remote"</li>
+<li>What compensating control or supplier attestation covers the risk the excluded control would otherwise have addressed</li>
+<li>When the justification stops being true, and who is responsible for catching that before the next scheduled review</li>
+<li>Enough specificity that an auditor can verify the claim against evidence, rather than take the sentence on faith</li>
+</ul>
+</div>
+</div>
+<h2>Residual Risk Statement</h2>
+<p>This SoA reflects Meridian's infrastructure and operating model as of September 2026: fully cloud-hosted, one leased office, in-house development only. Two of those facts are structural and unlikely to change on short notice. The third is not. If Meridian contracts an outside development team, for a single product line or to meet a deadline, A.8.30 becomes applicable the day that contract is signed, not at the next annual SoA review. The exclusion holds only because Procurement is required to flag any new vendor granted source code access to the ISMS owner immediately, a control point documented under A.5.19, not because the SoA says so once a year.</p>
+<h2>Recommendation</h2>
+<p>Approve this Statement of Applicability as the basis for Stage 1 certification audit readiness. Assign an owner to document the office's specific physical setup, the single network closet, the card-key perimeter, the landlord-operated monitoring, in Meridian's Physical Security Procedure before the Stage 1 audit, so the scope-modified controls above have a supporting document an auditor can read. Confirm AWS's current ISO/IEC 27001 certificate and SOC 2 Type II report are on file and less than twelve months old before citing them as evidence for A.7.11 and A.7.12. Re-run this exclusion analysis at the next material change to infrastructure, vendor relationships, or office footprint, not only at the annual review date.</p>
+<h2>Decision and Sign-off</h2>
+<table>
+<thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>ISMS Owner (Director of Information Security)</td><td></td><td>Approve / Reject</td><td></td></tr>
+<tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
+<tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
+</tbody>
+</table>
+<hr />
+<h2>Why This Statement of Applicability Is Built This Way</h2>
+<p>Two SoAs fail for opposite reasons. One marks all 93 controls applicable because excluding anything feels like admitting a gap, and an auditor reads a template that nobody actually reviewed against the business. The other excludes broad categories with a single sentence, "not applicable, we are remote," and the same auditor asks the one question that sentence cannot survive: where, specifically, does the data live, and who is responsible for the physical security of that.</p>
+<p>This SoA marks three controls not applicable and five more applicable with a scope narrower than the standard implies, and every one of those eight rows says exactly what changed and why. That is the difference between compliance and a document that describes compliance. A control that traces to a specific piece of Meridian's actual infrastructure survives scrutiny. A control that traces to nothing more than the words "cloud" and "remote" does not.</p>
+</main>
+</body>
+</html>
