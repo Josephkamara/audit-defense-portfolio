@@ -16,6 +16,12 @@ This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each o
 
 ## Case Studies
 
+**[GRC Control Automation: Why a Shared MFA Control Passes SOC 2 and ISO 27001 but Fails PCI DSS](https://josephkamara.github.io/audit-defense-portfolio/projects/grc-control-automation/)**
+
+A GRC engineering team built one control crosswalk to satisfy three audits at once. The mapping was correct. The automated evidence was not: it checked MFA enrollment, not per-session challenge, and a trusted-device feature meant real login sessions into the cardholder data environment ran on a password alone. Two audits missed it. A PCI QSA didn't.
+
+`GRC Engineering` `SOC 2` `PCI DSS`
+
 **[EU AI Act High-Risk Classification: Why a Workforce Monitoring Feature Can't Claim the Narrow-Task Exemption](https://josephkamara.github.io/audit-defense-portfolio/projects/eu-ai-act-high-risk-classification/)**
 
 A talent platform vendor classified its recruitment screening tool high-risk without argument, then waved its employee monitoring feature through as exempt. The exemption claim fails because the feature profiles workers, and profiling closes the exemption regardless of how narrow the task looks. Builds the classification a regulator would actually run.
