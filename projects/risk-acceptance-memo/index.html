@@ -17,10 +17,12 @@
   td { border:1px solid #ccc; padding:8px; }
   hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
   em { color:#555; }
+  main > ul { padding-left:20px; margin-top:8px; }
+  main > ul li { margin-bottom:8px; line-height:1.5; }
 </style>
 </head>
 <body>
-<header><a href="../../">← Back to Portfolio</a></header>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>Risk Acceptance Memorandum: Legacy EDI Gateway TLS Encryption Gap</h1>
   <p>A healthcare claims processor is caught between two bad options: cut a live claims connection today, or run a known encryption gap for six months while a vendor finishes a migration it cannot speed up. This memo walks through how that decision gets made: the vulnerability, the risk it creates, the controls that reduce it, and the sign-off that puts a clock on how long the business gets to live with it.</p>
@@ -78,6 +80,13 @@
 <p>A VP of Claims Operations who signs this memo is not approving a document. They are approving 180 days of a known encryption gap on a circuit carrying protected health information for roughly 40,000 members, in exchange for not disrupting claims payment while a vendor finishes a migration Meridian cannot accelerate. That is the actual trade, and the memo puts it in front of the signer in those terms instead of behind a sentence that says "risk is low, controls in place" and asks for a signature anyway.</p>
 <p>It separates the vulnerability, a protocol weakness, from the risk, PHI exposure and breach notification exposure, because a business owner cannot sign off on a risk they cannot picture. It names four specific, verifiable controls instead of asserting that controls exist, and it states plainly what could still go wrong after those controls are in place rather than letting the risk read as zero. It gives the business three options with real costs attached instead of a single yes or no on the vendor's terms.</p>
 <p>The expiration date carries as much weight as the acceptance itself. Remove the forced re-review at 90 days and the automatic expiration at 180, and this stops being a decision. It becomes a permanent exception dressed up as a temporary one.</p>
+<h2>Key Takeaways</h2>
+<ul>
+<li>A risk acceptance memo has to separate the vulnerability, a technical fact, from the risk, what it actually exposes, before a business owner can sign off on something they can picture.</li>
+<li>Compensating controls need to be named specifically, with evidence attached. "Controls are in place" is not a control.</li>
+<li>A risk acceptance without a forced expiration date and a mandatory re-review is a permanent exception dressed up as a temporary one.</li>
+<li>Presenting the business with real options and real costs, not a single yes or no, is what makes the sign-off a genuine decision instead of a formality.</li>
+</ul>
 </main>
 </body>
 </html>
