@@ -16,6 +16,12 @@ This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each o
 
 ## Case Studies
 
+**[Agentic AI Risk Assessment: Where an Autonomous Invoice-Approval Agent Needs a Human in the Loop](https://josephkamara.github.io/audit-defense-portfolio/projects/agentic-ai-risk-assessment/)**
+
+A distributor gives an AI agent the authority to read invoices, match them against purchase orders, and pay vendors on its own, below a set dollar threshold. The assessment tests that design against the OWASP Top 10 for Agentic Applications, walks one attack path through MITRE ATLAS, and structures the controls using NIST's AI Risk Management Framework.
+
+`AI Governance` `GRC Engineering` `Agentic AI`
+
 **[GRC Control Automation: Why a Shared MFA Control Passes SOC 2 and ISO 27001 but Fails PCI DSS](https://josephkamara.github.io/audit-defense-portfolio/projects/grc-control-automation/)**
 
 A GRC engineering team built one control crosswalk to satisfy three audits at once. The mapping was correct. The automated evidence was not: it checked MFA enrollment, not per-session challenge, and a trusted-device feature meant real login sessions into the cardholder data environment ran on a password alone. Two audits missed it. A PCI QSA didn't.
