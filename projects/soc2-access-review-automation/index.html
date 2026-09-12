@@ -28,6 +28,8 @@
   .split-col h3 { margin-top:0; }
   .split-col ul { margin:0; padding-left:20px; }
   .split-col li { margin-bottom:8px; line-height:1.5; }
+  main > ul { padding-left:20px; margin-top:8px; }
+  main > ul li { margin-bottom:8px; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -98,6 +100,13 @@
 <h2>What Actually Changes for the Analyst</h2>
 <p>The reconciliation used to take an analyst two to three days a quarter. A script now does it every day, without a coffee break, and does it better than the manual version did: it never forgets to check the second export. That part of the job is not shrinking. It is gone.</p>
 <p>What is left is the part a script cannot inherit: deciding what the rule should flag, defending why that logic satisfies the control's intent when an auditor asks, and owning the exceptions the rule cannot resolve on its own. An analyst who only knew how to run the old manual process now has less to do. An analyst who can design the rule, defend it, and take responsibility for its exceptions has a harder job than before, not an easier one. That is the actual case for keeping a person in this control, not a claim that automation cannot be trusted.</p>
+<h2>Key Takeaways</h2>
+<ul>
+<li>Automating a control removes the analyst's routine reconciliation work. It does not remove the analyst's judgment about what a flagged account actually means.</li>
+<li>An automated control needs a monitor on the monitor: a check that alerts when the automation itself goes silent, not just when it finds a bad account.</li>
+<li>The narrative an auditor tests is why a rule's logic satisfies the control's intent, not confirmation that a script ran on schedule.</li>
+<li>Every automated rule needs a named owner accountable for its exceptions and for reviewing the rule itself, not only its output.</li>
+</ul>
 </main>
 </body>
 </html>
