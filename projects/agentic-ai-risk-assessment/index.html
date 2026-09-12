@@ -26,6 +26,8 @@
   .split-col h3 { margin-top:0; }
   .split-col ul { margin:0; padding-left:20px; }
   .split-col li { margin-bottom:8px; line-height:1.5; }
+  main > ul { padding-left:20px; margin-top:8px; }
+  main > ul li { margin-bottom:8px; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -157,6 +159,13 @@
 <h2>The Line the Agent Cannot Move Itself</h2>
 <p>An instruction hidden in a PDF can persuade a language model. It cannot change what a payment function will accept from a service account that has no credential to do anything else. That gap, between what the model can be talked into and what the system will actually execute, is the entire security property this design depends on. Put the ceiling in a system prompt and it is a suggestion the model carries into every decision, including the ones an attacker wrote the prompt for. Put it in a comparison operator that runs after the model's output and before the payment API is called, and it stops being something the agent can be argued out of.</p>
 <p>That is also what makes this design testable rather than just plausible. An auditor does not need to trust that the agent behaves. They need to find the line in the code where the ceiling is enforced, confirm the model has no path around it, and confirm the log the agent writes to is one it cannot edit. Test the enforcement point, not the agent's good behavior in a demo, and the assessment holds regardless of what the model was told to do.</p>
+<h2>Key Takeaways</h2>
+<ul>
+<li>An authority boundary only holds if it is enforced in code the model cannot argue with, not in a system prompt the model reads as a suggestion.</li>
+<li>Mapping a design against OWASP's agentic catalog, one real MITRE ATLAS attack path, and NIST's four RMF functions turns "the agent behaves" into something an auditor can actually test.</li>
+<li>Narrow scoping, a single function, a fixed ceiling, no persistent memory, closes most of the highest-risk categories before any monitoring is even required.</li>
+<li>A narrowly-scoped agent cannot compensate for weak controls upstream of it, like a PO system that will open an order for anyone who asks.</li>
+</ul>
 </main>
 </body>
 </html>
