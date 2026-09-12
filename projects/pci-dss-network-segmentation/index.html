@@ -25,6 +25,8 @@ em { color:#555; }
 .split-col h3 { margin-top:0; }
 .split-col ul { margin:0; padding-left:20px; }
 .split-col li { margin-bottom:8px; line-height:1.5; }
+main > ul { padding-left:20px; margin-top:8px; }
+main > ul li { margin-bottom:8px; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -158,6 +160,13 @@ em { color:#555; }
 <h2>What a Diagram Alone Cannot Prove</h2>
 <p>The architecture diagram below shows four boundaries the same way Meridian's engineers have always drawn them: a box for the CDE, a box for everything else, and a line between them. That picture is where most segmentation assessments stop, because it is where the confirming evidence is easiest to find. A firewall rule set that matches the diagram gets read as proof the diagram is still true.</p>
 <p>The diagram does not show a logging pipeline built two systems and one migration ago, or a bastion host that started as a temporary fix and never got revisited, which is exactly where this assessment found its one real gap. Naming that gap, the SIEM ingestion path, before a QSA finds it independently is the difference an auditor actually credits. A company that discloses its own scope-expansion risk with a fix already planned reads as one that understands its environment past the diagram. A company whose QSA finds the same issue unprompted reads as one that does not.</p>
+<h2>Key Takeaways</h2>
+<ul>
+<li>A network diagram and a tested boundary are different kinds of evidence. A QSA is trained to ask for the second one specifically.</li>
+<li>A boundary that depends on a data-handling claim, like tokenization before export, needs its own verification, not just confirmation that the network path exists.</li>
+<li>Shared infrastructure, like a SIEM ingesting both CDE and non-CDE logs, can pull a system back into scope even when the architecture diagram shows it as external.</li>
+<li>Disclosing your own scope-expansion risk before a QSA finds it independently is the credibility difference that shows up in the assessment.</li>
+</ul>
 </main>
 </body>
 </html>
