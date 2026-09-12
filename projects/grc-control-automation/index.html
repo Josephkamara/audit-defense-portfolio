@@ -51,6 +51,58 @@ em { color:#555; }
 <h2>Where the Evidence Source Broke the Mapping</h2>
 <p>A control mapping is only as good as the evidence used to test it, and Meridian's automation pulled the wrong signal. The identity provider's API returns an "MFA enrolled" flag per user, set once when a user first registers a second factor, and a separate "MFA challenged" flag per login session, set only when that specific session actually prompted for the second factor. Meridian's automated evidence collector queried enrollment status because it was the simpler, cacheable call, and reported it to all three frameworks as "MFA verified."</p>
 <p>The trusted-device feature meant enrollment and challenge diverged constantly in practice. An administrator who passed MFA once on a given laptop would not see another prompt from that laptop for 30 days, during which every login on that device authenticated on the password alone. SOC 2 and ISO 27001 field work, in the samples pulled that cycle, happened to land on enrollment records and did not independently pull session-level challenge logs. PCI DSS 8.5.1 requires that an MFA implementation not grant access unless all required factors succeed, and that any bypass run only through a documented, management-approved exception. Meridian had no such exception on file for the trusted-device window. When the QSA pulled actual authentication logs for administrative sessions into the cardholder data environment, several were single-factor.</p>
+<div style="margin:28px 0 8px;">
+<svg viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:Arial,sans-serif;">
+<rect x="0" y="0" width="760" height="460" fill="#F4F6F8"/>
+
+<!-- Identity Provider -->
+<rect x="20" y="170" width="150" height="90" rx="6" fill="#002147"/>
+<text x="95" y="205" text-anchor="middle" fill="#C5A55A" font-size="12" font-weight="bold">Identity Provider</text>
+<text x="95" y="222" text-anchor="middle" fill="#fff" font-size="10">Enrolled flag</text>
+<text x="95" y="237" text-anchor="middle" fill="#fff" font-size="10">Challenged flag</text>
+
+<!-- used path: Enrolled -->
+<line x1="170" y1="195" x2="270" y2="195" stroke="#002147" stroke-width="2.5"/>
+<text x="176" y="186" fill="#2C3E50" font-size="9" font-weight="bold">Used: "enrolled"</text>
+<text x="176" y="207" fill="#7a8a99" font-size="8">one-time setup</text>
+
+<!-- unused path: Challenged -->
+<line x1="170" y1="245" x2="270" y2="245" stroke="#7a8a99" stroke-width="2" stroke-dasharray="4,4"/>
+<text x="176" y="264" fill="#7a8a99" font-size="9">Not queried: "challenged"</text>
+<text x="176" y="277" fill="#7a8a99" font-size="8">resets on trusted device</text>
+
+<!-- Automated Evidence Collector -->
+<rect x="270" y="160" width="180" height="80" rx="6" fill="#fff" stroke="#002147" stroke-width="1.5"/>
+<text x="360" y="192" text-anchor="middle" fill="#002147" font-size="12" font-weight="bold">Automated Evidence</text>
+<text x="360" y="208" text-anchor="middle" fill="#002147" font-size="12" font-weight="bold">Collector</text>
+<text x="360" y="226" text-anchor="middle" fill="#2C3E50" font-size="10">Reports "MFA verified"</text>
+
+<!-- fan out to 3 frameworks -->
+<line x1="450" y1="180" x2="580" y2="60" stroke="#002147" stroke-width="2"/>
+<line x1="450" y1="200" x2="580" y2="200" stroke="#002147" stroke-width="2"/>
+<line x1="450" y1="220" x2="580" y2="360" stroke="#C5A55A" stroke-width="2.5" stroke-dasharray="6,3"/>
+
+<!-- SOC 2 box -->
+<rect x="580" y="25" width="160" height="65" rx="6" fill="#fff" stroke="#7a8a99" stroke-width="1.5"/>
+<text x="660" y="50" text-anchor="middle" fill="#002147" font-size="11" font-weight="bold">SOC 2 CC6.1</text>
+<text x="660" y="67" text-anchor="middle" fill="#3d7a4d" font-size="10" font-weight="bold">Held</text>
+<text x="660" y="80" text-anchor="middle" fill="#7a8a99" font-size="9">sample missed the window</text>
+
+<!-- ISO box -->
+<rect x="580" y="167" width="160" height="65" rx="6" fill="#fff" stroke="#7a8a99" stroke-width="1.5"/>
+<text x="660" y="192" text-anchor="middle" fill="#002147" font-size="11" font-weight="bold">ISO 27001 A.8.5</text>
+<text x="660" y="209" text-anchor="middle" fill="#3d7a4d" font-size="10" font-weight="bold">Held</text>
+<text x="660" y="222" text-anchor="middle" fill="#7a8a99" font-size="9">policy did not define proof</text>
+
+<!-- PCI DSS box -->
+<rect x="580" y="328" width="160" height="80" rx="6" fill="#fff" stroke="#C5A55A" stroke-width="2.5" stroke-dasharray="6,3"/>
+<text x="660" y="352" text-anchor="middle" fill="#002147" font-size="11" font-weight="bold">PCI DSS 8.4.3 / 8.5.1</text>
+<text x="660" y="370" text-anchor="middle" fill="#a8842e" font-size="10" font-weight="bold">Did NOT hold</text>
+<text x="660" y="384" text-anchor="middle" fill="#2C3E50" font-size="9">QSA pulled session logs,</text>
+<text x="660" y="396" text-anchor="middle" fill="#2C3E50" font-size="9">found password-only access</text>
+</svg>
+</div>
+<p style="font-size:0.85em;color:#7a8a99;text-align:center;margin-top:-4px;">Figure 1. One evidence pull, three frameworks. SOC 2 and ISO 27001 accepted enrollment status without asking for session-level logs. PCI DSS 8.5.1 tests the session itself, and the enrollment flag never proved what happened there.</p>
 <h2>The Shared Control Against Each Framework</h2>
 <table>
 <thead><tr><th>Framework</th><th>What the Requirement Actually Tests</th><th>Did the Enrollment-Based Evidence Hold?</th></tr></thead>
@@ -85,7 +137,7 @@ em { color:#555; }
 </div>
 </div>
 <h2>Residual Risk Statement</h2>
-<p>Correcting the evidence source to session-level challenge logs closes the specific gap the QSA found. It does not remove the trusted-device feature itself, which remains a real usability trade-off Meridian's security team accepted for reasons unrelated to this finding. A second, structural risk is that Meridian now has one more shared control after this fix, and every future control added to the crosswalk carries the same amplification risk if its evidence source is validated against only the easiest framework to satisfy rather than the strictest one.</p>
+<p>Switching the evidence source to session-level challenge logs closes the specific gap the QSA found, but the trusted-device feature itself stays in place. It remains a real usability trade-off Meridian's security team accepted for reasons unrelated to this finding, and correcting the evidence does not remove it. A second, structural risk outlasts this fix: every control the crosswalk shares across frameworks carries the same amplification risk if its evidence source is validated against only the easiest framework to satisfy rather than the strictest one, and this was only the first one tested that way.</p>
 <h2>Recommendation</h2>
 <p>Switch the automated evidence collector to query per-session MFA challenge status for administrative logins into the CDE, not enrollment status, and backfill a documented, management-approved exception for the trusted-device window or disable it for CDE-adjacent administrative accounts specifically. Add a standing rule to the control crosswalk process: any control shared across frameworks with different evidence standards must be evidenced to the strictest framework in the mapping, with the others inheriting that same evidence rather than a looser one. Re-test every other control currently shared across Meridian's three frameworks against this same enrollment-versus-challenge question before the next audit cycle.</p>
 <h2>Decision and Sign-off</h2>
@@ -98,9 +150,9 @@ em { color:#555; }
 </tbody>
 </table>
 <hr />
-<h2>Why This Control Automation Is Built This Way</h2>
-<p>Most write-ups on control automation focus on the mapping: which clause in which framework corresponds to which internal control. The mapping is the easy part, and it is rarely where these programs actually fail. The harder question is whether the evidence behind a shared control was validated against the framework that tests it most strictly, or against whichever framework's auditor happened to ask first and easiest.</p>
-<p>This document names the gap between enrollment and challenge before a QSA does it during a live assessment, and it treats the fix as a rule for the whole crosswalk rather than a one-time patch on one control. A GRC engineering program that shares evidence across frameworks without asking which framework sets the real bar is not saving audit effort. It is multiplying one untested assumption by the number of auditors willing to accept it.</p>
+<h2>What a Crosswalk Actually Has to Prove</h2>
+<p>The clause mapping in this case study was never wrong. MFA for administrative access genuinely satisfies SOC 2 CC6.1, ISO 27001 A.8.5, and PCI DSS 8.4.3 on paper, and a reviewer checking the citations alone would sign off on all three. The failure was one layer down, in the evidence that was supposed to prove the mapping was true in practice, and that is the layer most control-automation write-ups skip past on their way to the clause table.</p>
+<p>Naming the gap between enrollment and challenge before a QSA does it during a live assessment is the point of this document, and the fix is written as a standing rule for the whole crosswalk rather than a one-time patch on one control. A GRC engineering program that shares evidence across frameworks without asking which framework sets the real bar is not saving audit effort. It is multiplying one untested assumption by the number of auditors willing to accept it.</p>
 </main>
 </body>
 </html>
