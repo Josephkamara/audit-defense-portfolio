@@ -18,6 +18,8 @@
   hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
   em { color:#555; }
   code { background:#F4F6F8; padding:1px 5px; border-radius:3px; font-size:0.9em; }
+  main > ul { padding-left:20px; margin-top:8px; }
+  main > ul li { margin-bottom:8px; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -108,6 +110,13 @@
 <h2>How to Read This POA&amp;M</h2>
 <p>Five weaknesses, five remediation items, and one column that matters more than the other four: Basis. Every row in the findings table traces to a specific RFC number, Notice number, or published date, not a paraphrase of "FedRAMP 20x requires more automation." A reviewer who checks that column against the actual RFC text can tell in minutes whether this plan was built from the source material or assembled from a conference talk about it.</p>
 <p>The sequencing section exists for the same reason. Five findings with no order of operations is an inventory, not a plan. POAM-041-1 and POAM-041-2 come first because they share the same external deadlines and because the automated-evidence work feeds the OSCAL conversion directly. And the residual risk statement does not pretend that closing all five items removes every risk to this authorization. A federal program running on reduced staff can still slow a review regardless of how ready Meridian's submission is, and a POA&amp;M that implies otherwise is not honest about what remediation controls and what it does not.</p>
+<h2>Key Takeaways</h2>
+<ul>
+<li>Every finding needs to trace to a specific RFC or Notice number, not a paraphrase of what the framework is believed to require.</li>
+<li>Sequencing findings against real, published external deadlines, not internal guesses, is what turns a list of gaps into a plan.</li>
+<li>Closing every item on a POA&amp;M does not eliminate every risk. A risk that sits outside the organization's control, like federal staffing, should be tracked honestly, not claimed as resolved.</li>
+<li>Automated telemetry that already exists for one requirement, like OSCAL evidence, should feed the next requirement rather than being re-documented by hand.</li>
+</ul>
 </main>
 </body>
 </html>
