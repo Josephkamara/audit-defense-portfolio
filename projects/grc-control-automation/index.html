@@ -25,6 +25,8 @@ em { color:#555; }
 .split-col h3 { margin-top:0; }
 .split-col ul { margin:0; padding-left:20px; }
 .split-col li { margin-bottom:8px; line-height:1.5; }
+main > ul { padding-left:20px; margin-top:8px; }
+main > ul li { margin-bottom:8px; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -153,6 +155,13 @@ em { color:#555; }
 <h2>What a Crosswalk Actually Has to Prove</h2>
 <p>The clause mapping in this case study was never wrong. MFA for administrative access genuinely satisfies SOC 2 CC6.1, ISO 27001 A.8.5, and PCI DSS 8.4.3 on paper, and a reviewer checking the citations alone would sign off on all three. The failure was one layer down, in the evidence that was supposed to prove the mapping was true in practice, and that is the layer most control-automation write-ups skip past on their way to the clause table.</p>
 <p>Naming the gap between enrollment and challenge before a QSA does it during a live assessment is the point of this document, and the fix is written as a standing rule for the whole crosswalk rather than a one-time patch on one control. A GRC engineering program that shares evidence across frameworks without asking which framework sets the real bar is not saving audit effort. It is multiplying one untested assumption by the number of auditors willing to accept it.</p>
+<h2>Key Takeaways</h2>
+<ul>
+<li>A control crosswalk can be correct on paper and still fail, because the citation mapping and the evidence behind it are two different things to verify.</li>
+<li>Automation that shares one evidence source across multiple frameworks concentrates risk instead of reducing it, since a flawed source now feeds every framework at once.</li>
+<li>A control shared across frameworks with different evidence standards should be evidenced to the strictest framework, with the others inheriting that same bar.</li>
+<li>Naming a gap in your own crosswalk before an assessor finds it is the standing rule this case study is actually about, not a one-time fix on one control.</li>
+</ul>
 </main>
 </body>
 </html>
