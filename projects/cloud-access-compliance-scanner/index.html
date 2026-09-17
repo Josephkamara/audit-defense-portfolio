@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Access Compliance Scanner: Working Code for Four SOC 2 and SOX Access Controls</title>
+<style>
+  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+  header { background:#002147; padding:20px 24px; }
+  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+  main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
+  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+  h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
+  strong { color:#002147; }
+  table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
+  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
+  td { border:1px solid #ccc; padding:8px; vertical-align:top; }
+  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+  em { color:#555; }
+  code, pre { background:#F4F6F8; font-family: 'Courier New', monospace; font-size:0.88em; }
+  code { padding:1px 5px; border-radius:3px; }
+  pre { padding:14px; border-radius:4px; border:1px solid #ddd; overflow-x:auto; line-height:1.5; white-space:pre-wrap; }
+  .split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
+  .split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
+  .split-col.automate { border-top:4px solid #7a8a99; }
+  .split-col.judge { border-top:4px solid #C5A55A; }
+  .split-col h3 { margin-top:0; }
+  .split-col ul { margin:0; padding-left:20px; }
+  .split-col li { margin-bottom:8px; line-height:1.5; }
+  main > ul { padding-left:20px; margin-top:8px; }
+  main > ul li { margin-bottom:8px; line-height:1.5; }
+  .sev-high { color:#a33; font-weight:bold; }
+  .sev-medium { color:#946200; font-weight:bold; }
+</style>
+</head>
+<body>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
+<main>
+<h1>Cloud Access Compliance Scanner: Working Code for Four SOC 2 and SOX Access Controls</h1>
+<p><em>Portfolio note: this project is real, working Python code, not a design document. It runs against a mocked AWS account (via the <code>moto</code> library). No real AWS account, credentials, or cost is involved. The account, users, keys, policies, and buckets described below are fictional, created only to exercise the code.</em></p>
+<hr />
+<h2>Document Header</h2>
+<p><strong>Document ID:</strong> CTRL-AUTO-2026-01<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>Control Owner:</strong> Cloud Security / IT Audit<br/>
+<strong>Control:</strong> Four logical-access and data-protection control tests against an AWS account<br/>
+<strong>Framework:</strong> SOC 2 Trust Services Criteria (CC6 series) and the equivalent SOX IT General Controls<br/>
+<strong>Status:</strong> Working, tested code. Not a design sample.</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>A stale IAM access key, a user with no MFA device, a public S3 bucket, and a wildcard IAM policy are four of the most common findings in a cloud access review, and four of the easiest to test with code instead of a manual walkthrough. This scanner automates all four checks against a real AWS account, using the same <code>boto3</code> SDK that runs against production. Every check in it executes and passes an automated test, run against a mocked account with no real credentials or cost.</p>
+<p>The output is a structured finding, not a pass or fail count: resource, condition, severity, control reference, and detail. That is the same shape as audit workpaper evidence, because that is what it is meant to support.</p>
+<h2>The Four Checks</h2>
+<table>
+<tr><th>Check</th><th>Control Mapping</th><th>What It Catches</th></tr>
+<tr><td>Stale IAM access keys</td><td>SOC 2 CC6.1 / ITGC credential rotation</td><td>Active access keys older than 90 days</td></tr>
+<tr><td>Missing MFA</td><td>SOC 2 CC6.1 / ITGC authentication control</td><td>IAM users with no MFA device registered</td></tr>
+<tr><td>Public S3 buckets</td><td>SOC 2 CC6.6-CC6.7 / data protection</td><td>Bucket ACLs granting access to AllUsers or AuthenticatedUsers</td></tr>
+<tr><td>Wildcard IAM policies</td><td>SOC 2 CC6.1 / least-privilege provisioning</td><td>Customer-managed policies allowing Action:* on Resource:*</td></tr>
+</table>
+<h2>How It Was Built and Verified</h2>
+<p>The scanner is written against the real <code>boto3</code> AWS SDK, so the same code runs against a real AWS account without modification. Three tools made it possible to build and prove this without touching a real cloud account:</p>
+<ul>
+<li><strong>moto</strong> (<code>@mock_aws</code>): mocks the AWS IAM, S3, and STS APIs in memory. No AWS account, credentials, or charges are involved in development or testing.</li>
+<li><strong>freezegun</strong> (<code>freeze_time</code>): used to genuinely create one demo access key with a <code>CreateDate</code> 120 days in the past, so the stale-key check is proven against a real time difference rather than a hardcoded result.</li>
+<li><strong>pytest</strong>: 10 unit tests, each isolating one control check in both its positive case (the condition is present and gets flagged) and its negative case (a compliant resource is confirmed clean). All 10 pass.</li>
+</ul>
+<p>Test coverage: the date-math helper in isolation, a stale key caught at 95 days, a fresh key correctly not flagged, severity escalating to High past 2x the threshold, a user with no MFA flagged, a user with an enabled MFA device correctly not flagged, a public bucket ACL flagged, a private bucket correctly not flagged, a wildcard policy flagged, and a least-privilege policy correctly not flagged.</p>
+<h2>Code Excerpt: The Stale-Key Check</h2>
+<p>The date-math logic is isolated into its own pure function specifically so it can be unit tested without needing a mocked AWS account or a real 90-day-old key:</p>
+<pre>def key_age_days(create_date, now=None) -> int:
+    """Pure helper, isolated so the age-threshold logic can be unit tested
+    without needing a mocked AWS account or a real 90-day-old key."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    return (now - create_date).days
+
+
+def check_stale_access_keys(iam_client, report, max_age_days=90):
+    """SOC 2 CC6.1 / ITGC periodic credential review."""
+    now = datetime.datetime.now(datetime.timezone.utc)
+    users = iam_client.list_users()["Users"]
+    for user in users:
+        username = user["UserName"]
+        keys = iam_client.list_access_keys(UserName=username)["AccessKeyMetadata"]
+        for key in keys:
+            if key["Status"] != "Active":
+                continue
+            age_days = key_age_days(key["CreateDate"], now=now)
+            if age_days > max_age_days:
+                report.add(Finding(
+                    check="Stale access key",
+                    resource=f"{username}/{key['AccessKeyId']}",
+                    condition=f"Active key is {age_days} days old (threshold {max_age_days})",
+                    severity="High" if age_days > max_age_days * 2 else "Medium",
+                    control_reference="SOC 2 CC6.1 / ITGC credential rotation",
+                    detail=f"{age_days}d old, created {key['CreateDate'].date()}",
+                ))</pre>
+<p>The full scanner, the complete 10-test pytest suite, and the demo harness that seeds a mocked account are in this project's <a href="https://github.com/Josephkamara/audit-defense-portfolio/tree/main/projects/cloud-access-compliance-scanner/code">code folder</a>, not just described here.</p>
+<h2>Demo Run: Seeded Account Output</h2>
+<p>The demo harness seeds a mocked account with a mix of compliant and non-compliant resources: one fully compliant user with a fresh key and an active MFA device, one user with a key genuinely created 120 days in the past (via <code>freeze_time</code>, not a faked comparison), one user with a fresh key but no MFA, a wildcard policy alongside a properly scoped one, and a public bucket alongside a private one. Running the actual, unmodified scanner logic against that seeded account produces this real output:</p>
+<pre>Account: 123456789012
+Generated: 2026-09-17T14:37:03+00:00
+Findings: 5 total (4 High, 1 Medium, 0 Low)
+
+Severity | Check                | Resource                                  | Control
+---------|----------------------|--------------------------------------------|----------------------------------------------
+High     | MFA not enabled      | bob.stale-key                               | SOC 2 CC6.1 / ITGC authentication control
+High     | MFA not enabled      | carol.no-mfa                                | SOC 2 CC6.1 / ITGC authentication control
+High     | Public S3 bucket ACL | public-marketing-assets                     | SOC 2 CC6.6/CC6.7 data protection
+High     | Wildcard IAM policy  | LegacyFullAccessPolicy                      | SOC 2 CC6.1 / ITGC least-privilege provisioning
+Medium   | Stale access key     | bob.stale-key/AKIARZPUZDIKA2F7AFL5          | SOC 2 CC6.1 / ITGC credential rotation</pre>
+<p><strong>What the output confirms, and why it matters:</strong> <code>alice.compliant</code> (fresh key, active MFA device), the private bucket <code>internal-audit-workpapers</code>, and the scoped policy <code>ScopedReportsReadPolicy</code> do not appear anywhere in the findings. That is the actual proof the checks discriminate correctly instead of flagging everything indiscriminately: a scanner that flags every resource regardless of its actual state is not a control test, it is noise, and the seeded compliant resources exist specifically to catch that failure mode before an auditor would.</p>
+<h2>What Automation Can Pull, and What the Auditor Still Has to Judge</h2>
+<div class="split">
+<div class="split-col automate">
+<h3>What the scanner absorbs</h3>
+<ul>
+<li>Pulling every IAM user, access key, MFA device, S3 bucket ACL, and customer-managed policy in the account</li>
+<li>Computing exact key age against a defined threshold, consistently, every run</li>
+<li>Flagging a resource that fails a defined rule, with a structured, control-referenced finding</li>
+<li>Running the identical logic against a mocked account for testing and a real account for production, with no code changes</li>
+</ul>
+</div>
+<div class="split-col judge">
+<h3>What still needs the auditor</h3>
+<ul>
+<li>Deciding whether a flagged account is a real finding or a documented exception, such as a service account with a legitimate reason to hold a long-lived key</li>
+<li>Setting the age threshold itself: 90 days is a common default, not a universal one, and the right number depends on the organization's own policy</li>
+<li>Judging whether a flagged public bucket is actually a control failure or an intentionally public asset, such as a marketing site's static assets</li>
+<li>Owning the exception population and the periodic review of the scanner's own rules, not just its output</li>
+</ul>
+</div>
+</div>
+<h2>How to Run It</h2>
+<pre>pip install boto3 moto freezegun pytest
+
+# See the tool work end to end against a seeded mock account
+python3 demo_seed_and_run.py
+
+# Run the full test suite
+pytest -v test_cloud_compliance_scanner.py
+
+# Run against a real AWS account (reads live IAM and S3 data, makes no changes)
+python3 cloud_compliance_scanner.py</pre>
+<p>Running against a real account requires standard AWS credentials configured in the environment and read-only IAM and S3 permissions. The script only calls list and get operations. It makes no changes to any resource.</p>
+<h2>Key Takeaways</h2>
+<ul>
+<li>A cloud access review built from four common findings, stale keys, missing MFA, public buckets, and wildcard policies, can run as code instead of a manual walkthrough, using the same SDK that runs against production.</li>
+<li>Proving a scanner works means showing it correctly leaves compliant resources out of the findings, not just showing it catches the non-compliant ones.</li>
+<li>A mocked AWS account (moto) and genuine time manipulation (freezegun) make it possible to build and prove cloud automation with a real, passing test suite and zero real cloud cost.</li>
+<li>The scanner replaces the pull and the flag. It does not replace the judgment call on whether a flagged resource is a real finding, what threshold is right for this organization, or who owns the exception.</li>
+</ul>
+</main>
+</body>
+</html>

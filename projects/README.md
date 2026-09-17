@@ -1,6 +1,6 @@
 # Projects
 
-Nine case studies. Each one is a realistic scenario, built to show the reasoning behind a decision, not just a completed checklist.
+Eleven case studies. Each one is a realistic scenario, built to show the reasoning behind a decision, not just a completed checklist.
 
 - [SOC 2 Evidence Automation](soc2-access-review-automation/): a quarterly access review redesigned as a continuous control.
 - [Risk Acceptance Memorandum](risk-acceptance-memo/): a TLS encryption gap on a legacy healthcare claims gateway.
@@ -11,5 +11,8 @@ Nine case studies. Each one is a realistic scenario, built to show the reasoning
 - [EU AI Act High-Risk Classification](eu-ai-act-high-risk-classification/): why a workforce monitoring feature can't claim the narrow-task exemption.
 - [GRC Control Automation](grc-control-automation/): why a shared MFA control passes SOC 2 and ISO 27001 but fails PCI DSS.
 - [Agentic AI Risk Assessment](agentic-ai-risk-assessment/): where an autonomous invoice-approval agent needs a human in the loop.
+
+- [Cloud Access Compliance Scanner](cloud-access-compliance-scanner/): working, tested Python code for four SOC 2 and SOX access controls.
+- [Multi-Cloud SOX ITGC Control Mapping](multicloud-sox-itgc-control-mapping/): mapping six SOX ITGC objectives to real AWS and GCP evidence sources.
 
 [Back to the portfolio](../)

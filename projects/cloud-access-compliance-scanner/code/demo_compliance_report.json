@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-09-17T14:37:03+00:00",
+  "account_id": "123456789012",
+  "summary": {
+    "High": 4,
+    "Medium": 1,
+    "Low": 0
+  },
+  "findings": [
+    {
+      "check": "Stale access key",
+      "resource": "bob.stale-key/AKIARZPUZDIKA2F7AFL5",
+      "condition": "Active key is 120 days old (threshold 90)",
+      "severity": "Medium",
+      "control_reference": "SOC 2 CC6.1 / ITGC credential rotation",
+      "detail": "120d old, created 2026-05-20"
+    },
+    {
+      "check": "MFA not enabled",
+      "resource": "bob.stale-key",
+      "condition": "No MFA device registered for an IAM user with console/API access",
+      "severity": "High",
+      "control_reference": "SOC 2 CC6.1 / ITGC authentication control",
+      "detail": "Zero MFA devices attached"
+    },
+    {
+      "check": "MFA not enabled",
+      "resource": "carol.no-mfa",
+      "condition": "No MFA device registered for an IAM user with console/API access",
+      "severity": "High",
+      "control_reference": "SOC 2 CC6.1 / ITGC authentication control",
+      "detail": "Zero MFA devices attached"
+    },
+    {
+      "check": "Public S3 bucket ACL",
+      "resource": "public-marketing-assets",
+      "condition": "Bucket ACL grants READ to AllUsers",
+      "severity": "High",
+      "control_reference": "SOC 2 CC6.6/CC6.7 data protection",
+      "detail": "Grantee URI: http://acs.amazonaws.com/groups/global/AllUsers, permission: READ"
+    },
+    {
+      "check": "Wildcard IAM policy",
+      "resource": "LegacyFullAccessPolicy",
+      "condition": "Policy statement allows Action:* on Resource:*",
+      "severity": "High",
+      "control_reference": "SOC 2 CC6.1 / ITGC least-privilege provisioning",
+      "detail": "Policy ARN arn:aws:iam::123456789012:policy/LegacyFullAccessPolicy"
+    }
+  ]
+}

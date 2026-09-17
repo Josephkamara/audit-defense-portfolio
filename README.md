@@ -16,6 +16,18 @@ This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each o
 
 ## Case Studies
 
+**[Cloud Access Compliance Scanner: Working Code for Four SOC 2 and SOX Access Controls](https://josephkamara.github.io/audit-defense-portfolio/projects/cloud-access-compliance-scanner/)**
+
+A Python scanner that pulls real evidence for four access and data-protection controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Built against the real boto3 SDK and verified with a 10-test pytest suite against a mocked AWS account. This one is working code, not a design sample.
+
+`Cloud Security` `SOC 2` `Automation`
+
+**[Multi-Cloud SOX ITGC Control Mapping: AWS and GCP Evidence Sources for a Shared-Responsibility Environment](https://josephkamara.github.io/audit-defense-portfolio/projects/multicloud-sox-itgc-control-mapping/)**
+
+A company running production across both AWS and GCP tests the same six SOX IT general controls in two environments that expose evidence through completely different native services. This maps each control to its real native evidence source in both clouds, then separates what a script can pull from what a SOX tester still has to judge.
+
+`Cloud Security` `GRC Engineering` `SOX`
+
 **[Agentic AI Risk Assessment: Where an Autonomous Invoice-Approval Agent Needs a Human in the Loop](https://josephkamara.github.io/audit-defense-portfolio/projects/agentic-ai-risk-assessment/)**
 
 A distributor gives an AI agent the authority to read invoices, match them against purchase orders, and pay vendors on its own, below a set dollar threshold. The assessment tests that design against the OWASP Top 10 for Agentic Applications, walks one attack path through MITRE ATLAS, and structures the controls using NIST's AI Risk Management Framework.

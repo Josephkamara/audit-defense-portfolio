@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Cloud SOX ITGC Control Mapping: AWS and GCP Evidence Sources for a Shared-Responsibility Environment</title>
+<style>
+  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
+  header { background:#002147; padding:20px 24px; }
+  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
+  main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
+  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
+  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
+  h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
+  strong { color:#002147; }
+  table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
+  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
+  td { border:1px solid #ccc; padding:8px; vertical-align:top; }
+  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
+  em { color:#555; }
+  code, pre { background:#F4F6F8; font-family: 'Courier New', monospace; font-size:0.88em; }
+  code { padding:1px 5px; border-radius:3px; }
+  pre { padding:14px; border-radius:4px; border:1px solid #ddd; overflow-x:auto; line-height:1.5; white-space:pre-wrap; }
+  .split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
+  .split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
+  .split-col.automate { border-top:4px solid #7a8a99; }
+  .split-col.judge { border-top:4px solid #C5A55A; }
+  .split-col h3 { margin-top:0; }
+  .split-col ul { margin:0; padding-left:20px; }
+  .split-col li { margin-bottom:8px; line-height:1.5; }
+  main > ul { padding-left:20px; margin-top:8px; }
+  main > ul li { margin-bottom:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<header><a href="../../">&larr; Back to Portfolio</a></header>
+<main>
+<h1>Multi-Cloud SOX ITGC Control Mapping: AWS and GCP Evidence Sources for a Shared-Responsibility Environment</h1>
+<p><em>Portfolio note: This design document describes a fictional company. The SOX IT general control objectives and the AWS and GCP service names referenced are real and current as of September 2026. No client or employer information appears anywhere in this document.</em></p>
+<hr />
+<h2>Document Header</h2>
+<p><strong>Document ID:</strong> CTRL-DESIGN-2026-08<br/>
+<strong>Date Prepared:</strong> September 2026<br/>
+<strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
+<strong>Control Owner:</strong> IT Audit Manager, SOX Compliance<br/>
+<strong>Control:</strong> Six IT general control objectives tested across a dual-cloud AWS and GCP production environment<br/>
+<strong>Framework:</strong> SOX Section 404 IT general controls, tested against native AWS and GCP evidence sources<br/>
+<strong>Status:</strong> Design sample, not a deployed audit or automation</p>
+<hr />
+<h2>Executive Summary</h2>
+<p>Meridian Data Systems runs its production workloads split across AWS and GCP: the core transaction platform on AWS, and the analytics and reporting pipeline that feeds the general ledger on GCP. For SOX purposes, the same six IT general control objectives apply to both environments. The problem for whoever tests them is that AWS and GCP do not expose identity, change, and configuration evidence through the same service, the same log, or the same command. A tester who only knows where to look in one provider walks into the other one blind.</p>
+<p>This document maps each control objective to the actual native evidence source in AWS and in GCP, so a tester or an engineer designing an automated check knows where the evidence lives before the walkthrough starts. It closes with the harder half: what a script can mechanically pull versus what a tester still has to decide before that evidence supports a control conclusion.</p>
+<h2>Why the Same Control Needs Two Evidence Trails</h2>
+<p>A control objective such as "only authorized users can access production" reads the same on paper regardless of the infrastructure underneath it. The evidence request list does not. AWS records identity and access events in AWS CloudTrail and exposes access analysis through IAM Access Analyzer and IAM Access Advisor. GCP records the same category of event in Cloud Audit Logs and exposes access analysis through IAM Recommender and Cloud Asset Inventory. Neither provider's tooling reads the other provider's logs. A test plan built against one cloud does not transfer to the other without a separate evidence map, which is what the six tables below provide.</p>
+<h2>Scope: Six Control Objectives</h2>
+<p>The objectives below are not an exhaustive ITGC list. They are the six a SOX IT auditor tests most often in an integrated audit, chosen here because each one maps to a genuinely different AWS and GCP service, which is what makes the multi-cloud comparison worth showing rather than a single generic table repeated six times.</p>
+<ol>
+<li>Logical access provisioning and deprovisioning (joiner, mover, leaver)</li>
+<li>Privileged access review</li>
+<li>Change management and SDLC controls for production changes</li>
+<li>Security configuration and hardening baselines</li>
+<li>Segregation of duties over privileged administrative functions</li>
+<li>Backup and recovery</li>
+</ol>
+
+<h2>1. Logical Access Provisioning and Deprovisioning</h2>
+<p>The auditor tests whether a new hire's access matches their approved role and whether a terminated employee's access is removed within a defined window, typically same day or next business day for a high-risk system.</p>
+<table>
+<tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
+<tr><td>Native evidence source</td><td>AWS IAM Identity Center, provisioned through SCIM from the HR system or identity provider; AWS CloudTrail management events for IAM user, role, and login profile changes</td><td>Cloud Identity, provisioned through SCIM from the same HR system; Cloud Audit Logs Admin Activity log for identity lifecycle and IAM policy events</td></tr>
+<tr><td>How the evidence is pulled</td><td>Export IAM Identity Center assignment status and cross-reference it against CloudTrail events for CreateUser, DeleteLoginProfile, and DetachUserPolicy in the review window</td><td>Export Cloud Identity user status and cross-reference it against Cloud Audit Logs entries for user suspend or delete actions and SetIamPolicy calls in the review window</td></tr>
+<tr><td>What it demonstrates</td><td>A dated, immutable record of exactly when an account was created or disabled, not the account's state today</td><td>The same before-and-after picture, since Cloud Audit Logs entries are also immutable and timestamped</td></tr>
+</table>
+
+<h2>2. Privileged Access Review</h2>
+<p>The auditor tests who currently holds administrative rights in each environment, whether that access is still needed, and whether the review that is supposed to catch excess access actually happened this period. This is the objective worked through end to end in the example below.</p>
+<table>
+<tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
+<tr><td>Native evidence source</td><td>IAM Access Analyzer (external and unused access findings), IAM Access Advisor (service-last-accessed data), the IAM credential report</td><td>IAM Recommender (least-privilege recommendations based on ninety days of usage), Cloud Asset Inventory's IAM policy search, Cloud Audit Logs for privileged role grants</td></tr>
+<tr><td>How the evidence is pulled</td><td>Generate the IAM credential report for account-wide access-key age and MFA status, then run IAM Access Analyzer to flag unused permissions on privileged roles</td><td>Run an IAM Recommender query against each project holding privileged roles, then run a Cloud Asset Inventory search across the organization for every principal holding an owner or editor role</td></tr>
+<tr><td>What it demonstrates</td><td>A dated snapshot of every privileged identity, its credential hygiene, and whether its granted permissions have actually been used</td><td>The same snapshot for GCP, plus Google's own usage-based recommendation for whether a grant is excessive, which gives the tester a documented basis for that judgment</td></tr>
+</table>
+
+<h2>3. Change Management and SDLC Controls for Production Changes</h2>
+<p>The auditor tests whether a production change was authorized, tested, and approved before it was deployed, and whether the record of that approval exists independently of the person who made the change.</p>
+<table>
+<tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
+<tr><td>Native evidence source</td><td>AWS Systems Manager Change Manager (formal change request and approval workflow), AWS CodePipeline manual approval action history, AWS Config resource timeline</td><td>Cloud Deploy release and rollout approval gates, Cloud Build build history, Cloud Audit Logs Admin Activity events for the underlying resource change</td></tr>
+<tr><td>How the evidence is pulled</td><td>Pull the Change Manager request record and the CodePipeline approval history for the release, then confirm against the Config timeline that the resource change occurred only after the approval timestamp</td><td>Pull the Cloud Deploy rollout history for the approval event, then confirm against Cloud Audit Logs that the underlying resource change timestamp follows the approval</td></tr>
+<tr><td>What it demonstrates</td><td>A change occurred only after a documented, timestamped approval, not merely that an approval exists somewhere in a ticketing system</td><td>The same sequencing proof, built entirely from GCP-native logs rather than a ticketing system the tester has to trust separately</td></tr>
+</table>
+
+<h2>4. Security Configuration and Hardening Baselines</h2>
+<p>The auditor tests whether production resources are configured to an approved baseline, such as no public storage buckets and encryption at rest enabled, and whether drift away from that baseline is detected.</p>
+<table>
+<tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
+<tr><td>Native evidence source</td><td>AWS Config conformance pack for the CIS AWS Foundations Benchmark, AWS Config rules such as s3-bucket-public-read-prohibited and encrypted-volumes, AWS Security Hub aggregated findings</td><td>Security Command Center's Security Health Analytics module, which includes built-in detectors mapped to the CIS GCP Foundation Benchmark, plus Organization Policy Service constraints</td></tr>
+<tr><td>How the evidence is pulled</td><td>Pull the conformance pack compliance summary for the review period and the Security Hub finding history for any resource that failed a rule and when it was remediated</td><td>Pull the Security Health Analytics finding history and the active Organization Policy constraints in effect for the same period</td></tr>
+<tr><td>What it demonstrates</td><td>Continuous, rule-based monitoring against a named benchmark, with a timestamp for both the failure and the remediation</td><td>The same continuous monitoring on the GCP side, against the same benchmark family, so the tester is comparing like evidence across both providers</td></tr>
+</table>
+
+<h2>5. Segregation of Duties Over Privileged Administrative Functions</h2>
+<p>The auditor tests that no single identity can both make a sensitive change and approve it, such as modifying an IAM policy and approving that same policy change, or pushing code and approving its own deployment.</p>
+<table>
+<tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
+<tr><td>Native evidence source</td><td>IAM Access Analyzer policy validation, the AWS Config rule iam-policy-no-statements-with-admin-access, CloudTrail records correlating the requester identity against the approver identity on a CodePipeline manual approval</td><td>IAM Deny policies and Organization Policy constraints that block a principal from holding conflicting roles, Policy Simulator to test a proposed grant before it is applied, Cloud Audit Logs distinguishing the committer from the approver on a Cloud Build or Cloud Deploy release</td></tr>
+<tr><td>How the evidence is pulled</td><td>Cross-reference the CodePipeline approval log's requester and approver fields against IAM to confirm they are different identities, then check the Config rule's finding history for any policy granting both capabilities to one role</td><td>Cross-reference the Cloud Deploy release record's committer and approver fields, then check active Organization Policy constraints for any exception allowing a single principal both privileges</td></tr>
+<tr><td>What it demonstrates</td><td>A structural control, enforced by policy rather than by a person remembering not to approve their own change</td><td>The same structural enforcement on GCP, verifiable from Cloud Audit Logs rather than from a self-reported process description</td></tr>
+</table>
+
+<h2>6. Backup and Recovery</h2>
+<p>The auditor tests that production data is backed up on a defined schedule, retained per policy, and that a restore actually works, not just that a backup job reports success.</p>
+<table>
+<tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
+<tr><td>Native evidence source</td><td>AWS Backup centralized backup plans, with AWS Backup Audit Manager reporting compliance against the defined frequency and retention rules, S3 Versioning and Object Lock for immutability</td><td>Google Cloud's Backup and DR Service, with its own policy-based backup plans and compliance reporting, Persistent Disk snapshot schedules, Cloud Storage Object Versioning and Bucket Lock retention policies</td></tr>
+<tr><td>How the evidence is pulled</td><td>Pull the Backup Audit Manager compliance report for the period and the CloudTrail record of a completed restore test</td><td>Pull the Backup and DR Service compliance report for the period and the Cloud Audit Logs record of a completed restore test</td></tr>
+<tr><td>What it demonstrates</td><td>Backups ran on schedule, are retained per policy, and were proven recoverable, not just present</td><td>The same three-part proof on the GCP side, from the provider's own audit-focused backup service rather than a manually maintained backup log</td></tr>
+</table>
+
+<h2>Worked Example: Pulling Privileged Access Review Evidence</h2>
+<p>An auditor sampling privileged access needs two things from each cloud: a current census of who holds administrative rights, and proof that a review of that access actually happened in the period. The commands below are illustrative of what an auditor or an engineer building this control would actually run. They are not a script meant to be executed as written; account IDs, ARNs, and project names are placeholders.</p>
+<pre>
+# AWS: pull the account-wide IAM credential report
+# (per-user MFA status, password age, access key age and last-used date)
+aws iam generate-credential-report
+aws iam get-credential-report --query 'Content' --output text | base64 --decode > iam-credential-report.csv
+
+# AWS: pull the full authorization snapshot: every user, group,
+# role, and the policies attached to each, in one call
+aws iam get-account-authorization-details > iam-authorization-details.json
+
+# AWS: pull IAM Access Analyzer findings for unused or externally reachable access
+aws accessanalyzer list-findings \
+  --analyzer-arn arn:aws:access-analyzer:us-east-1:111122223333:analyzer/meridian-analyzer
+
+# GCP: search every IAM policy binding across the organization for a privileged role
+gcloud asset search-all-iam-policies \
+  --scope=organizations/123456789012 \
+  --query="policy:roles/owner OR policy:roles/editor"
+
+# GCP: pull IAM Recommender's least-privilege recommendations for a project
+gcloud recommender recommendations list \
+  --project=meridian-prod \
+  --location=global \
+  --recommender=google.iam.policy.Recommender
+
+# GCP: query Cloud Audit Logs for every IAM policy change in the review period
+gcloud logging read \
+  'protoPayload.methodName="SetIamPolicy"' \
+  --project=meridian-prod \
+  --freshness=30d
+</pre>
+<p><strong>What each command returns, and why it is sufficient evidence:</strong> the credential report gives a point-in-time list of every IAM user with MFA status and credential age, which is what a test of "privileged accounts enforce MFA and rotate credentials" actually needs. The authorization-details call returns the full census of who holds what, which is the population the tester samples from, not who was granted access at onboarding but who holds it today. IAM Access Analyzer's findings identify access that is unused or reachable from outside the account, which is the specific defect a privileged-access-review control exists to catch. On the GCP side, Cloud Asset Inventory's org-wide policy search is the equivalent census, run once across every project instead of project by project. IAM Recommender's output is Google's own usage-based judgment on whether a grant is excessive, based on ninety days of actual activity, which gives the tester a documented basis for a finding rather than a reading of the policy text alone. The Cloud Audit Logs query returns every IAM policy change logged in the period, which is how the tester confirms a privileged grant was actually reviewed and acted on, not merely that it exists today.</p>
+
+<h2>What Automation Can Pull, and What the Tester Still Has to Judge</h2>
+<div class="split">
+<div class="split-col automate">
+<h3>What automation absorbs</h3>
+<ul>
+<li>Pulling identity, access, and configuration data from both providers on a schedule</li>
+<li>Producing a timestamped export or log excerpt as evidence for each control objective above</li>
+<li>Flagging an account, policy, or configuration that fails a defined rule</li>
+<li>Running AWS's or Google's own recommendation engines to surface candidate excess access</li>
+<li>Keeping an immutable record of who changed what, and when, in each environment</li>
+</ul>
+</div>
+<div class="split-col judge">
+<h3>What still needs the tester</h3>
+<ul>
+<li>Deciding whether a flagged grant is a real finding or a documented exception, such as a break-glass account or a service account with a legitimate reason to hold broad permissions</li>
+<li>Judging whether the sample and the period the pulled evidence covers are actually sufficient to support the control conclusion, not just whether the pull ran</li>
+<li>Deciding whether a compensating control, such as detective monitoring on an account that fails the primary control, closes the gap enough to support a passing opinion</li>
+<li>Weighing materiality: whether the same exception carries the same audit weight in a system that touches financial reporting as it does in one that does not</li>
+<li>Confirming the evidence itself was not altered before the tester received it, since a log export only counts as evidence if its own chain of custody holds up</li>
+</ul>
+</div>
+</div>
+<p>None of the mechanics above change what a SOX opinion actually rests on. The tool and the query change from AWS to GCP; the judgment does not. A script can hand a tester a list of every account that failed a rule. Only the tester can decide which of those failures is a real finding, whether a compensating control closes it, and whether it is material enough to matter, and that decision is the one an auditor is actually there to make.</p>
+
+<h2>Key Takeaways</h2>
+<ul>
+<li>The same SOX control objective needs two separate evidence maps when production runs across two cloud providers, since AWS and GCP expose identity, change, and configuration evidence through entirely different native services.</li>
+<li>A tester who only knows where to look in one provider walks into the other one blind. The evidence map has to exist before the walkthrough starts, not get discovered during it.</li>
+<li>Automation can pull the census, the log excerpt, and the flagged exception in both environments. It cannot decide whether a flagged grant is a real finding, whether a compensating control closes the gap, or whether the exception is material.</li>
+<li>The tool changes from AWS to GCP. The judgment behind a SOX opinion does not.</li>
+</ul>
+</main>
+</body>
+</html>
