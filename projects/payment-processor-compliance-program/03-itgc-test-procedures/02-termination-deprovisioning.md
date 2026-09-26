@@ -27,9 +27,9 @@ To ensure that access to in-scope systems is removed promptly when an individual
 
 ## Population and Sample Size
 
-**For Okta-managed accounts (employees and most contractors):** Full-population analytic. Compare every HRIS termination date to the Okta `user.lifecycle.deactivate` timestamp and the SCIM deprovision events in downstream apps (ServiceNow, GitHub, GRC platform, Splunk). Flag any Okta deactivation later than the termination date or SCIM event later than same business day.
+**For Okta-managed accounts (employees and most contractors):** Full-population analytic. Compare every HRIS and contractor roster termination to the Okta `user.lifecycle.deactivate` timestamp, SCIM deprovision events in downstream apps (ServiceNow, GitHub, GRC platform, Splunk), and IAM Identity Center assignments. Flag any Okta deactivation later than the termination date, SCIM event later than same business day after Okta deactivation, or remaining Identity Center assignments.
 
-**For legacy batch and database accounts:** Sample-based. Sample 25 terminated users who had legacy system access, stratified by month.
+**For legacy batch and database accounts:** Test all terminated users who had legacy access (expected fewer than 5 per year); if more than 25, sample 25.
 
 **Population:** All employee and contractor terminations during the review period (HRIS export and contractor roster with end dates).
 
