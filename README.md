@@ -52,21 +52,21 @@ A company running production across both AWS and GCP tests the same six SOX IT g
 
 `Cloud Security` `SOX`
 
-### [Cloud Access Compliance Scanner](https://josephkamara.github.io/audit-defense-portfolio/projects/cloud-access-compliance-scanner (tested against a mocked Keystone sandbox account)/)
+### [Cloud Access Compliance Scanner](https://josephkamara.github.io/audit-defense-portfolio/projects/cloud-access-compliance-scanner/)
 
 **Working Code**
 
-A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Built against the real boto3 SDK and verified with a 10-test pytest suite against a mocked AWS account.
+A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies, verified with a 10-test pytest suite against a mocked Keystone Civic Payments (fictional) sandbox account. The design states what each control requires, what exact evidence proves it, and why each check would pass or fail a third-party test. The test suite itself runs through pytest in under 2 seconds.
 
 `Cloud Security` `SOC 2` `Automation`
 
 ## SOC 2 and Attestation
 
-### [SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control](https://josephkamara.github.io/audit-defense-portfolio/projects/soc2-access-review-automation (Keystone's quarterly ServiceNow review redesigned as a continuous control)/)
+### [SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control](https://josephkamara.github.io/audit-defense-portfolio/projects/soc2-access-review-automation/)
 
-**Memo**
+**Automation Design**
 
-A manual quarterly access review gets redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.
+Keystone Civic Payments' (fictional) quarterly ServiceNow access review, redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.
 
 `SOC 2` `Automation`
 
