@@ -47,6 +47,7 @@
 <p>FedRAMP 20x launched in March 2025 to fix a bottleneck that had produced fewer than 500 total authorizations across the program's history. Phase 1 authorized 12 of 13 reviewed submissions, a 92.3% success rate once capacity-constrained submissions are excluded. Phase 2 tested the Moderate baseline across thirteen pilot participants. Phase 3, opening in the second half of 2026, formalizes Low and Moderate requirements for wide-scale adoption. Authorization timelines under 20x drop from Rev5's 12 to 24 months to under two months, and initial costs fall by roughly 75 to 90 percent.</p>
 <p>The shift is not a smaller version of the same requirement. Rev5 asked an organization to write that a control works. FedRAMP 20x asks the system to prove it, through continuous telemetry submitted as SUM (implementation summary with pass/fail criteria), MAS (Minimum Assessment Scope documentation), and ORD (criticality ordering) for each KSI.</p>
 <h2>Findings and Remediation Items</h2>
+<div class="table-wrap">
 <table>
 <thead><tr><th>ID</th><th>Weakness</th><th>Basis</th><th>Risk Rating</th><th>Remediation</th><th>Milestone</th></tr></thead>
 <tbody>
@@ -92,6 +93,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h2>Sequencing Rationale</h2>
 <p>POAM-041-1 and POAM-041-2 come first because they share the same September 30, 2026 and January 1, 2027 external dates and because the automated-evidence work directly feeds the OSCAL conversion: telemetry that already exists in machine-readable form is telemetry that does not need to be re-documented by hand. POAM-041-3 and POAM-041-4 are lower-effort, bounded fixes that a small team can close in parallel without competing for the same engineering time. POAM-041-5 depends on Phase 3 finalizing the Moderate KSI specification, so it is scoped now and executed once that specification is stable.</p>
 <h2>Residual Risk Statement</h2>
@@ -99,6 +101,7 @@
 <h2>Recommendation</h2>
 <p>Approve this POA&amp;M and fund the OSCAL tooling evaluation (POAM-041-1) and automated-evidence build-out (POAM-041-2) as the two priority workstreams for Q4 2026, ahead of the January 1, 2027 CR26 mandatory date. Track POAM-041-3 and POAM-041-4 as parallel, lower-effort items. Hold POAM-041-5 for Phase 3 finalization rather than building against a specification that has not stabilized.</p>
 <h2>Decision and Sign-off</h2>
+<div class="table-wrap">
 <table>
 <thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
 <tbody>
@@ -107,6 +110,7 @@
 <tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
 </tbody>
 </table>
+</div>
 <hr />
 <h2>How to Read This POA&amp;M</h2>
 <p>Five weaknesses, five remediation items, and one column that matters more than the other four: Basis. Every row in the findings table traces to a specific RFC number, Notice number, or published date, not a paraphrase of "FedRAMP 20x requires more automation." A reviewer who checks that column against the actual RFC text can tell in minutes whether this plan was built from the source material or assembled from a conference talk about it.</p>

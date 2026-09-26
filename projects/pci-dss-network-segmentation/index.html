@@ -17,7 +17,7 @@
 <p>Keystone Civic Payments (fictional), a multi-tenant payment service provider serving about 50 state agency portals in 12 states. This is the September 2025 segmentation retest: the prior test was 11 months old against a six-month clock under 11.4.6, and one of four claimed boundaries failed. The findings were remediated before the September 2026 readiness assessment.</p>
 
 <h3>Frameworks</h3>
-<p>PCI DSS v4.0.1 Requirements 11.4.3 (segmentation controls), 11.4.4 (defined scope), 11.4.5 (segmentation testing methodology), 11.4.6 (segmentation testing six-month frequency)</p>
+<p>PCI DSS v4.0.1 Requirement 1 (network security controls and CDE scoping); Requirements 11.4.5 (segmentation penetration testing, at least every 12 months), 11.4.6 (service provider segmentation testing, at least every six months), and 11.4.7 (multi-tenant service provider support for customer penetration testing)</p>
 
 <h3>Key Artifacts</h3>
 <p>Segmentation testing scope with four boundaries examined (corporate network, analytics export, shared logging pipeline, bastion administrative access); penetration test design; findings on one non-compliant boundary and how it was remediated.</p>
@@ -96,6 +96,7 @@
 </div>
 <p style="font-size:0.85em;color:#7a8a99;text-align:center;margin-top:-4px;">Figure 1. The four claimed segmentation boundaries around Keystone's CDE. Three hold under testing. The SIEM ingestion path does not, because it can carry raw card data into infrastructure shared with non-CDE systems.</p>
 <h2>Claimed Segmentation Boundaries</h2>
+<div class="table-wrap">
 <table>
 <thead><tr><th>Boundary</th><th>Control in Place</th><th>Claim</th></tr></thead>
 <tbody>
@@ -105,7 +106,9 @@
 <tr><td>Administrative Access to the CDE</td><td>A single bastion host provides SSH access to CDE systems for the payments engineering team</td><td>Controlled and audited</td></tr>
 </tbody>
 </table>
+</div>
 <h2>Where the Claim Holds, and Where It Doesn't</h2>
+<div class="table-wrap">
 <table>
 <thead><tr><th>Boundary</th><th>Does the Segmentation Hold?</th><th>Why</th></tr></thead>
 <tbody>
@@ -115,6 +118,7 @@
 <tr><td>Administrative Access to the CDE</td><td>Conditionally holds</td><td>The claim is only as strong as the bastion host's own hardening. A shared bastion host with standing credentials, no per-session multi-factor prompt, or access from unmanaged laptops is a more direct path into the CDE than the firewall rule the rest of this table is built around.</td></tr>
 </tbody>
 </table>
+</div>
 <h2>What an Auditor Will Push Back On</h2>
 <p>A network diagram and a tested boundary are not the same evidence, and a QSA is trained to ask for the second one specifically.</p>
 <div class="split">
@@ -142,6 +146,7 @@
 <h2>Recommendation</h2>
 <p>Insert a masking step in front of the shared SIEM so that CDE-originated logs are scrubbed of any card data before they reach infrastructure shared with non-CDE systems, or bring the SIEM itself under full CDE-level controls if masking cannot be guaranteed. Formally classify the bastion host as an in-scope CDE system, requiring per-session multi-factor authentication and eliminating standing credentials. Schedule the next full segmentation penetration test within six months of the last one, per 11.4.6, and add a standing requirement that any new microservice or merchant onboarding affecting network topology triggers a boundary review before launch, not at the next scheduled test.</p>
 <h2>Decision and Sign-off</h2>
+<div class="table-wrap">
 <table>
 <thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
 <tbody>
@@ -150,6 +155,7 @@
 <tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
 </tbody>
 </table>
+</div>
 <hr />
 <h2>What a Diagram Alone Cannot Prove</h2>
 <p>The architecture diagram below shows four boundaries the same way Keystone's engineers have always drawn them: a box for the CDE, a box for everything else, and a line between them. That picture is where most segmentation assessments stop, because it is where the confirming evidence is easiest to find. A firewall rule set that matches the diagram gets read as proof the diagram is still true.</p>

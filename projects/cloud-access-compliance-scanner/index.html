@@ -42,6 +42,7 @@
 <p>A stale IAM access key, a user with no MFA device, a public S3 bucket, and a wildcard IAM policy are four of the most common findings in a cloud access review, and four of the easiest to test with code instead of a manual walkthrough. This scanner automates all four checks against a real AWS account, using the same <code>boto3</code> SDK that runs against production. Every check in it executes and passes an automated test, run against a mocked account with no real credentials or cost.</p>
 <p>The output is a structured finding, not a pass or fail count: resource, condition, severity, control reference, and detail. That is the same shape as audit workpaper evidence, because that is what it is meant to support.</p>
 <h2>The Four Checks</h2>
+<div class="table-wrap">
 <table>
 <tr><th>Check</th><th>Control Mapping</th><th>What It Catches</th></tr>
 <tr><td>Stale IAM access keys</td><td>SOC 2 CC6.1 / ITGC credential rotation</td><td>Active access keys older than 90 days</td></tr>
@@ -49,6 +50,7 @@
 <tr><td>Public S3 buckets</td><td>SOC 2 CC6.6-CC6.7 / data protection</td><td>Bucket ACLs granting access to AllUsers or AuthenticatedUsers</td></tr>
 <tr><td>Wildcard IAM policies</td><td>SOC 2 CC6.1 / least-privilege provisioning</td><td>Customer-managed policies allowing Action:* on Resource:*</td></tr>
 </table>
+</div>
 <h2>How It Was Built and Verified</h2>
 <p>The scanner is written against the real <code>boto3</code> AWS SDK, so the same code runs against a real AWS account without modification. Three tools made it possible to build and prove this without touching a real cloud account:</p>
 <ul>
