@@ -9,8 +9,11 @@ body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F
 header { background:#002147; color:#fff; padding:48px 24px; text-align:center; }
 header h1 { margin:0 0 8px; font-family: Arial, sans-serif; font-size:2em; }
 header p { margin:0; color:#C5A55A; font-family: Arial, sans-serif; letter-spacing:0.5px; }
+header nav { margin-top:12px; }
+header nav a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; margin-right:16px; font-size:0.9em; }
+header nav a:hover { color:#fff; }
 main { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
-.intro { font-size:1.05em; line-height:1.6; margin-bottom:40px; }
+.intro { font-size:1.05em; line-height:1.6; margin-bottom:40px; background:#fff; border:1px solid #e0e0e0; border-radius:6px; padding:24px 28px; }
 h2.section { font-family: Arial, sans-serif; color:#002147; border-bottom:2px solid #C5A55A; padding-bottom:6px; margin-top:48px; }
 .project { background:#fff; border:1px solid #e0e0e0; border-radius:6px; padding:24px 28px; margin:20px 0; }
 .project h3 { margin:0 0 10px; font-family: Arial, sans-serif; color:#002147; }
@@ -18,108 +21,142 @@ h2.section { font-family: Arial, sans-serif; color:#002147; border-bottom:2px so
 .project p:last-of-type { margin-top:14px; margin-bottom:0; }
 .project a { color:#002147; font-family: Arial, sans-serif; font-weight:bold; text-decoration:none; border-bottom:2px solid #C5A55A; }
 .project a:hover { color:#C5A55A; }
+.project .what-this-shows { font-style:italic; color:#555; margin-bottom:14px; }
+.project .type-label { display:inline-block; font-family: Arial, sans-serif; font-size:0.7em; color:#fff; background:#7a8a99; border-radius:3px; padding:2px 8px; margin-left:8px; }
 .tag { display:inline-block; font-family: Arial, sans-serif; font-size:0.75em; color:#002147; background:#F4F6F8; border:1px solid #C5A55A; border-radius:12px; padding:3px 12px; margin:0 8px 8px 0; }
+.featured { border-top:4px solid #C5A55A; }
 .placeholder { border-style:dashed; color:#7a8a99; text-align:center; padding:32px 24px; }
 footer { text-align:center; padding:32px 24px; font-family: Arial, sans-serif; font-size:0.85em; color:#7a8a99; }
 footer a { color:#002147; }
+.last-updated { text-align:right; font-size:0.8em; color:#7a8a99; margin-top:40px; }
 </style>
 </head>
 <body>
 <header>
 <h1>Joseph Kamara</h1>
 <p>GRC &amp; IT AUDIT PORTFOLIO - CPA, CISSP, CISA</p>
+<nav>
+<a href="https://www.linkedin.com/in/joseph-kamara" target="_blank">LinkedIn</a>
+<a href="https://josefkamara.com" target="_blank">josefkamara.com</a>
+</nav>
 </header>
 <main>
-<p class="intro">This is a working portfolio of GRC, cybersecurity, and IT audit projects. Each one is a realistic scenario, built to show the reasoning behind a decision, not just a completed checklist. Frameworks are listed where they apply, but the point of each project is the judgment call underneath the framework.</p>
+<div class="intro">
+<p><strong>About:</strong> I have about 15 years of experience in IT audit and information security compliance, with CPA, CISA, and CISSP certifications. I led a five-person IT audit team whose SOX ITGC work a Big 4 external auditor relied on, and led a ten-person SOC and HITRUST attestation team. I have HIPAA and PCI experience.</p>
+<p><strong>What this portfolio demonstrates:</strong> How to scope, test, and document controls under PCI DSS, SOC 2, ISO 27001, NIST frameworks, and AI governance standards. Each project shows the judgment behind a decision, not just a completed checklist.</p>
+<p><strong>Note:</strong> Every scenario is fictional and built to demonstrate reasoning and technical depth. No real employer or client is named.</p>
+</div>
 
-<h2 class="section">Projects</h2>
+<h2 class="section">Start Here</h2>
+
+<div class="project featured">
+<h3>Payment Processor Compliance Program<span class="type-label">Program Design</span></h3>
+<p class="what-this-shows">What this shows: How to scope, map, test, and manage a multi-framework compliance program where one control and one evidence set support PCI DSS, SOC 1, SOC 2, and GovRAMP assessments.</p>
+<p>A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level 1 service provider), SOC 1 Type 2, SOC 2 Type 2, and GovRAMP Moderate. Unified control matrix mapping 76 controls across all frameworks. Seven detailed ITGC test procedures with sample workpapers and one realistic exception with root cause analysis. Gap analysis, remediation tracker, 12-month compliance calendar, and 30/60/90-day plan for a new IT auditor.</p>
+<span class="tag">PCI DSS</span><span class="tag">SOC 2</span><span class="tag">GovRAMP</span><span class="tag">SOX ITGC</span>
+<p><a href="projects/payment-processor-compliance-program/">Read the program design &rarr;</a></p>
+</div>
+
+<div class="project featured">
+<h3>PCI DSS Network Segmentation<span class="type-label">Assessment</span></h3>
+<p class="what-this-shows">What this shows: How to test segmentation controls under QSA scrutiny and name the boundary that fails before an auditor finds it first.</p>
+<p>A payment platform's segmentation attestation was renewed every year without testing the parts that don't show up on the architecture diagram. This report builds the testing scope a QSA will actually run: a shared log pipeline, a jump box, and a batch export job. Three boundaries hold up. The SIEM ingestion path does not, because raw card data can reach infrastructure shared with non-CDE systems.</p>
+<span class="tag">PCI DSS</span><span class="tag">Cybersecurity</span>
+<p><a href="projects/pci-dss-network-segmentation/">Read the segmentation report &rarr;</a></p>
+</div>
+
+<div class="project featured">
+<h3>GRC Control Automation: Why a Shared MFA Control Fails PCI DSS<span class="type-label">Assessment</span></h3>
+<p class="what-this-shows">What this shows: How automated evidence can pass two audits and fail a third when it checks the wrong thing.</p>
+<p>A GRC engineering team built one control crosswalk to satisfy SOC 2, ISO 27001, and PCI DSS at once. The mapping was correct. The automated evidence was not: it checked MFA enrollment, not per-session challenge. A trusted-device feature meant real login sessions into the cardholder data environment ran on a password alone. Two audits missed it. A PCI QSA didn't.</p>
+<span class="tag">PCI DSS</span><span class="tag">SOC 2</span><span class="tag">ISO 27001</span>
+<p><a href="projects/grc-control-automation/">Read the control automation review &rarr;</a></p>
+</div>
+
+<h2 class="section">IT Audit and SOX ITGC</h2>
 
 <div class="project">
-<h3>SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control</h3>
+<h3>Multi-Cloud SOX ITGC Control Mapping<span class="type-label">Test Plan</span></h3>
+<p class="what-this-shows">What this shows: How to map the same SOX ITGC control to native evidence sources in AWS and GCP when the two clouds expose evidence through completely different services.</p>
+<p>A company running production across both AWS and GCP tests the same six SOX IT general controls in two environments. This maps each control to its real native evidence source in both clouds, then separates what a script can pull from what a SOX tester still has to judge.</p>
+<span class="tag">Cloud Security</span><span class="tag">SOX</span>
+<p><a href="projects/multicloud-sox-itgc-control-mapping/">Read the control mapping &rarr;</a></p>
+</div>
+
+<div class="project">
+<h3>Cloud Access Compliance Scanner<span class="type-label">Working Code</span></h3>
+<p class="what-this-shows">What this shows: How to automate evidence collection for four access and data-protection controls with real working code and a test suite.</p>
+<p>A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Built against the real boto3 SDK and verified with a 10-test pytest suite against a mocked AWS account. This one is working code, not a design sample.</p>
+<span class="tag">Cloud Security</span><span class="tag">SOC 2</span><span class="tag">Automation</span>
+<p><a href="projects/cloud-access-compliance-scanner/">Read the write-up and see the code &rarr;</a></p>
+</div>
+
+<h2 class="section">SOC 2 and Attestation</h2>
+
+<div class="project">
+<h3>SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control<span class="type-label">Memo</span></h3>
+<p class="what-this-shows">What this shows: How to redesign a manual quarterly review as a continuous, automated check without replacing the analyst.</p>
 <p>A manual quarterly access review gets redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.</p>
-<span class="tag">SOC 2</span><span class="tag">GRC Engineering</span><span class="tag">Cybersecurity</span>
+<span class="tag">SOC 2</span><span class="tag">Automation</span>
 <p><a href="projects/soc2-access-review-automation/">Read the design document &rarr;</a></p>
 </div>
 
 <div class="project">
-<h3>Risk Acceptance Memorandum: Legacy EDI Gateway TLS Encryption Gap</h3>
+<h3>ISO/IEC 27001:2022 Statement of Applicability<span class="type-label">Assessment</span></h3>
+<p class="what-this-shows">What this shows: How to justify control exclusions from the actual infrastructure up, with reasoning an auditor can test.</p>
+<p>A consultant-built SoA marks all 93 Annex A controls applicable. This document rebuilds it from the actual infrastructure up: which controls apply in full, which apply with the scope narrowed to what the company really operates, and which do not apply at all, with reasoning an auditor can test.</p>
+<span class="tag">ISO 27001</span><span class="tag">Cybersecurity</span>
+<p><a href="projects/iso27001-statement-of-applicability/">Read the Statement of Applicability &rarr;</a></p>
+</div>
+
+<h2 class="section">Risk and Third Parties</h2>
+
+<div class="project">
+<h3>Third-Party Risk Management Under NIST CSF 2.0<span class="type-label">Program Design</span></h3>
+<p class="what-this-shows">What this shows: How to scale vendor assessment depth, contract terms, and monitoring cadence to the risk each vendor actually carries.</p>
+<p>A benefits administrator treats every vendor the same: one questionnaire, filed once, never revisited. This program redesigns vendor risk management under NIST CSF 2.0's supply chain risk category, with assessment depth, contract terms, and monitoring cadence scaled to how much risk each vendor actually carries.</p>
+<span class="tag">NIST CSF</span><span class="tag">Third-Party Risk</span>
+<p><a href="projects/third-party-risk-management/">Read the program design &rarr;</a></p>
+</div>
+
+<div class="project">
+<h3>Risk Acceptance Memorandum: Legacy EDI Gateway TLS Encryption Gap<span class="type-label">Memo</span></h3>
+<p class="what-this-shows">What this shows: How to walk the full risk acceptance decision with a forced expiration date.</p>
 <p>A healthcare claims gateway is stuck on TLS 1.0 while a vendor migration is pending. Walks the full decision: vulnerability, risk, likelihood/impact rating, compensating controls, residual risk, and a recommendation with a forced expiration date.</p>
 <span class="tag">HIPAA</span><span class="tag">SOC 2</span><span class="tag">Risk Acceptance</span>
 <p><a href="projects/risk-acceptance-memo/">Read the memo &rarr;</a></p>
 </div>
 
 <div class="project">
-<h3>FedRAMP 20x Transition: Plan of Action &amp; Milestones for the Machine-Readable Evidence Gap</h3>
+<h3>FedRAMP 20x Transition: Plan of Action &amp; Milestones<span class="type-label">POA&amp;M</span></h3>
+<p class="what-this-shows">What this shows: How to sequence remediation against real published deadlines rather than internal guesses.</p>
 <p>A cloud service provider holding an existing FedRAMP Rev5 Moderate authorization has to close five gaps before FedRAMP 20x's Consolidated Rules take mandatory effect on January 1, 2027. Every finding cites a specific RFC or Notice number, rated by likelihood and impact, and sequenced against real published deadlines rather than internal guesses.</p>
-<span class="tag">Cloud Security</span><span class="tag">GRC Engineering</span><span class="tag">POA&amp;M</span>
+<span class="tag">Cloud Security</span><span class="tag">FedRAMP</span>
 <p><a href="projects/fedramp-20x-poam/">Read the memo &rarr;</a></p>
 </div>
 
-<div class="project">
-<h3>Third-Party Risk Management: Building a Risk-Tiered Vendor Program Under NIST CSF 2.0</h3>
-<p>A benefits administrator treats every vendor the same: one questionnaire, filed once, never revisited. This program redesigns vendor risk management under NIST CSF 2.0's supply chain risk category, with assessment depth, contract terms, and monitoring cadence scaled to how much risk each vendor actually carries.</p>
-<span class="tag">NIST CSF</span><span class="tag">GRC Engineering</span><span class="tag">Third-Party Risk</span>
-<p><a href="projects/third-party-risk-management/">Read the program design &rarr;</a></p>
-</div>
+<h2 class="section">AI Governance</h2>
 
 <div class="project">
-<h3>ISO/IEC 27001:2022 Statement of Applicability: Justifying Control Exclusions for a Remote-First SaaS Company</h3>
-<p>A consultant-built SoA marks all 93 Annex A controls applicable. This document rebuilds it from the actual infrastructure up: which controls apply in full, which apply with the scope narrowed to what the company really operates, and which do not apply at all, with reasoning an auditor can test.</p>
-<span class="tag">ISO 27001</span><span class="tag">GRC Engineering</span><span class="tag">Cybersecurity</span>
-<p><a href="projects/iso27001-statement-of-applicability/">Read the Statement of Applicability &rarr;</a></p>
-</div>
-
-<div class="project">
-<h3>PCI DSS Network Segmentation: Defending the CDE Boundary Under QSA Scrutiny</h3>
-<p>A payment platform has renewed the same segmentation attestation every year without testing the parts that don't show up on the architecture diagram. This report builds the testing scope a QSA will actually run and names the boundary that fails before an auditor finds it first.</p>
-<span class="tag">PCI DSS</span><span class="tag">Cybersecurity</span><span class="tag">GRC Engineering</span>
-<p><a href="projects/pci-dss-network-segmentation/">Read the segmentation report &rarr;</a></p>
-</div>
-
-<div class="project">
-<h3>EU AI Act High-Risk Classification: Why a Workforce Monitoring Feature Can't Claim the Narrow-Task Exemption</h3>
-<p>A talent platform vendor classified its recruitment screening tool high-risk without argument, then waved its employee monitoring feature through as exempt. The exemption claim fails because the feature profiles workers, and profiling closes the exemption regardless of how narrow the task looks. Builds the classification a regulator would actually run.</p>
-<span class="tag">EU AI Act</span><span class="tag">AI Governance</span><span class="tag">GRC Engineering</span>
-<p><a href="projects/eu-ai-act-high-risk-classification/">Read the classification assessment &rarr;</a></p>
-</div>
-
-<div class="project">
-<h3>GRC Control Automation: Why a Shared MFA Control Passes SOC 2 and ISO 27001 but Fails PCI DSS</h3>
-<p>A GRC engineering team built one control crosswalk to satisfy three audits at once. The mapping was correct. The automated evidence was not: it checked MFA enrollment, not per-session challenge, and a trusted-device feature meant real login sessions into the cardholder data environment ran on a password alone. Two audits missed it. A PCI QSA didn't.</p>
-<span class="tag">GRC Engineering</span><span class="tag">SOC 2</span><span class="tag">PCI DSS</span>
-<p><a href="projects/grc-control-automation/">Read the control automation review &rarr;</a></p>
-</div>
-
-<div class="project">
-<h3>Agentic AI Risk Assessment: Where an Autonomous Invoice-Approval Agent Needs a Human in the Loop</h3>
+<h3>Agentic AI Risk Assessment<span class="type-label">Assessment</span></h3>
+<p class="what-this-shows">What this shows: How to assess an autonomous agent that has authority to act on its own, structured using NIST AI RMF and OWASP Top 10 for Agentic Applications.</p>
 <p>A distributor gives an AI agent the authority to read invoices, match them against purchase orders, and pay vendors on its own, below a set dollar threshold. The assessment tests that design against the OWASP Top 10 for Agentic Applications, walks one attack path through MITRE ATLAS, and structures the controls using NIST's AI Risk Management Framework.</p>
-<span class="tag">AI Governance</span><span class="tag">GRC Engineering</span><span class="tag">Agentic AI</span>
+<span class="tag">AI Governance</span><span class="tag">Agentic AI</span>
 <p><a href="projects/agentic-ai-risk-assessment/">Read the risk assessment &rarr;</a></p>
 </div>
 
 <div class="project">
-<h3>Multi-Cloud SOX ITGC Control Mapping: AWS and GCP Evidence Sources for a Shared-Responsibility Environment</h3>
-<p>A company running production across both AWS and GCP tests the same six SOX IT general controls in two environments that expose evidence through completely different native services. This maps each control to its real native evidence source in both clouds, then separates what a script can pull from what a SOX tester still has to judge.</p>
-<span class="tag">Cloud Security</span><span class="tag">GRC Engineering</span><span class="tag">SOX</span>
-<p><a href="projects/multicloud-sox-itgc-control-mapping/">Read the control mapping &rarr;</a></p>
+<h3>EU AI Act High-Risk Classification<span class="type-label">Assessment</span></h3>
+<p class="what-this-shows">What this shows: How to build the classification a regulator would actually run when the narrow-task exemption fails.</p>
+<p>A talent platform vendor classified its recruitment screening tool high-risk without argument, then waved its employee monitoring feature through as exempt. The exemption claim fails because the feature profiles workers, and profiling closes the exemption regardless of how narrow the task looks. Builds the classification a regulator would actually run.</p>
+<span class="tag">EU AI Act</span><span class="tag">AI Governance</span>
+<p><a href="projects/eu-ai-act-high-risk-classification/">Read the classification assessment &rarr;</a></p>
 </div>
 
-<div class="project">
-<h3>Cloud Access Compliance Scanner: Working Code for Four SOC 2 and SOX Access Controls</h3>
-<p>A Python scanner that pulls real evidence for four access and data-protection controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Built against the real boto3 SDK and verified with a 10-test pytest suite against a mocked AWS account. This one is working code, not a design sample.</p>
-<span class="tag">Cloud Security</span><span class="tag">SOC 2</span><span class="tag">Automation</span>
-<p><a href="projects/cloud-access-compliance-scanner/">Read the write-up and see the code &rarr;</a></p>
-</div>
-
-<div class="project placeholder">
-<h3>More original work in progress</h3>
-<p>New case studies are being built from the ground up, real lab environments, original evidence, and the same judgment-first approach as the memos above. Check back soon.</p>
-</div>
-
-<p style="font-family: Arial, sans-serif; color:#7a8a99; font-size:0.9em; margin-top:40px;">More projects are being added on an ongoing basis, covering AI governance and incident response.</p>
+<p class="last-updated">Last updated: September 2026</p>
 </main>
 <footer>
-Joseph Kamara, CPA, CISSP, CISA &nbsp;|&nbsp; <a href="https://josefkamara.com">josefkamara.com</a>
+Joseph Kamara, CPA, CISSP, CISA &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/joseph-kamara" target="_blank">LinkedIn</a> &nbsp;|&nbsp; <a href="https://josefkamara.com">josefkamara.com</a>
 </footer>
 </body>
 </html>

@@ -33,7 +33,16 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <header><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>GRC Control Automation: Why a Shared MFA Control Passes SOC 2 and ISO 27001 but Fails PCI DSS</h1>
-<p>A GRC engineering team built a control crosswalk to stop running the same evidence request three times a year for three different auditors. One control, multi-factor authentication for administrative access, got mapped to SOC 2 CC6.1, ISO 27001 Annex A.8.5, and PCI DSS Requirements 8.4.3 and 8.5.1 at once. The mapping was correct on paper. The evidence behind it was not, because the automated collector checked whether a user had MFA enrolled, not whether MFA was actually challenged on the session being tested. Two audits never noticed. A PCI assessor did. This document builds the crosswalk the way it should have been evidenced the first time.</p>
+<p>A GRC engineering team built a control crosswalk to stop running the same evidence request three times a year for three different auditors. One control, multi-factor authentication for administrative access, got mapped to SOC 2 CC6.1, ISO 27001 Annex A.8.5, and PCI DSS Requirements 8.4.1 and 8.5.1 at once. The mapping was correct on paper. The evidence behind it was not, because the automated collector checked whether a user had MFA enrolled, not whether MFA was actually challenged on the session being tested. Two audits never noticed. A PCI assessor did. This document builds the crosswalk the way it should have been evidenced the first time.</p>
+
+<p><strong>Scenario:</strong> A GRC team maps one MFA control to SOC 2, ISO 27001, and PCI DSS simultaneously. The control design is correct, but automated evidence checks enrollment instead of per-session challenge, failing PCI DSS 8.4.1 when a trusted-device feature bypasses MFA.</p>
+
+<p><strong>Frameworks:</strong> PCI DSS v4.0.1 (8.4.1, 8.5.1), SOC 2 (CC6.1), ISO 27001:2022 (Annex A.8.5)</p>
+
+<p><strong>Key artifacts:</strong> Control crosswalk matrix mapping one control to three frameworks; evidence gap analysis showing enrollment vs. per-session challenge; corrected evidence specification.</p>
+
+<p><strong>Takeaway:</strong> Mapping one control to multiple frameworks is correct only if the evidence proves what each framework requires. Enrollment evidence passed the SOC 2 and ISO audits in this scenario; PCI DSS requires per-session MFA challenge for each access attempt into the CDE.</p>
+
 <p><em>The company below is built for this walkthrough. The SOC 2, ISO 27001, and PCI DSS requirement citations are real and current, verified against each standard's own published text and independent technical summaries of PCI DSS v4.0.1's authentication requirements.</em></p>
 <hr />
 <h2>Control Automation Information</h2>
@@ -41,7 +50,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <strong>Date Prepared:</strong> September 2026<br/>
 <strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
 <strong>Control Owner:</strong> Director of Security Engineering<br/>
-<strong>Frameworks:</strong> SOC 2 Trust Services Criteria CC6.1 (AICPA); ISO/IEC 27001:2022 Annex A.8.5 (Secure Authentication); PCI DSS v4.0.1 Requirements 8.4.3 and 8.5.1<br/>
+<strong>Frameworks:</strong> SOC 2 Trust Services Criteria CC6.1 (AICPA); ISO/IEC 27001:2022 Annex A.8.5 (Secure Authentication); PCI DSS v4.0.1 Requirements 8.4.1 and 8.5.1<br/>
 <strong>Status:</strong> Design sample, not a deployed automation<br/>
 <strong>Review Cycle:</strong> Each time a shared control's underlying evidence source changes, and at every framework's own audit cycle</p>
 <hr />
@@ -49,7 +58,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <p>Meridian Commerce Platform runs a multi-tenant SaaS product that processes card payments for its merchant customers. That single business model puts it in front of three separate audits every year: SOC 2 Type II for enterprise customers, ISO 27001 for customers in regulated markets, and PCI DSS Level 1 because it stores, processes, and transmits cardholder data directly. All three frameworks require multi-factor authentication for administrative access to sensitive systems. Meridian's GRC engineering team built a control crosswalk so that one automated evidence pull, an export from the identity provider showing MFA status for every administrative account, would satisfy all three auditors at once.</p>
 <p>The crosswalk mapping itself was sound. The evidence was not. The identity provider export showed MFA enrollment, a one-time setup status, not MFA challenge, the record of whether a specific login actually required the second factor. Meridian's identity provider had a "remember this device for 30 days" feature enabled by default, which suppresses the MFA prompt after the first successful challenge. SOC 2 and ISO 27001 auditors accepted the enrollment evidence without asking for session-level logs. A PCI DSS Qualified Security Assessor did ask, and found administrative sessions into the cardholder data environment that ran on a password alone for weeks at a time.</p>
 <h2>Why Teams Build One Control to Satisfy Three Frameworks</h2>
-<p>Running three audits a year against three separate control sets multiplies the same evidence request by three, with three different auditors asking for proof of the same underlying practice in three slightly different formats. Control crosswalk mapping exists to stop that. A properly built crosswalk uses a defined method, such as the set-theory relationship mapping the Secure Controls Framework publishes, to state precisely how one internal control satisfies the language of each external requirement, rather than an analyst's guess that two controls sound similar. Done well, this cuts audit fatigue without cutting rigor. Meridian's mapping logic was built this way: MFA for administrative access maps cleanly to SOC 2 CC6.1's access restriction criteria, to ISO 27001 Annex A.8.5's authentication control, and to PCI DSS 8.4.3's administrative access scope. The mapping was never the problem.</p>
+<p>Running three audits a year against three separate control sets multiplies the same evidence request by three, with three different auditors asking for proof of the same underlying practice in three slightly different formats. Control crosswalk mapping exists to stop that. A properly built crosswalk uses a defined method, such as the set-theory relationship mapping the Secure Controls Framework publishes, to state precisely how one internal control satisfies the language of each external requirement, rather than an analyst's guess that two controls sound similar. Done well, this cuts audit fatigue without cutting rigor. Meridian's mapping logic was built this way: MFA for administrative access maps cleanly to SOC 2 CC6.1's access restriction criteria, to ISO 27001 Annex A.8.5's authentication control, and to PCI DSS 8.4.1's administrative access scope. The mapping was never the problem.</p>
 <h2>Where the Evidence Source Broke the Mapping</h2>
 <p>A control mapping is only as good as the evidence used to test it, and Meridian's automation pulled the wrong signal. The identity provider's API returns an "MFA enrolled" flag per user, set once when a user first registers a second factor, and a separate "MFA challenged" flag per login session, set only when that specific session actually prompted for the second factor. Meridian's automated evidence collector queried enrollment status because it was the simpler, cacheable call, and reported it to all three frameworks as "MFA verified."</p>
 <p>The trusted-device feature meant enrollment and challenge diverged constantly in practice. An administrator who passed MFA once on a given laptop would not see another prompt from that laptop for 30 days, during which every login on that device authenticated on the password alone. SOC 2 and ISO 27001 field work, in the samples pulled that cycle, happened to land on enrollment records and did not independently pull session-level challenge logs. PCI DSS 8.5.1 requires that an MFA implementation not grant access unless all required factors succeed, and that any bypass run only through a documented, management-approved exception. Meridian had no such exception on file for the trusted-device window. When the QSA pulled actual authentication logs for administrative sessions into the cardholder data environment, several were single-factor.</p>
@@ -98,7 +107,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 
 <!-- PCI DSS box -->
 <rect x="580" y="328" width="160" height="80" rx="6" fill="#fff" stroke="#C5A55A" stroke-width="2.5" stroke-dasharray="6,3"/>
-<text x="660" y="352" text-anchor="middle" fill="#002147" font-size="11" font-weight="bold">PCI DSS 8.4.3 / 8.5.1</text>
+<text x="660" y="352" text-anchor="middle" fill="#002147" font-size="11" font-weight="bold">PCI DSS 8.4.1 / 8.5.1</text>
 <text x="660" y="370" text-anchor="middle" fill="#a8842e" font-size="10" font-weight="bold">Did NOT hold</text>
 <text x="660" y="384" text-anchor="middle" fill="#2C3E50" font-size="9">QSA pulled session logs,</text>
 <text x="660" y="396" text-anchor="middle" fill="#2C3E50" font-size="9">found password-only access</text>
@@ -111,7 +120,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <tbody>
 <tr><td>SOC 2 CC6.1</td><td>Logical access is restricted through defined authentication mechanisms, tested largely through design and operating effectiveness over a sample period</td><td>Held, because the sample tested did not isolate individual login sessions during the trusted-device window</td></tr>
 <tr><td>ISO 27001 Annex A.8.5</td><td>Secure authentication is implemented in line with an access control policy, with the standard leaving implementation specifics to the organization's own risk assessment</td><td>Held, for the same reason, and because Meridian's own documented policy did not explicitly define session-level MFA as the standard of proof</td></tr>
-<tr><td>PCI DSS 8.4.3 and 8.5.1</td><td>MFA is required for all access to the CDE, and access must not be granted unless all required factors succeed on that session, with any bypass requiring a documented exception</td><td>Did not hold. Actual session logs showed password-only administrative access to the CDE during the trusted-device window, with no documented exception on file</td></tr>
+<tr><td>PCI DSS 8.4.1 and 8.5.1</td><td>MFA is required for all non-console administrative access into the CDE (8.4.1), and access must not be granted unless all required factors succeed on that session, with any bypass requiring a documented, management-approved exception (8.5.1)</td><td>Did not hold. Actual session logs showed password-only administrative access to the CDE during the trusted-device window, with no documented exception on file</td></tr>
 </tbody>
 </table>
 <h2>Why Automation Made This Worse, Not Better</h2>
@@ -122,7 +131,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <div class="split-col automate">
 <h3>What the crosswalk dashboard shows</h3>
 <ul>
-<li>A green "MFA verified" status against SOC 2 CC6.1, ISO 27001 A.8.5, and PCI DSS 8.4.3 for every administrative account</li>
+<li>A green "MFA verified" status against SOC 2 CC6.1, ISO 27001 A.8.5, and PCI DSS 8.4.1 for every administrative account</li>
 <li>An identity provider export confirming every administrator has MFA enrolled</li>
 <li>A control mapping document citing the correct clause in all three frameworks</li>
 <li>No distinction anywhere in the dashboard between enrollment and per-session challenge</li>
@@ -153,7 +162,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 </table>
 <hr />
 <h2>What a Crosswalk Actually Has to Prove</h2>
-<p>The clause mapping in this case study was never wrong. MFA for administrative access genuinely satisfies SOC 2 CC6.1, ISO 27001 A.8.5, and PCI DSS 8.4.3 on paper, and a reviewer checking the citations alone would sign off on all three. The failure was one layer down, in the evidence that was supposed to prove the mapping was true in practice, and that is the layer most control-automation write-ups skip past on their way to the clause table.</p>
+<p>The clause mapping in this case study was never wrong. MFA for administrative access genuinely satisfies SOC 2 CC6.1, ISO 27001 A.8.5, and PCI DSS 8.4.1 on paper, and a reviewer checking the citations alone would sign off on all three. The failure was one layer down, in the evidence that was supposed to prove the mapping was true in practice, and that is the layer most control-automation write-ups skip past on their way to the clause table.</p>
 <p>Naming the gap between enrollment and challenge before a QSA does it during a live assessment is the point of this document, and the fix is written as a standing rule for the whole crosswalk rather than a one-time patch on one control. A GRC engineering program that shares evidence across frameworks without asking which framework sets the real bar is not saving audit effort. It is multiplying one untested assumption by the number of auditors willing to accept it.</p>
 <h2>Key Takeaways</h2>
 <ul>
