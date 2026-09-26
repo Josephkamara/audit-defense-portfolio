@@ -35,9 +35,11 @@
 <strong>Date Prepared:</strong> September 2026<br/>
 <strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
 <strong>Control Owner:</strong> Director of Security Engineering<br/>
-<strong>Frameworks:</strong> SOC 2 Trust Services Criteria CC6.1 (AICPA); ISO/IEC 27001:2022 Annex A.8.5 (Secure Authentication); PCI DSS v4.0.1 Requirements 8.4.1 and 8.5.1<br/>
-<strong>Status:</strong> Design sample, not a deployed automation<br/>
-<strong>Review Cycle:</strong> Each time a shared control's underlying evidence source changes, and at every framework's own audit cycle</p>
+SOC 2 Trust Services Criteria CC6.1 (AICPA); ISO/IEC 27001:2022 Annex A.8.5 (Secure Authentication); PCI DSS v4.0.1 Requirements 8.4.1 and 8.5.1</p>
+
+<p><strong>Status:</strong> Design sample, not a deployed automation</p>
+
+<p><strong>Review Cycle:</strong> Each time a shared control's underlying evidence source changes, and at every framework's own audit cycle</p>
 <hr />
 <h2>Executive Summary</h2>
 <p>Pellworth Commerce (fictional) runs a multi-tenant SaaS product that processes card payments for its merchant customers. That single business model puts it in front of three separate audits every year: SOC 2 Type II for enterprise customers, ISO 27001 for customers in regulated markets, and PCI DSS Level 1 because it stores, processes, and transmits cardholder data directly. All three frameworks require multi-factor authentication for administrative access to sensitive systems. Pellworth's GRC engineering team built a control crosswalk so that one automated evidence pull, an export from the identity provider showing MFA status for every administrative account, would satisfy all three auditors at once.</p>
