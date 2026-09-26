@@ -33,6 +33,8 @@ Download or view the CSV directly in GitHub for the full matrix.
 | Evidence | What evidence demonstrates the control is designed and operating |
 | Test Procedure Ref | Reference to the detailed test procedure (TP-01 through TP-07 in `03-itgc-test-procedures/`, TP-STD for standard inspection-based testing, or TP-AUTO for test-of-one plus ITGC reliance) |
 
+**Nature counts:** Manual 29, Automated 27, IT-dependent manual 20, Hybrid 3 (ACC-02, ACC-07, NET-01).
+
 ### Test Procedure Ref: TP-AUTO (Test of One with ITGC Reliance)
 
 **TP-AUTO** applies to controls that are automated, Terraform-defined, or platform-enforced (such as AWS Config, Security Hub, or Okta policy). The test approach is:
