@@ -8,7 +8,7 @@ This checklist ensures that evidence provided to auditors meets quality standard
 
 ## Checklist
 
-Use this checklist before submitting evidence to the PCI QSA, SOC auditor, GovRAMP assessor, or financial statement auditor.
+Use this checklist before submitting evidence to the PCI QSA, SOC service auditor, or GovRAMP 3PAO.
 
 ### 1. Is the evidence system-generated?
 
@@ -128,7 +128,7 @@ If your systems log in UTC but your policy says "within 1 business day" (which d
 
 ## Avoiding Re-Requests Across PCI, SOC, and GovRAMP
 
-Keystone is audited by three different entities (PCI QSA, SOC auditor, GovRAMP assessor) plus a financial statement auditor for SOC 1. They all ask for overlapping evidence, but they phrase the requests differently.
+Keystone is assessed by three different parties: the PCI QSA, the CPA firm that issues SOC 1 and SOC 2, and the GovRAMP 3PAO. They all ask for overlapping evidence, but they phrase the requests differently.
 
 ### One Control, Many Evidence Requests
 
@@ -137,7 +137,7 @@ Keystone is audited by three different entities (PCI QSA, SOC auditor, GovRAMP a
 - **PCI QSA asks:** "Provide evidence that MFA is enforced for all non-console access into the CDE per 8.4.2, and for all remote access that could reach the CDE per 8.4.3."
 - **SOC auditor asks:** "Provide evidence that multi-factor authentication is required per CC6.1."
 - **GovRAMP assessor asks:** "Provide evidence of IA-2(1), IA-2(2), and IA-2(8) implementation."
-- **SOX auditor asks:** "Provide evidence of strong authentication for access to programs and data affecting financial reporting."
+- **SOC 1 service auditor asks:** "Provide evidence supporting the logical access control objective for the payment database."
 
 **The evidence is the same for all four:**
 
@@ -147,7 +147,7 @@ Keystone is audited by three different entities (PCI QSA, SOC auditor, GovRAMP a
 
 **How to avoid re-requests:**
 
-- Map the control in advance using the unified control matrix. ACC-06 maps to PCI 8.4.2/8.4.3, SOC 2 CC6.1, NIST IA-2 enhancements, and SOX ITGC Access.
+- Map the control in advance using the unified control matrix. ACC-06 maps to PCI 8.4.1 to 8.4.3, SOC 2 CC6.1 and CC6.6, NIST IA-2 enhancements, and the SOC 1 access objective.
 - When the PCI QSA requests evidence for 8.4.2, provide the evidence once and note: "This evidence also satisfies SOC 2 CC6.1, NIST IA-2, and SOX ITGC access controls."
 - Give each auditor a copy of the same evidence file, with the PBC request ID updated to match their request list. Do not re-export the same Okta System Log three times with three different filenames.
 

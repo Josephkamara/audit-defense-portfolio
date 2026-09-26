@@ -44,7 +44,7 @@ Download or view the CSV directly in GitHub for the full matrix.
 | NIST 800-53 | AC-2, AC-6(7) | Review accounts and privileges at organization-defined frequency |
 | SOX ITGC | Access to Programs and Data | Periodic access reviews are performed and inappropriate access is remediated |
 
-**One control (ACC-04) satisfies all four.** Keystone performs privileged and CDE access reviews quarterly and all other access reviews semiannually. That exceeds PCI's six-month minimum, satisfies SOC 2's "periodically," meets NIST's organization-defined frequency (Keystone defined it as quarterly for privileged), and provides SOX ITGC evidence. The same ServiceNow access review campaign export, with the same test procedure, goes to the PCI QSA, the SOC auditor, the GovRAMP assessor, and the financial statement auditor.
+**One control (ACC-04), one evidence set.** Keystone performs privileged and CDE access reviews quarterly and all other access reviews semiannually. That exceeds PCI's six-month minimum, addresses SOC 2 CC6.2/CC6.3, meets NIST's organization-defined frequency (Keystone defined it as quarterly for privileged), and supports the SOC 1 access objective. The same ServiceNow access review campaign export, with the same test procedure, goes to the PCI QSA, the SOC service auditor, and the GovRAMP 3PAO.
 
 ### Example 2: MFA for CDE Access (ACC-06)
 
