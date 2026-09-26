@@ -41,16 +41,20 @@ To ensure that access to in-scope systems is removed promptly when an individual
    - Reconcile to HR's official termination list to confirm completeness.
 
 2. **For Okta-managed accounts (full population):**
-   - Export all HRIS terminations with termination date.
+   - Export all HRIS and contractor roster terminations with termination date.
    - Export all Okta `user.lifecycle.deactivate` events for the period with user identifier and timestamp.
    - Export all SCIM deprovision events from downstream apps (ServiceNow, GitHub, GRC platform, Splunk) for the period.
+   - Export all IAM Identity Center assignments (direct and group-based) for terminated users.
+   - Export contractor ServiceNow offboarding tasks with completion timestamps.
    - Join the exports on user identifier. Flag any row where:
-     - Okta deactivation timestamp is after the HRIS termination date (should be same day)
-     - SCIM deprovision timestamp in any downstream app is more than 1 business day after the Okta deactivation
+     - Okta deactivation timestamp is after the termination date (should be same day)
+     - SCIM deprovision timestamp in any downstream app is later than same business day after Okta deactivation
+     - IAM Identity Center assignments still exist after the termination date
+     - Contractor offboarding task missing or completed late
    - Investigate and document any flagged exceptions.
 
-3. **For legacy batch and database accounts (sample):**
-   - For each sampled termination who had legacy system access, SSH to the server and confirm the account is removed or disabled (`cat /etc/passwd`, `passwd -S username` to check lock status). For database accounts, confirm dropped or revoked (`psql -c "\du"`).
+3. **For legacy batch and database accounts (test all or sample):**
+   - For each terminated user who had legacy system access, SSH to the server and confirm the account is removed or disabled (`cat /etc/passwd`, `passwd -S username` to check lock status). For database accounts, confirm dropped or revoked (`psql -c "\du"`).
    - Confirm removal occurred the same business day as the termination date.
 
 4. **Check for any lingering access:**
@@ -60,17 +64,19 @@ To ensure that access to in-scope systems is removed promptly when an individual
 
 | Attribute | Expected | How to Test |
 |-----------|----------|-------------|
-| Okta deactivation on termination date | Deactivate event date = termination date | Full-population analytic: join HRIS terminations to Okta deactivate events and flag late deactivations |
-| SCIM deprovision within 1 business day | SCIM event within 1 business day of Okta deactivation | Full-population analytic: join Okta deactivations to SCIM deprovision events in downstream apps |
-| Legacy accounts removed same day | Account removed or disabled | Sample: check /etc/passwd, database user list for sampled terminations |
+| Okta deactivation on termination date | Deactivate event date = termination date | Full-population analytic: join HRIS and contractor roster terminations to Okta deactivate events and flag late deactivations |
+| SCIM deprovision same business day | SCIM event same business day after Okta deactivation | Full-population analytic: join Okta deactivations to SCIM deprovision events in downstream apps |
+| IAM Identity Center assignments removed | No assignments remain after termination | Full-population analytic: export Identity Center assignments for terminated users and flag any that exist |
+| Contractor offboarding task completed | Task created, assigned, closed timely | Full-population: check contractor terminations have completed ServiceNow tasks |
+| Legacy accounts removed same day | Account removed or disabled | Test all or sample: check /etc/passwd, database user list for terminated users with legacy access |
 | No lingering access | Account not present in current directory | Sample both Okta and legacy terminated users; search Okta/AWS/GitHub/ServiceNow |
 
 ## Exception Example
 
-**Exception:** One contractor termination (john.tempworker@vendor.example, end date May 15, 2026) had Okta account disabled on May 15 as expected (contractor accounts carry an end date set at provisioning), but the ServiceNow offboarding task was not created until May 22 (7 calendar days late). The offboarding task's completion triggered removal of the user's GitHub collaborator access, which was not removed until May 23.
+**Exception:** One contractor termination (john.tempworker@vendor.example, end date May 29, 2026) had Okta disabled on May 29 as expected, and SCIM removed GitHub on May 29. However, the contractor had two AWS IAM Identity Center permission sets assigned directly (outside Okta), and the ServiceNow offboarding task was not created until June 5, 2026. The Q2 2026 access review (certification date June 10) flagged the two remaining Identity Center assignments. Removal finished June 19, 2026, 9 business days after certification, 4 past the 5-business-day standard.
 
-**Root Cause:** The sponsoring manager was out of the office the week of May 15 and did not submit the offboarding task before leaving. No backup process existed for manager absences.
+**Root Cause:** The sponsoring manager was out of the office the week of May 29 and did not submit the offboarding task before leaving. No backup process existed for manager absences. The direct Identity Center assignments were outside the Okta-to-AWS provisioning flow.
 
-**Mitigating Factors:** The contractor's Okta account was disabled on time, so the contractor could not authenticate to GitHub through SSO. GitHub access without SSO authentication was not possible because Keystone enforces SAML SSO for the organization.
+**Mitigating Factors:** Okta was disabled on time, and SCIM deprovisioned GitHub. The contractor could not sign in to AWS because Keystone requires Okta SSO for console and CLI access. The direct assignments were read-only sandbox roles.
 
-**Remediation:** HR updated the offboarding checklist to require sponsoring managers to submit contractor offboarding tasks at least 3 business days before the end date. Implemented June 1, 2026.
+**Remediation:** HR updated the offboarding checklist to require sponsoring managers to submit contractor offboarding tasks at least 3 business days before the end date. IAM Manager is adding Identity Center assignment reconciliation to the monthly review (ACC-14). Implemented June 2026.

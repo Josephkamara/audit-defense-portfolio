@@ -20,13 +20,13 @@
 <p>PCI DSS v4.0.1 (Requirements 1, 11.4.5, 11.4.6, 11.4.7)</p>
 
 <h3>Key Artifacts</h3>
-<p>Segmentation testing scope with three boundaries examined (log pipeline, jump box, batch export); penetration test design; findings on one non-compliant boundary.</p>
+<p>Segmentation testing scope with three boundaries examined (log pipeline, bastion host, batch export); penetration test design; findings on one non-compliant boundary.</p>
 
 <h3>Takeaway</h3>
 <p>Service providers face a six-month segmentation testing clock (11.4.6), on top of the twelve-month test in 11.4.5 that applies to all entities. Testing only what appears on the architecture diagram misses the connections that actually expand CDE scope.</p>
 </div>
 
-<p>A payment platform's security team built network segmentation two years ago and has renewed the same one-page attestation every year since: "the cardholder data environment is segmented from the corporate network." The attestation was never wrong exactly. It was also never tested against the parts of the environment that don't show up on the architecture diagram: a shared log pipeline, a jump box used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document builds the segmentation testing scope a QSA will actually run, and states plainly which claimed boundaries hold up and which do not.</p>
+<p>A payment platform's security team built network segmentation two years ago and has renewed the same one-page attestation every year since: "the cardholder data environment is segmented from the corporate network." The attestation was never wrong exactly. It was also never tested against the parts of the environment that don't show up on the architecture diagram: a shared log pipeline, a bastion host used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document builds the segmentation testing scope a QSA will actually run, and states plainly which claimed boundaries hold up and which do not.</p>
 
 <p><em>The company below is built for this walkthrough. The PCI DSS v4.0.1 requirement numbers and testing cadences cited are real and current, verified against the published standard and independent technical summaries of it.</em></p>
 <hr />
@@ -112,7 +112,7 @@
 <tr><td>CDE to Corporate Network</td><td>Holds</td><td>Ninety days of firewall change logs show no ad hoc rule additions, and the last segmentation penetration test confirmed no reachable path from the corporate network into the CDE's allow-listed ports.</td></tr>
 <tr><td>CDE to Analytics Environment</td><td>Holds, conditionally</td><td>The boundary depends entirely on tokenization happening before data leaves the CDE. That is a data-handling claim, not a network claim, and it needs its own verification, a review of the export job's actual output, not just confirmation that the network path exists.</td></tr>
 <tr><td>CDE to Shared Logging and Monitoring</td><td>Does not hold as claimed</td><td>Web server access logs can carry card numbers in query strings when a client misconfigures a request. If those raw logs reach a SIEM that also holds non-CDE data, without a masking step in front of it, the SIEM is not outside the CDE. It is inside it, whatever the network diagram says, and every system that reads from that SIEM inherits the same scope.</td></tr>
-<tr><td>Administrative Access to the CDE</td><td>Conditionally holds</td><td>The claim is only as strong as the bastion host's own hardening. A shared jump box with standing credentials, no per-session multi-factor prompt, or access from unmanaged laptops is a more direct path into the CDE than the firewall rule the rest of this table is built around.</td></tr>
+<tr><td>Administrative Access to the CDE</td><td>Conditionally holds</td><td>The claim is only as strong as the bastion host's own hardening. A shared bastion host with standing credentials, no per-session multi-factor prompt, or access from unmanaged laptops is a more direct path into the CDE than the firewall rule the rest of this table is built around.</td></tr>
 </tbody>
 </table>
 <h2>What an Auditor Will Push Back On</h2>
@@ -138,7 +138,7 @@
 </div>
 </div>
 <h2>Residual Risk Statement</h2>
-<p>The SIEM fix closes the clearest scope-expansion risk this assessment found, but two exposures sit outside what a masking step can touch. The bastion host stays a single point through which all administrative access to the CDE flows, and a compromised engineer's laptop or a leaked credential there bypasses the network segmentation entirely, since the traffic it carries is already inside the allow list. Keystone's platform also adds new merchant clients and new microservices on a rolling basis, and each addition is a potential new path into or out of the CDE. This testing scope reflects the environment as it exists in September 2026, not as it will exist after the next feature launch.</p>
+<p>The SIEM fix closes the clearest scope-expansion risk this assessment found, but two exposures sit outside what a masking step can touch. The bastion host stays a single point through which all administrative access to the CDE flows, and a compromised engineer's laptop or a leaked credential there bypasses the network segmentation entirely, since the traffic it carries is already inside the allow list. Keystone's platform also adds new state agency portals and new microservices on a rolling basis, and each addition is a potential new path into or out of the CDE. This testing scope reflects the environment as it exists in September 2026, not as it will exist after the next feature launch.</p>
 <h2>Recommendation</h2>
 <p>Insert a masking step in front of the shared SIEM so that CDE-originated logs are scrubbed of any card data before they reach infrastructure shared with non-CDE systems, or bring the SIEM itself under full CDE-level controls if masking cannot be guaranteed. Formally classify the bastion host as an in-scope CDE system, requiring per-session multi-factor authentication and eliminating standing credentials. Schedule the next full segmentation penetration test within six months of the last one, per 11.4.6, and add a standing requirement that any new microservice or merchant onboarding affecting network topology triggers a boundary review before launch, not at the next scheduled test.</p>
 <h2>Decision and Sign-off</h2>
