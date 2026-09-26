@@ -14,25 +14,25 @@
 
 <div class="summary-block">
 <h3>Scenario</h3>
-<p>A multi-tenant payment platform serving 200 merchants under PCI DSS as a service provider, with an 11-month-old segmentation test and a six-month requirement clock under 11.4.6.</p>
+<p>Keystone Civic Payments (fictional), a multi-tenant payment service provider serving about 50 state agency portals in 12 states. This is the September 2025 segmentation retest: the prior test was 11 months old against a six-month clock under 11.4.6, and one of four claimed boundaries failed. The findings were remediated before the September 2026 readiness assessment.</p>
 
 <h3>Frameworks</h3>
-<p>PCI DSS v4.0.1 (Requirements 1, 11.4.5, 11.4.6, 11.4.7)</p>
+<p>PCI DSS v4.0.1 Requirements 11.4.3 (segmentation controls), 11.4.4 (defined scope), 11.4.5 (segmentation testing methodology), 11.4.6 (segmentation testing six-month frequency)</p>
 
 <h3>Key Artifacts</h3>
-<p>Segmentation testing scope with three boundaries examined (log pipeline, bastion host, batch export); penetration test design; findings on one non-compliant boundary.</p>
+<p>Segmentation testing scope with four boundaries examined (corporate network, analytics export, shared logging pipeline, bastion administrative access); penetration test design; findings on one non-compliant boundary and how it was remediated.</p>
 
 <h3>Takeaway</h3>
 <p>Service providers face a six-month segmentation testing clock (11.4.6), on top of the twelve-month test in 11.4.5 that applies to all entities. Testing only what appears on the architecture diagram misses the connections that actually expand CDE scope.</p>
 </div>
 
-<p>A payment platform's security team built network segmentation two years ago and has renewed the same one-page attestation every year since: "the cardholder data environment is segmented from the corporate network." The attestation was never wrong exactly. It was also never tested against the parts of the environment that don't show up on the architecture diagram: a shared log pipeline, a bastion host used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document builds the segmentation testing scope a QSA will actually run, and states plainly which claimed boundaries hold up and which do not.</p>
+<p>Keystone's security team built network segmentation two years ago and has renewed the same one-page attestation every year since: "the cardholder data environment is segmented from the corporate network." The attestation was never wrong exactly. It was also never tested against the parts of the environment that don't show up on the architecture diagram: a shared log pipeline, a bastion host used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document builds the segmentation testing scope a QSA will actually run, and states plainly which claimed boundaries hold up and which do not.</p>
 
 <p><em>The company below is built for this walkthrough. The PCI DSS v4.0.1 requirement numbers and testing cadences cited are real and current, verified against the published standard and independent technical summaries of it.</em></p>
 <hr />
 <h2>Segmentation Testing Information</h2>
-<p><strong>Report ID:</strong> PCI-SEG-2026-02<br/>
-<strong>Date Prepared:</strong> September 2026<br/>
+<p><strong>Report ID:</strong> PCI-SEG-2025-02<br/>
+<strong>Date Prepared:</strong> September 2025<br/>
 <strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
 <strong>Program Owner:</strong> Director of Payment Security<br/>
 <strong>Framework:</strong> PCI DSS v4.0.1, Requirement 1 (Network Security Controls and CDE Scoping); Requirement 11.4.5 through 11.4.7 (Segmentation Penetration Testing)<br/>
@@ -41,7 +41,7 @@
 <hr />
 <h2>Executive Summary</h2>
 <p>Keystone Civic Payments (fictional, about 250 employees) processes card and ACH payments for about 50 state government agency portals in 12 states on a shared multi-tenant platform. As a multi-tenant service provider, PCI DSS 11.4.7 applies. This is the September 2025 segmentation retest. The 11-month-old test and the failed shared-SIEM boundary documented here were remediated before the September 2026 readiness assessment.</p>
-<p><strong>Date Prepared: September 2025.</strong> This document rebuilds the segmentation testing scope around what actually connects to the cardholder data environment, not what the architecture diagram says connects to it. Four boundaries are examined. Three hold up. One does not, and the reason it does not is the kind of finding that expands a PCI DSS assessment's scope rather than shrinking it. Remediated before the 2026 readiness assessment; see the Keystone Payment Processor Compliance Program system description.</p>
+<p>This document rebuilds the segmentation testing scope around what actually connects to the cardholder data environment, not what the architecture diagram says connects to it. Four boundaries are examined. Three hold up. One does not, and the reason it does not is the kind of finding that expands a PCI DSS assessment's scope rather than shrinking it. Remediated before the 2026 readiness assessment. Remediation: CDE logs moved to a CDE-dedicated Splunk Cloud index with role-based access, the bastion with standing credentials was replaced by AWS Systems Manager Session Manager with SSO and per-session MFA, and the semiannual testing cadence was restored.</p>
 <h2>Why Service Providers Get a Shorter Clock</h2>
 <p>Most companies treat "segmentation testing" as a single annual line item. It is not, and getting the cadence wrong is itself a finding. Requirement 11.4.5 sets a twelve-month testing cycle for an entity using segmentation to reduce the scope of its own PCI DSS assessment. Requirement 11.4.6 sets a six-month cycle specifically for service providers, entities that store, process, or transmit cardholder data on behalf of other organizations. Requirement 11.4.7 adds a further obligation for multi-tenant service providers: supporting a customer's own external penetration test of the shared environment and providing remediation evidence when asked.</p>
 <p>Keystone's platform is multi-tenant by design. Every state agency portal's transactions pass through shared processing infrastructure before settlement. That is precisely the profile Requirement 11.4.6 was written for, and it means the twelve-month clock some of Keystone's own engineers assumed applied is the wrong clock. An assessment built on the wrong testing cadence does not just risk a finding. It risks a QSA treating every other date in the assessment as unverified until proven otherwise.</p>
@@ -55,8 +55,8 @@
 <text x="380" y="203" text-anchor="middle" fill="#C5A55A" font-size="13" font-weight="bold">CARDHOLDER DATA</text>
 <text x="380" y="219" text-anchor="middle" fill="#C5A55A" font-size="13" font-weight="bold">ENVIRONMENT (CDE)</text>
 <text x="380" y="243" text-anchor="middle" fill="#fff" font-size="11">Payment API</text>
-<text x="380" y="261" text-anchor="middle" fill="#fff" font-size="11">Tokenization Service</text>
-<text x="380" y="279" text-anchor="middle" fill="#fff" font-size="11">Settlement Batch Processor</text>
+<text x="380" y="261" text-anchor="middle" fill="#fff" font-size="11">GatewayCo Tokenization Call</text>
+<text x="380" y="279" text-anchor="middle" fill="#fff" font-size="11">Legacy Colo Batch Processor</text>
 
 <!-- Corporate Network (top, holds) -->
 <rect x="270" y="20" width="220" height="70" rx="6" fill="#fff" stroke="#7a8a99" stroke-width="1.5"/>
