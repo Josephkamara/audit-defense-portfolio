@@ -4,7 +4,7 @@
 
 ## Company Overview
 
-Keystone Civic Payments, LLC processes card and ACH payments for approximately 50 state government agency web portals across 12 states. These portals handle license renewals, permit applications, court fines, and various government fees. Keystone operates as a Level 1 PCI DSS service provider, processing over 6 million card transactions annually.
+Keystone Civic Payments, LLC processes card and ACH payments for approximately 50 state government agency web portals across 12 states. These portals handle license renewals, permit applications, court fines, and various government fees. Keystone processes about 6 million card transactions a year, well above the 300,000-transaction threshold for a Level 1 PCI DSS service provider, and validates annually with a ROC by a QSA.
 
 ## Framework Scope Summary
 
@@ -38,7 +38,7 @@ The CDE includes systems that store, process, or transmit cardholder data or tha
 
 ### Colocation Site: Legacy Batch System
 
-**Facility:** SecureData Centers, facility location withheld
+**Facility:** ColoCo (fictional), facility location withheld
 
 - **Legacy batch server** (physical server): Processes ACH files and legacy card batch settlements for two state agencies not yet migrated to the API platform
 - **Database:** Local PostgreSQL instance with column-level encryption
@@ -77,19 +77,19 @@ See `cardholder-data-flow.md` for the Mermaid diagram showing:
 
 Keystone uses the carve-out method for two subservice organizations in its SOC 1 and SOC 2 reports:
 
-### 1. Payment Gateway / Tokenization Provider: SecureGate Payments
+### 1. Payment Gateway / Tokenization Provider: GatewayCo (fictional)
 
 **Services provided:** Card authorization, gateway tokenization (primary tokens used for card-on-file), PCI DSS compliance for gateway infrastructure
 
 **SOC reports obtained:** SOC 1 Type 2 and SOC 2 Type 2, periods ending within three months of Keystone's report date, bridge letters obtained when needed
 
 **Complementary Subservice Organization Controls (CSOCs) Keystone relies on:**
-- SecureGate maintains PCI DSS Level 1 service provider validation (annual ROC and AOC)
-- SecureGate encrypts data in transit (TLS 1.2+) and at rest
-- SecureGate performs vulnerability scanning and penetration testing of gateway infrastructure
-- SecureGate provides transaction logs to Keystone for reconciliation
+- GatewayCo maintains PCI DSS Level 1 service provider validation (annual ROC and AOC)
+- GatewayCo encrypts data in transit (TLS 1.2+) and at rest
+- GatewayCo performs vulnerability scanning and penetration testing of gateway infrastructure
+- GatewayCo provides transaction logs to Keystone for reconciliation
 
-**Keystone's responsibility:** Validate TLS configuration on our API endpoints calling SecureGate, review SecureGate's AOC and SOC reports annually, map CSOCs to Keystone controls. [See VEN-03 in the control matrix.](../02-control-matrix/)
+**Keystone's responsibility:** Validate TLS configuration on our API endpoints calling GatewayCo, review GatewayCo's AOC and SOC reports annually, map CSOCs to Keystone controls. [See VEN-03 in the control matrix.](../02-control-matrix/)
 
 ### 2. Cloud Infrastructure Provider: Amazon Web Services (AWS)
 
@@ -120,7 +120,7 @@ The SOC 2 system description in Keystone's Type 2 report describes:
 - **Trust Services Categories:** Security (all criteria), Availability (subset), Confidentiality (cardholder data and citizen PII)
 - **Period:** 12 months ending on the report date
 - **Boundaries:** Same as the PCI CDE plus the customer-facing agency portal (authentication, user management, transaction reporting), which does not handle raw card data but is in scope for SOC 2 Availability
-- **Carve-out subservice orgs:** SecureGate Payments (gateway) and AWS (infrastructure) as described above
+- **Carve-out subservice orgs:** GatewayCo (fictional) (gateway) and AWS (infrastructure) as described above
 
 ## GovRAMP Moderate Boundary
 
@@ -165,7 +165,7 @@ One control often satisfies all three frameworks. Example: ACC-04 (quarterly pri
 
 ## References
 
-- PCI DSS Requirements and Testing Procedures v4.0.1 (March 2022, requirements mandatory March 31, 2025)
+- PCI DSS Requirements and Testing Procedures v4.0.1 (June 2024; future-dated requirements introduced in v4.0, March 2022, mandatory since March 31, 2025)
 - AICPA Trust Services Criteria (2017 criteria with 2022 points of focus)
 - NIST SP 800-53 Revision 5 (September 2020)
 - NIST SP 800-53B, Control Baselines for Information Systems and Organizations (October 2020)

@@ -42,23 +42,23 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 ## Gap Detail
 
-### GAP-001: Phishing-Resistant MFA Not Fully Enforced for All CDE Access (PCI DSS 8.4.3)
+### GAP-001: Break-Glass Accounts Use TOTP, Not Phishing-Resistant MFA (Keystone MFA Standard)
 
-**Framework:** PCI DSS v4.0.1
+**Framework:** Keystone MFA standard (ACC-06); NIST SP 800-53 Rev 5 IA-2(1) (GovRAMP Moderate). PCI DSS v4.0.1 8.4 and 8.5.1 are met.
 
-**Requirement:** 8.4.3 - MFA is implemented for all access into the CDE (not just non-console access). This requirement became mandatory March 31, 2025 (previously a future-dated requirement).
+**Requirement:** Keystone's MFA standard requires phishing-resistant authenticators (FIDO2) for all privileged access. PCI DSS 8.4.1 to 8.4.3 require MFA but not phishing resistance, so TOTP satisfies PCI DSS.
 
-**Current State:** Keystone enforces phishing-resistant MFA (FIDO2) for all workforce access through Okta, including console access to AWS and remote access. However, AWS console access for break-glass emergency scenarios uses IAM users with MFA (time-based one-time passwords, TOTP), not FIDO2. TOTP is not phishing-resistant per PCI SSC guidance.
+**Current State:** Keystone enforces FIDO2 through Okta for all workforce sign-ins, including non-console access to the CDE and all remote access. Two vaulted emergency IAM users (not assigned to individuals; the documented exception to ACC-05) use time-based one-time passwords (TOTP) instead of hardware keys.
 
-**Gap:** Break-glass IAM user MFA is TOTP, not phishing-resistant.
+**Gap:** Break-glass MFA does not meet Keystone's phishing-resistant standard.
 
-**Likelihood:** Low (1) - Break-glass access is rarely used (2-3 times per year) and is logged and reviewed.
+**Likelihood:** Low (1) - Break-glass access is used 2 to 3 times per year, and every use is alerted, logged, and reviewed.
 
-**Impact:** High (3) - PCI DSS 8.4.3 non-compliance could result in a finding, not just an observation.
+**Impact:** Medium (2) - A deviation from the internal standard on the highest-privilege accounts. Not a PCI DSS gap.
 
-**Risk Score:** 3 (Low risk, but high impact if auditor flags it)
+**Risk Score:** 2 (Low risk)
 
-**Remediation:** Transition break-glass IAM users to use hardware security keys (YubiKey or AWS-supported FIDO2 keys) instead of TOTP. Target completion: November 2026.
+**Remediation:** Move both break-glass IAM users to FIDO2 hardware security keys, stored in the vault with the root credentials. Target completion: November 2026.
 
 **Owner:** Cloud Platform Engineering Manager
 
@@ -78,39 +78,39 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Likelihood:** Medium (2) - The manual review occurs daily, but a missed review or delayed response is possible.
 
-**Impact:** Medium (2) - PCI DSS 10.4.1.1 non-compliance could result in an observation or finding depending on the QSA's interpretation (the requirement allows for a targeted risk analysis to justify manual review for certain components, which Keystone has not documented).
+**Impact:** Medium (2) - The legacy batch server is a CDE component, so its logs fall under 10.4.1 and 10.4.1.1. A targeted risk analysis cannot replace automated review here (the 10.4.2.1 TRA only sets review frequency for other components). Left as is, a QSA would mark 10.4.1.1 Not in Place.
 
 **Risk Score:** 4 (Medium risk)
 
-**Remediation:** Option 1: Create SIEM correlation rules for the legacy batch system logs (similar to the rules used for AWS infrastructure). Option 2: Document a targeted risk analysis (TRA) justifying manual review for the legacy system due to low transaction volume and planned migration to AWS in 2027. Keystone chose Option 2 (TRA). Target completion: October 2026.
+**Remediation:** Build SIEM correlation rules and alerting for the legacy batch system logs, using the same rule set as the AWS CDE components. Manual daily review continues until the rules are validated. Target completion: November 2026.
 
 **Owner:** Security Operations Manager
 
-**Status:** Completed (TRA documented and reviewed, filed under GOV-04)
+**Status:** In progress (log source onboarded to SIEM; correlation rules in testing)
 
 ---
 
-### GAP-003: Payment Page Change Detection Not Running Every 7 Days (PCI DSS 11.6.1 TRA)
+### GAP-003: Payment Page Tamper Alerts Not Routed to the SOC Ticket Queue (PCI DSS 11.6.1, 12.10.5)
 
 **Framework:** PCI DSS v4.0.1
 
-**Requirement:** 11.6.1 - A change- and tamper-detection mechanism is deployed to alert personnel to unauthorized changes to the payment page. If not run at least once every seven days, a targeted risk analysis (TRA) is performed and documented per 12.3.1.
+**Requirement:** 11.6.1 - A change- and tamper-detection mechanism alerts personnel to unauthorized modification of payment page scripts and security-impacting HTTP headers, and runs at least weekly. 12.10.5 - The incident response plan covers monitoring and responding to alerts from security monitoring systems, including the payment page change- and tamper-detection mechanism.
 
-**Current State:** Keystone's payment page change detection service (third-party tool) runs every few hours (approximately every 3 hours), which exceeds the minimum weekly frequency. However, the TRA required by 11.6.1 was not documented when the tool was configured in 2024.
+**Current State:** Keystone's tamper-detection service runs about every 3 hours, well above the weekly minimum. However, its alerts went to a shared email mailbox instead of the SOC ticket queue, and the IR plan did not name the alert source.
 
-**Gap:** No documented TRA for the frequency choice (even though the actual frequency exceeds the minimum). PCI DSS 11.6.1 explicitly requires a TRA if the frequency is not weekly, regardless of whether the chosen frequency is more or less frequent.
+**Gap:** Alerts could sit unread, and the response is not tied to the IR process.
 
-**Likelihood:** Low (1) - The control is operating more frequently than required; the gap is documentation only.
+**Likelihood:** Low (1) - The mailbox is monitored during business hours.
 
-**Impact:** Medium (2) - A QSA will ask for the TRA; not having it documented is a documentation gap, not a control gap.
+**Impact:** Medium (2) - An unanswered skimming alert is exactly the risk 11.6.1 targets.
 
 **Risk Score:** 2 (Low risk)
 
-**Remediation:** Document a TRA for PCI DSS 11.6.1 justifying the every-few-hours frequency. Target completion: October 2026.
+**Remediation:** Route alerts to the SIEM and SOC queue with a high-severity playbook, and add the alert source to the IR plan. Completed September 2026.
 
-**Owner:** Director of GRC
+**Owner:** Security Operations Manager
 
-**Status:** Completed (TRA documented October 2026, filed under GOV-04)
+**Status:** Completed (test alert confirmed in the SOC queue, September 2026)
 
 ---
 
@@ -186,23 +186,23 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 ---
 
-### GAP-007: GovRAMP POA&M Not Updated Within 30 Days for One Finding
+### GAP-007: July Monthly Scan Submission Missed Inventory Components (GovRAMP ConMon)
 
-**Framework:** GovRAMP Moderate
+**Framework:** GovRAMP Moderate (Continuous Monitoring Guide)
 
-**Requirement:** Continuous Monitoring - POA&M must be updated within 30 days of a new finding or a change in status.
+**Requirement:** Monthly continuous monitoring submissions must include scans that cover all inventory components, and the POA&M must account for every open and past-due vulnerability.
 
-**Current State:** In July 2026, an internal vulnerability scan identified a high-severity finding (CVE-2026-12345, Apache Tomcat vulnerability) on the payment API tier. The finding was remediated within 15 days (patched July 20, 2026) and confirmed by rescan July 22. However, the POA&M was not updated to reflect the new finding and closure until the August monthly submission (August 5, 2026), which is 36 days after the initial finding.
+**Current State:** The July 2026 monthly package left out scans for three EC2 instances in the DR account that had been added to the inventory workbook in June. The GovRAMP PMO review flagged that scan coverage did not reconcile to the inventory.
 
-**Gap:** POA&M was updated 6 days late (36 days instead of 30 days).
+**Gap:** Scan scope was not reconciled to the inventory before submission.
 
-**Likelihood:** Low (1) - The delay was isolated; the finding was remediated promptly, and the late POA&M update was due to the monthly submission cycle, not a control failure.
+**Likelihood:** Low (1) - One month, three components.
 
-**Impact:** Low (1) - GovRAMP PMO may note the late update, but the finding was remediated on time, so the impact on authorization is minimal.
+**Impact:** Medium (2) - Incomplete scan coverage weakens the ConMon package and can trigger a detailed finding review.
 
-**Risk Score:** 1 (Low risk)
+**Risk Score:** 2 (Low risk)
 
-**Remediation:** Update the GovRAMP submission process to allow mid-month POA&M updates for high-severity findings. Target completion: Completed (process updated August 2026).
+**Remediation:** Added an inventory-to-scan reconciliation step to the monthly ConMon checklist (GOV-08). The August package included all components. Completed August 2026.
 
 **Owner:** Director of GRC
 
@@ -288,7 +288,7 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Requirement:** CC9.2 (SOC 2), 12.8.4 (PCI DSS) - The entity obtains and reviews SOC reports for subservice organizations annually and maps complementary user entity controls (CUECs) to entity controls.
 
-**Current State:** Keystone obtains SOC reports for its two subservice organizations (SecureGate Payments and AWS) annually. However, the SOC report review checklist (documented in VEN-03) was not completed for the AWS SOC 1 report review in Q1 2026. The Vendor Risk Manager reviewed the report but did not document the review using the checklist.
+**Current State:** Keystone obtains SOC reports for its two subservice organizations (GatewayCo (fictional) and AWS) annually. However, the SOC report review checklist (documented in VEN-03) was not completed for the AWS SOC 1 report review in Q1 2026. The Vendor Risk Manager reviewed the report but did not document the review using the checklist.
 
 **Gap:** SOC report review checklist not used consistently; one review (AWS Q1 2026) was completed without the checklist.
 
@@ -364,7 +364,7 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Gap:** Legacy batch system accounts not included in quarterly access review process.
 
-**Likelihood:** Medium (2) - The legacy system has only 4-5 user accounts, but they are in CDE scope and should be reviewed quarterly per PCI DSS 7.2.4 (CDE access reviewed more frequently than semiannually).
+**Likelihood:** Medium (2) - The legacy system has only 4 to 5 user accounts, but they are in the CDE. The informal annual review does not meet the PCI DSS 7.2.4 minimum of every six months, and Keystone policy requires quarterly review of privileged and CDE access.
 
 **Impact:** High (3) - PCI DSS 7.2.4 non-compliance could result in a finding.
 

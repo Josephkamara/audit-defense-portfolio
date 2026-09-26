@@ -26,7 +26,7 @@ graph TB
     
     subgraph "CDE: Keystone Systems"
         C[Hosted Payment Page<br/>CloudFront + S3<br/>SAQ A-EP]
-        D[Payment Gateway<br/>SecureGate Payments<br/>Subservice Org]
+        D[Payment Gateway<br/>GatewayCo (fictional)<br/>Subservice Org]
         E[Payment API<br/>ECS Fargate]
         F[Tokenization Service<br/>ECS Fargate]
         G[Payment Database<br/>RDS PostgreSQL<br/>Encrypted PAN]
@@ -63,7 +63,7 @@ graph TB
 
 - The hosted payment page is CDE because it captures PAN, even though it immediately posts to the gateway. Keystone is responsible for PCI DSS 6.4.3 (script inventory and justification) and 11.6.1 (change and tamper detection). [See CHG-07 and CHG-08 in the control matrix.](../02-control-matrix/)
 - The agency's web server never receives PAN, so it remains out of Keystone's CDE scope. The agency operates under SAQ A-EP or its own validation as a merchant.
-- The gateway (SecureGate) is a subservice organization. Keystone relies on SecureGate's PCI DSS validation and reviews its AOC annually.
+- The gateway (GatewayCo) is a subservice organization. Keystone relies on GatewayCo's PCI DSS validation and reviews its AOC annually.
 - Keystone's tokenization service writes encrypted PAN to the database for legacy reporting requirements. New transactions after Q1 2025 store tokens only.
 
 ## Flow 2: Settlement and Reconciliation

@@ -29,7 +29,7 @@ Access reviews are a detective control. They do not prevent inappropriate access
 | PCI DSS v4.0.1 | 7.2.4 | "All user accounts and related access privileges, including third-party/vendor accounts, are reviewed as follows: At least once every six months. Privileged user accounts are reviewed at least once every three months. Anomalies are addressed." |
 | SOC 2 | CC6.2, CC6.3 | "Logical access is reviewed periodically. The entity authorizes, modifies, or removes access based on changes in job responsibilities, terminations, or changes in authorizations." |
 | NIST SP 800-53 Rev 5 | AC-2, AC-6(7) | "Review accounts for compliance with account management requirements [Assignment: organization-defined frequency]; and if accounts are not in compliance, take [Assignment: organization-defined actions]. Review roles and privileges [Assignment: organization-defined frequency] to validate the need for such roles and privileges; and reassign or remove roles and privileges, if necessary." |
-| SOX ITGC | Access to Programs and Data | Periodic access reviews are performed and documented; inappropriate access is remediated in a timely manner. |
+| SOC 1 / ITGC | Access to Programs and Data | Periodic access reviews are performed and documented; inappropriate access is remediated in a timely manner. |
 
 **Keystone's defined frequency:** Privileged and CDE access quarterly; all other access semiannually.
 
@@ -162,7 +162,7 @@ For each exception:
 
 1. Document the specific deviation (what was expected vs. what was found)
 2. Perform inquiry with the control owner to determine root cause
-3. Check for compensating controls (example: a late removal for a privileged account, but the account was disabled on the termination date, so the delay in full removal had no security impact)
+3. Check for mitigating factors (example: a late removal for a privileged account, but the identity provider account was disabled on the termination date and logs show no activity). In PCI DSS work, do not call this a "compensating control"; that term has a formal meaning in the standard.
 4. Determine whether the exception is isolated or systemic (is it one account or a pattern?)
 5. Report the exception to the audit lead and recommend remediation
 
@@ -178,15 +178,15 @@ For each exception:
 | Removal effective | Access was actually removed in the source system | For sampled flagged accounts, check current access in Okta/AWS/etc.; confirm account no longer has access |
 | Management sign-off | Director of IT Operations signed off on campaign summary | Inspect campaign summary report; look for signature or email approval |
 
-## Sample Workpaper: Q3 2026 Privileged Access Review
+## Sample Workpaper: Q2 2026 Privileged Access Review
 
-**Review Period:** Q3 2026 (July 1, 2026 - September 30, 2026)
+**Review Period:** Q2 2026 (April 1, 2026 to June 30, 2026)
 
-**Review Campaign ID:** SN-ACCESSREV-2026-Q3-PRIV
+**Review Campaign ID:** SN-ACCESSREV-2026-Q2-PRIV
 
-**Review Start Date:** October 1, 2026
+**Review Start Date:** July 1, 2026
 
-**Review Completion Date:** October 8, 2026
+**Review Completion Date:** July 9, 2026
 
 **Population Source:** AWS IAM Identity Center permission sets for production accounts; Okta super admin group; ServiceNow admin role; GitHub org admin; legacy batch system root/sudo
 
@@ -194,66 +194,88 @@ For each exception:
 
 **Reviewers:** Cloud Platform Engineering Manager (AWS), IAM Manager (Okta), IT Operations Manager (ServiceNow, legacy), AppSec Lead (GitHub)
 
-**Management Sign-off:** Director of IT Operations, signed October 10, 2026
+**Management Sign-off:** Director of IT Operations, signed July 10, 2026
 
 ### Sample Selection
 
-25 accounts requested per test procedure; population is only 16 privileged accounts; testing all 16 (100% sample).
+The test procedure calls for 25 accounts, but the population has only 16 privileged accounts, so all 16 were tested (100% sample).
 
 | # | Account Username | System | Reviewer | Decision | Certified Date | Removal Ticket | Result |
 |---|------------------|--------|----------|----------|----------------|----------------|--------|
-| 1 | alice.admin@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-10-02 | N/A | Pass |
-| 2 | bob.platform@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-10-02 | N/A | Pass |
-| 3 | charlie.db@keystone.example | RDS DBA | Cloud Eng Mgr | Approved | 2026-10-03 | N/A | Pass |
-| 4 | david.iam@keystone.example | Okta Super Admin | IAM Manager | Approved | 2026-10-03 | N/A | Pass |
-| 5 | eve.snow@keystone.example | ServiceNow Admin | IT Ops Mgr | Approved | 2026-10-04 | N/A | Pass |
-| 6 | frank.gh@keystone.example | GitHub Org Admin | AppSec Lead | Approved | 2026-10-04 | N/A | Pass |
-| 7 | grace.ops@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-10-05 | N/A | Pass |
-| 8 | henry.contractor@secureconsult.example | AWS Admin | Cloud Eng Mgr | Remove | 2026-10-05 | CHG-45678 | **Exception (see below)** |
-| 9 | iris.batch@keystone.example | Legacy sudo | IT Ops Mgr | Approved | 2026-10-06 | N/A | Pass |
-| 10 | jack.security@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-10-06 | N/A | Pass |
-| 11 | karen.cloud@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-10-07 | N/A | Pass |
-| 12 | larry.incident@keystone.example | ServiceNow Admin | IT Ops Mgr | Approved | 2026-10-07 | N/A | Pass |
-| 13 | monica.db@keystone.example | RDS DBA | Cloud Eng Mgr | Approved | 2026-10-07 | N/A | Pass |
-| 14 | nathan.deploy@keystone.example | GitHub Org Admin | AppSec Lead | Approved | 2026-10-08 | N/A | Pass |
-| 15 | olivia.access@keystone.example | Okta Super Admin | IAM Manager | Approved | 2026-10-08 | N/A | Pass |
-| 16 | paul.batch@keystone.example | Legacy root | IT Ops Mgr | Approved | 2026-10-08 | N/A | Pass |
+| 1 | alice.admin@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-07-01 | N/A | Pass |
+| 2 | bob.platform@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-07-01 | N/A | Pass |
+| 3 | charlie.db@keystone.example | RDS DBA | Cloud Eng Mgr | Approved | 2026-07-02 | N/A | Pass |
+| 4 | david.iam@keystone.example | Okta Super Admin | IAM Manager | Approved | 2026-07-02 | N/A | Pass |
+| 5 | eve.snow@keystone.example | ServiceNow Admin | IT Ops Mgr | Approved | 2026-07-02 | N/A | Pass |
+| 6 | frank.gh@keystone.example | GitHub Org Admin | AppSec Lead | Approved | 2026-07-02 | N/A | Pass |
+| 7 | grace.ops@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-07-06 | N/A | Pass |
+| 8 | henry.contractor@contractorco.example | AWS Admin | Cloud Eng Mgr | Remove | 2026-07-06 | RITM-45678 | **Exception (see below)** |
+| 9 | iris.batch@keystone.example | Legacy sudo | IT Ops Mgr | Approved | 2026-07-07 | N/A | Pass |
+| 10 | jack.security@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-07-07 | N/A | Pass |
+| 11 | karen.cloud@keystone.example | AWS Admin | Cloud Eng Mgr | Approved | 2026-07-08 | N/A | Pass |
+| 12 | larry.incident@keystone.example | ServiceNow Admin | IT Ops Mgr | Approved | 2026-07-08 | N/A | Pass |
+| 13 | monica.db@keystone.example | RDS DBA | Cloud Eng Mgr | Approved | 2026-07-08 | N/A | Pass |
+| 14 | nathan.deploy@keystone.example | GitHub Org Admin | AppSec Lead | Approved | 2026-07-09 | N/A | Pass |
+| 15 | olivia.access@keystone.example | Okta Super Admin | IAM Manager | Approved | 2026-07-09 | N/A | Pass |
+| 16 | paul.batch@keystone.example | Legacy root | IT Ops Mgr | Approved | 2026-07-09 | N/A | Pass |
 
-**Summary:** 15 of 16 accounts tested passed. 1 exception (account #8, contractor access not removed timely).
+**Summary:** 15 of 16 accounts passed all attributes. One exception: account #8, where removal was not completed within the 5-business-day standard.
 
 ### Exception Detail: Account #8
 
-**Account:** henry.contractor@secureconsult.example
+**Account:** henry.contractor@contractorco.example (fictional contractor)
 
 **System:** AWS IAM Identity Center, production accounts
 
-**Issue:** Contractor engagement ended August 31, 2026 per contract. Access was flagged for removal during the Q3 privileged access review on October 5, 2026. Removal ticket CHG-45678 was created October 5, opened to the IAM team. Ticket was completed October 18, 2026 (9 business days late per 5-business-day SLA). Access was removed October 18, confirmed by checking AWS IAM Identity Center assignments (no active sessions, permission sets unassigned).
+**Facts:**
+- The contractor's engagement ended Friday, May 29, 2026.
+- His Okta account was disabled that day by the end date set on contractor accounts at provisioning (ACC-02).
+- During a 2025 incident, two AWS permission set assignments had been made directly in IAM Identity Center instead of through an Okta group. Disabling the Okta account did not remove them.
+- The Q2 review flagged them on Monday, July 6, 2026. Removal request RITM-45678 was opened the same day, due July 13.
+- The request was assigned to an IAM engineer who was on PTO, and nothing escalated it. The IAM Manager found it while reviewing overdue requests on July 16.
+- The assignments were removed Friday, July 17, 2026.
 
-**Deviation:** Removal was 9 business days late (14 calendar days from review date to removal completion).
+**Deviation:** Removal was completed 9 business days (11 calendar days) after the review flagged it. That is 4 business days past Keystone's 5-business-day standard.
 
-**Root Cause (inquiry with IAM Manager):** The contractor's Okta account was disabled on the termination date (August 31) per ACC-02, so he could not authenticate. However, the IAM team did not receive the termination notification from the sponsoring manager until the access review flagged it in October. The delay in creating the removal ticket and completing it was due to the ticket being assigned to a team member who was on PTO, and no escalation occurred until the IAM Manager manually reviewed overdue tickets on October 17.
+**Root Cause (inquiry with IAM Manager):**
+1. The offboarding workflow does not cover direct permission set assignments made outside Okta groups.
+2. Removal requests do not escalate automatically when the assignee is unavailable.
 
-**Compensating Control Assessment:** The contractor's Okta account was disabled on the termination date, so even though his AWS permission set assignments were not removed until October 18, he could not authenticate through Okta SSO to reach AWS. No AWS access occurred between August 31 and October 18 (confirmed by checking CloudTrail logs for the user's identity; zero events). The late removal had no security impact because the authentication layer (Okta) was already disabled.
+**Mitigating Factors (did the delay matter?):**
+- IAM Identity Center authenticates only through Okta SSO, and the Okta account was disabled on May 29.
+- The IAM credential report shows no IAM user or access keys for this person.
+- CloudTrail shows zero events for the identity between May 29 and July 17.
 
-**Impact on Control Effectiveness:** The control operated as designed for 15 of 16 accounts. The one exception was an isolated operational failure (assignee on PTO, no escalation), not a systemic control design failure. The compensating control (Okta deactivation at termination) prevented unauthorized access.
+No access occurred, and the issue is limited to one account.
 
-**Auditor's Determination:** Exception is noted as an isolated deviation, not a control deficiency. Recommend management implement an escalation rule in ServiceNow for overdue removal tickets (auto-assign to IAM Manager if open > 3 business days).
+**Impact on Control Effectiveness:** The review worked as designed. It found the leftover access, and management acknowledged the results. The deviation is that the removal finished late. The direct-assignment gap is referred to TP-02 (termination and deprovisioning) for evaluation under ACC-02.
 
-**Remediation (documented in ticket CHG-45678):** IAM Manager added a ServiceNow business rule on November 1, 2026 to auto-escalate access removal tickets open longer than 3 business days. Tested by creating a test ticket and confirming auto-assignment after 3 days.
+**Auditor's Determination:** One isolated deviation with no unauthorized access. The control operated with one exception. Recommendations: auto-escalate overdue removal requests, and check for direct assignments at offboarding.
+
+**Remediation:**
+- On August 3, 2026, the IAM Manager added a ServiceNow rule that escalates removal requests open more than 3 business days, and tested it with a sample request.
+- The offboarding workflow now runs a report of the departing user's direct IAM Identity Center assignments.
 
 **How This Would Be Reported:**
 
-- **PCI ROC:** Noted as an observation (not a compensatory control deficiency) in the testing details for Requirement 7.2.4. QSA confirms remediation was implemented.
-- **SOC 2 Type 2:** Noted in the testing of CC6.2/CC6.3 as "one instance of untimely removal, compensating control operated effectively, management implemented corrective action." Does not rise to a reportable exception because the underlying authentication control prevented access.
-- **SOX ITGC:** Noted in the management letter as a process improvement opportunity. No impact on the financial statement audit opinion because the access was never used and the delay was isolated.
-- **GovRAMP:** Reported on the POA&M as a finding, closed same month after remediation implemented.
+- **Internal testing:** Reported to the audit lead and the control owner as one deviation, with its root cause, mitigating factors, and remediation.
+- **SOC 2 Type 2 (and SOC 1, where this control supports an access control objective):**
+  - The service auditor describes the deviation in the tests of controls and results. For example: "For 1 of 16 accounts flagged for removal, access was removed 9 business days after the review, exceeding the 5-business-day requirement."
+  - The auditor then decides whether the control still achieved the criterion or objective. With the mitigating evidence above, an unmodified opinion is likely.
+  - Management can add a response in the report section the auditor does not give an opinion on.
+- **PCI DSS ROC:**
+  - A ROC has no "observation" finding. The QSA concludes whether each requirement is In Place or Not in Place.
+  - The QSA would look at 8.2.5 (access for terminated users is immediately revoked) and 7.2.4 (review performed at least every six months, inappropriate access addressed, management acknowledgment).
+  - Okta was disabled on the termination date and was the only way to authenticate, and the review caught and removed the leftover assignments. So In Place is supportable if the QSA agrees no other access path existed.
+  - The 5-day clock is Keystone policy, not a PCI DSS requirement.
+- **GovRAMP:** If the 3PAO identified this during the annual assessment, it would go on the POA&M as an AC-2 / AC-6(7) weakness until the remediation evidence is accepted.
 
 ## Test Conclusion
 
-Based on the test procedures performed, the control is designed and operating effectively, with one isolated exception remediated within the same quarter. The control provides reasonable assurance that user access is reviewed periodically and inappropriate access is removed in a timely manner.
+Based on the procedures performed, the control is designed appropriately and operated effectively during the period tested, with one isolated deviation that was remediated in August 2026.
 
 **Tested by:** [Auditor name]
 
 **Tested on:** [Date]
 
-**Result:** No exceptions (or "1 exception, remediated, see workpaper")
+**Result:** 1 exception, remediated (see workpaper)

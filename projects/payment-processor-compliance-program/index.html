@@ -41,7 +41,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 <p>Unified control matrix (76 controls mapped across all frameworks), system scoping and data flow diagrams, 7 detailed ITGC test procedures with sample workpapers and one realistic exception, gap analysis with 15 identified gaps and remediation tracker, vendor and penetration test oversight checklists, 12-month compliance calendar with KPIs, 30/60/90-day plan for a new IT auditor</p>
 
 <h3>Takeaway</h3>
-<p>One control, tested once, can satisfy PCI DSS, SOC 2, NIST, and SOX simultaneously if the mapping is documented and the evidence is managed correctly. This program shows how to scope a multi-framework environment, build a unified control matrix, test controls with audit-grade rigor, track gaps, and run continuous compliance without duplicating work across audits.</p>
+<p>One well-designed control, with one owner and one evidence set, can support PCI DSS, SOC 1, SOC 2, and GovRAMP assessments at the same time. Each assessor still tests it independently. This program shows how to scope a multi-framework environment, build a unified control matrix, test controls with audit-grade rigor, track gaps, and run continuous compliance without duplicating work across audits.</p>
 </div>
 
 <span class="tag">PCI DSS</span><span class="tag">SOC 2</span><span class="tag">GovRAMP</span><span class="tag">SOX ITGC</span><span class="tag">Program Design</span>
@@ -50,9 +50,9 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <h2>What This Demonstrates</h2>
 
-<p>Most compliance programs treat each framework as a separate project: one team handles PCI DSS, another handles SOC 2, a third handles GovRAMP. Evidence is requested twice, controls are tested three times, and nobody sees that the same MFA policy satisfies four different auditors. This program shows the alternative: map controls once, test once, and provide evidence to all auditors from a single source.</p>
+<p>Most compliance programs treat each framework as a separate project: one team handles PCI DSS, another handles SOC 2, a third handles GovRAMP. Evidence is requested twice, controls are tested three times, and nobody sees that the same MFA policy is being evidenced four different ways. This program shows the alternative: map controls once, manage evidence once, and let each assessor test from a single source.</p>
 
-<p>The challenge is scoping. A payment processor serving state agencies operates under PCI DSS as a Level 1 service provider (over 6 million transactions annually), which means segmentation testing every six months per 11.4.6, not the annual cycle that applies to merchants. It also operates under SOC 1 and SOC 2 with subservice organizations (payment gateway, cloud provider) that require complementary user entity controls (CUECs) and complementary subservice organization controls (CSOCs) to be mapped back to the entity's own controls. And it operates under GovRAMP, which requires monthly continuous monitoring submissions and a POA&M that must be updated within 30 days of any new finding.</p>
+<p>The challenge is scoping. A payment processor serving state agencies operates under PCI DSS as a service provider. At more than 300,000 card transactions a year it validates as a Level 1 service provider with an annual ROC by a QSA, and as a service provider it must pen test segmentation every six months under 11.4.6, on top of the annual test in 11.4.5. It also operates under SOC 1 and SOC 2 with subservice organizations (payment gateway, cloud provider) that require complementary user entity controls (CUECs) and complementary subservice organization controls (CSOCs) to be mapped back to the entity's own controls. And it operates under GovRAMP, which requires monthly continuous monitoring submissions (POA&M, inventory, scans, executive summary) and remediation of high findings within 30 days, moderate within 90, and low within 180.</p>
 
 <p>This program walks through how those boundaries relate, how one control satisfies multiple frameworks, how to test that control with the rigor a PCI QSA or SOC auditor expects, and how to track gaps and remediation across all three programs without losing sight of what has already been fixed.</p>
 
@@ -68,7 +68,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p><strong>Data flow diagrams:</strong> Mermaid diagrams showing three flows: card not present (CNP) transactions via the hosted payment page, settlement and reconciliation, and the legacy ACH batch system. Each flow shows where PAN is captured, tokenized, encrypted, and settled.</p>
 
-<p><strong>Subservice organizations:</strong> Describes the payment gateway (SecureGate Payments) and cloud provider (AWS) as carved-out subservice orgs, lists the CSOCs Keystone relies on, and maps the CUECs (complementary user entity controls) Keystone must operate back to controls in the unified matrix.</p>
+<p><strong>Subservice organizations:</strong> Describes the payment gateway (GatewayCo (fictional)) and cloud provider (AWS) as carved-out subservice orgs, lists the CSOCs Keystone relies on, and maps the CUECs (complementary user entity controls) Keystone must operate back to controls in the unified matrix.</p>
 
 <p><strong>Why this matters:</strong> A QSA will ask "what is in scope?" before testing anything. If the scope is wrong, the entire assessment is wrong. If CUECs are not mapped to entity controls, the SOC auditor will issue a qualified opinion. <a href="README.md" target="_blank">Read the full system description and data flows.</a></p>
 
@@ -76,7 +76,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p><strong>The matrix:</strong> 76 controls across 14 domains (Governance, Access, Change, Operations, Logging, Vulnerability, Network, Encryption, Incident Response, Vendor, Physical, HR, Data Retention, Business Continuity). Each control maps to PCI DSS v4.0.1 requirements, SOC 2 Trust Services Criteria (2017 with 2022 Points of Focus), NIST SP 800-53 Rev 5 (GovRAMP Moderate baseline), and SOX ITGC areas where applicable.</p>
 
-<p><strong>Example:</strong> ACC-04 (quarterly privileged access review) maps to PCI DSS 7.2.4, SOC 2 CC6.2 and CC6.3, NIST AC-2 and AC-6(7), and SOX ITGC Access to Programs and Data. One ServiceNow access review campaign, tested once, provides evidence for all four.</p>
+<p><strong>Example:</strong> ACC-04 (quarterly privileged access review) maps to PCI DSS 7.2.4, SOC 2 CC6.2 and CC6.3, NIST AC-2 and AC-6(7), and the SOC 1 access control objective. One ServiceNow access review campaign provides the evidence each assessor tests.</p>
 
 <p><strong>CSV format:</strong> Control ID, Domain, Control Statement, Control Owner (role), Frequency, Nature, Type, Key Control (Y/N), PCI DSS Req, SOC 2 TSC, NIST 800-53, SOX ITGC Area, Evidence, Test Procedure Reference.</p>
 
@@ -89,7 +89,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 <ul>
 <li><strong>User provisioning (ACC-01):</strong> Access requests with manager and system owner approval before provisioning.</li>
 <li><strong>Termination and deprovisioning (ACC-02):</strong> HRIS-triggered Okta deactivation on termination date; contractor offboarding tasks.</li>
-<li><strong>Periodic and privileged access review (ACC-04):</strong> Quarterly review of privileged and CDE access, semiannual review of all other access, with sample workpaper and one realistic exception (contractor access removed 9 business days late, root cause, compensating control assessment, remediation). <strong>This is the flagship test procedure with a full walkthrough of how to handle an exception.</strong></li>
+<li><strong>Periodic and privileged access review (ACC-04):</strong> Quarterly review of privileged and CDE access, semiannual review of all other access, with sample workpaper and one realistic exception (contractor access removed 4 business days past the standard, root cause, mitigating factors, remediation). <strong>This is the flagship test procedure with a full walkthrough of how to handle an exception.</strong></li>
 <li><strong>Change management (CHG-01, CHG-02, CHG-05):</strong> ServiceNow change records with CAB approval, GitHub branch protection, CI/CD deployment, separation of duties.</li>
 <li><strong>Backup and restore (OPS-01, OPS-02):</strong> Daily AWS Backup with vault lock, quarterly restore tests with data integrity checks.</li>
 <li><strong>Batch job monitoring (OPS-03):</strong> Nightly settlement, remittance, and ACH file jobs with control-total reconciliation and failure alerting.</li>
@@ -108,9 +108,9 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <h3>5. Gap Analysis and Remediation Tracking (Folder: 05-gap-analysis)</h3>
 
-<p><strong>Readiness assessment:</strong> 15 gaps identified across PCI DSS (including future-dated requirements that became mandatory March 31, 2025), SOC 2, and GovRAMP Moderate. Each gap rated by risk (likelihood × impact, 3×3 matrix). Includes gaps such as phishing-resistant MFA not fully enforced for break-glass access (PCI 8.4.3), automated log review not implemented for legacy batch system (PCI 10.4.1.1), and legacy system accounts not included in quarterly access reviews (PCI 7.2.4, highest risk score 6). <a href="05-gap-analysis/readiness-assessment.md" target="_blank">Read the full assessment.</a></p>
+<p><strong>Readiness assessment:</strong> 15 gaps identified across PCI DSS (including future-dated requirements that became mandatory March 31, 2025), SOC 2, and GovRAMP Moderate. Each gap rated by risk (likelihood × impact, 3×3 matrix). Includes gaps such as break-glass accounts on TOTP instead of Keystone's phishing-resistant standard, automated log review not yet implemented for the legacy batch system (PCI 10.4.1.1), and legacy system accounts not included in quarterly access reviews (PCI 7.2.4, highest risk score 6). <a href="05-gap-analysis/readiness-assessment.md" target="_blank">Read the full assessment.</a></p>
 
-<p><strong>Remediation tracker:</strong> CSV tracking each gap with framework criteria, risk score, owner, action, target date, status, and validation evidence. 8 of 15 gaps completed, 5 in progress, 2 pending. <a href="05-gap-analysis/remediation-tracker.csv" target="_blank">Download remediation-tracker.csv.</a></p>
+<p><strong>Remediation tracker:</strong> CSV tracking each gap with framework criteria, risk score, owner, action, target date, status, and validation evidence. 7 of 15 gaps completed, 5 in progress, 3 pending or scheduled. <a href="05-gap-analysis/remediation-tracker.csv" target="_blank">Download remediation-tracker.csv.</a></p>
 
 <h3>6. Third-Party and Penetration Testing Oversight (Folder: 06-third-party-and-pentest)</h3>
 
@@ -156,26 +156,21 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 <h2>Key Takeaways</h2>
 
 <ul>
-<li>A Level 1 PCI DSS service provider has a six-month segmentation testing clock (11.4.6), not the annual cycle that applies to merchants (11.4.5). Getting the testing cadence wrong is itself a finding.</li>
-<li>One control can satisfy PCI DSS, SOC 2, NIST, and SOX simultaneously if the mapping is documented in a unified matrix and the evidence is managed from a single source. The alternative is re-exporting the same Okta log three times with three different filenames.</li>
+<li>Every PCI DSS service provider that relies on segmentation has a six-month segmentation testing clock (11.4.6), on top of the 11.4.5 annual requirement that applies to all entities. Getting the cadence wrong is itself a finding.</li>
+<li>One control can support PCI DSS, SOC 1, SOC 2, and GovRAMP if the mapping is documented in a unified matrix and the evidence is managed from a single source. Each assessor still tests it to its own standard. The alternative is re-exporting the same Okta log three times with three different filenames.</li>
 <li>Complementary user entity controls (CUECs) listed in a subservice organization's SOC report must be mapped back to the entity's own controls. If a CUEC says "user entities must configure AWS security groups securely," Keystone must document which control covers that (NET-01). If no control exists, that is a gap.</li>
-<li>PCI DSS v4.0.1 introduced future-dated requirements that became mandatory March 31, 2025. A readiness assessment identifies which requirements Keystone implemented early (8.4.2 MFA, 10.4.1.1 automated log review, 11.6.1 payment page change detection) and which still need documentation (targeted risk analyses for frequency choices).</li>
-<li>Exception handling is where audit credibility is built. When a control operates 59 times successfully and fails once, document the exception, determine root cause, check for compensating controls, assess whether it is isolated or systemic, and implement remediation. Hiding exceptions erodes trust.</li>
+<li>PCI DSS v4.0 introduced future-dated requirements, carried into v4.0.1, that became mandatory March 31, 2025. The readiness assessment shows which ones Keystone has in place (8.4.2 MFA, 11.6.1 payment page change detection), which still need work (10.4.1.1 automated log review for the legacy system), and which needed documentation (targeted risk analyses where Keystone sets the frequency).</li>
+<li>Exception handling is where audit credibility is built. When a control works 15 times and fails once, document the exception, determine root cause, check for mitigating factors, assess whether it is isolated or systemic, and implement remediation. Hiding exceptions erodes trust.</li>
 <li>A compliance calendar integrated with audit schedules ensures that evidence is prepared before the auditor asks for it, not after. The most painful evidence requests are the ones that should have been anticipated.</li>
 </ul>
 
-<h2>How to Use This Program in an Interview</h2>
-
-<p>If you are screen-sharing this program during a hiring manager interview:</p>
-
+<h2>Five-Minute Reading Path</h2>
 <ol>
-<li><strong>Start with the unified control matrix.</strong> Open <a href="02-control-matrix/unified-control-matrix.csv" target="_blank">unified-control-matrix.csv</a> and show how one row (example: ACC-06 MFA) maps to PCI DSS 8.4.2, SOC 2 CC6.1, NIST IA-2, and SOX ITGC Access. Explain the "test once, satisfy many" principle.</li>
-<li><strong>Walk through one test procedure.</strong> Open <a href="03-itgc-test-procedures/03-periodic-and-privileged-access-review.md" target="_blank">03-periodic-and-privileged-access-review.md</a> and show the sample workpaper with one exception (contractor access removed 9 business days late, root cause, compensating control assessment, remediation). Explain how you would handle the exception in a PCI ROC vs. a SOC 2 Type 2 report.</li>
-<li><strong>Show the gap analysis.</strong> Open <a href="05-gap-analysis/readiness-assessment.md" target="_blank">readiness-assessment.md</a> and highlight two or three gaps (example: GAP-001 break-glass MFA not phishing-resistant, GAP-014 legacy system not in quarterly access reviews). Explain the risk rating method and why GAP-014 has the highest risk score (6).</li>
-<li><strong>Demonstrate cross-references.</strong> Show how this program links to existing projects instead of duplicating content. Open one link to the PCI DSS segmentation project or the shared MFA control project and explain why those are separate deep dives.</li>
+<li><strong>Control matrix:</strong> one row (ACC-06, MFA) mapped to PCI DSS 8.4.1 to 8.4.3, SOC 2 CC6.1 and CC6.6, and NIST IA-2.</li>
+<li><strong>Access review test procedure:</strong> population, sampling, attributes, and one exception worked end to end.</li>
+<li><strong>Readiness assessment:</strong> how gaps are rated and why GAP-014 is the top open item.</li>
+<li><strong>Related projects:</strong> the segmentation testing and shared MFA control deep dives.</li>
 </ol>
-
-<p>The program is built to be navigated quickly. Every folder has a clear purpose, and every document includes a table of contents or summary block at the top.</p>
 
 <p><a href="README.md" target="_blank"><strong>Read the full program README with a 3-minute walkthrough path.</strong></a></p>
 

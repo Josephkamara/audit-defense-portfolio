@@ -59,7 +59,7 @@ To ensure that access to in-scope systems is removed promptly when an individual
 
 ## Exception Example
 
-**Exception:** One contractor termination (john.tempworker@vendor.example, end date May 15, 2026) had Okta account disabled on May 15 as expected, but the ServiceNow offboarding task was not created until May 22 (7 calendar days late). The offboarding task's completion triggered removal of the user's GitHub collaborator access, which was not removed until May 23.
+**Exception:** One contractor termination (john.tempworker@vendor.example, end date May 15, 2026) had Okta account disabled on May 15 as expected (contractor accounts carry an end date set at provisioning), but the ServiceNow offboarding task was not created until May 22 (7 calendar days late). The offboarding task's completion triggered removal of the user's GitHub collaborator access, which was not removed until May 23.
 
 **Root Cause:** The sponsoring manager was out of the office the week of May 15 and did not submit the offboarding task before leaving. No backup process existed for manager absences.
 

@@ -12,10 +12,10 @@ Hosted mostly in AWS (VPC, EC2, RDS, S3, KMS, CloudTrail, GuardDuty), code in Gi
 
 ## Read This in 3 Minutes
 
-If you are screening this program during an interview:
+If you have three minutes:
 
 1. **Start with scoping:** `01-scoping/system-description.md` shows how the CDE boundary is defined, what is connected, and what stays out. The data-flow diagram is in the same folder.
-2. **See the unified control matrix:** `02-control-matrix/unified-control-matrix.csv` maps 76 controls across PCI DSS v4.0.1, SOC 2, NIST SP 800-53 Rev 5 (GovRAMP Moderate baseline), and SOX ITGC areas. One control, tested once, satisfies multiple frameworks.
+2. **See the unified control matrix:** `02-control-matrix/unified-control-matrix.csv` maps 76 controls across PCI DSS v4.0.1, SOC 2, NIST SP 800-53 Rev 5 (GovRAMP Moderate baseline), and SOX ITGC areas. One control and one evidence set support multiple assessments; each assessor still tests independently.
 3. **Pick one test procedure:** `03-itgc-test-procedures/03-periodic-and-privileged-access-review.md` walks through testing a quarterly access review with a sample workpaper and one realistic exception with root cause and how it would be reported.
 4. **Check the gap analysis:** `05-gap-analysis/readiness-assessment.md` shows how gaps are identified, rated, and tracked, with examples from SOC 2 readiness and PCI DSS v4.0.1 future-dated requirements that became mandatory March 31, 2025.
 

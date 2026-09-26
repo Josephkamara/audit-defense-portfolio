@@ -14,6 +14,8 @@ I have about 15 years of experience in IT audit and information security complia
 
 This portfolio demonstrates how to scope, test, and document controls under PCI DSS, SOC 2, ISO 27001, NIST frameworks, and AI governance standards. Every scenario is fictional and built to demonstrate reasoning and technical depth. No real employer or client is named.
 
+I write at [josefkamara.com](https://josefkamara.com) and publish [The Authority Brief](https://www.linkedin.com/newsletters/7419428063517728768/) on LinkedIn.
+
 ## Start Here
 
 ### [Payment Processor Compliance Program](https://josephkamara.github.io/audit-defense-portfolio/projects/payment-processor-compliance-program/)
@@ -122,4 +124,6 @@ A talent platform vendor classified its recruitment screening tool high-risk wit
 
 ## Connect
 
-[LinkedIn](https://www.linkedin.com/in/joseph-kamara) · [josefkamara.com](https://josefkamara.com)
+Available for GRC, audit, and AI governance engagements. [Book a call](https://calendar.app.google/8xRWG2Yz3n9vKDLx5)
+
+[LinkedIn](https://www.linkedin.com/in/joseph-kamara) · [X](https://x.com/Josefkamara) · [josefkamara.com](https://josefkamara.com)

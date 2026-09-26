@@ -93,11 +93,11 @@ When the population is large (example: 1,500 access requests per year), the audi
 
 ### 8. Are exceptions documented?
 
-If a control operated 59 times successfully and failed once, document the exception:
+If a control operated 15 times successfully and failed once, document the exception:
 
-- What was the deviation? (example: access removal 9 business days late)
-- What was the root cause? (example: assignee on PTO, no escalation)
-- Was there a compensating control? (example: account was disabled at termination, so late removal had no security impact)
+- What was the deviation? (example: access removed 4 business days past the 5-day standard)
+- What was the root cause? (example: direct assignment outside Okta groups; assignee on PTO, no escalation)
+- Were there mitigating factors? (example: identity provider account disabled at termination, no logged activity)
 - What remediation was implemented? (example: auto-escalation rule added to ServiceNow)
 
 **Why it matters:** Auditors expect exceptions. Hiding exceptions or claiming 100% success when there were failures erodes trust. Documenting exceptions and remediation shows control maturity.
@@ -134,7 +134,7 @@ Keystone is audited by three different entities (PCI QSA, SOC auditor, GovRAMP a
 
 **Example: ACC-06 (MFA for CDE access)**
 
-- **PCI QSA asks:** "Provide evidence that MFA is enforced for all non-console access into the CDE per 8.4.2, and for all access into the CDE per 8.4.3."
+- **PCI QSA asks:** "Provide evidence that MFA is enforced for all non-console access into the CDE per 8.4.2, and for all remote access that could reach the CDE per 8.4.3."
 - **SOC auditor asks:** "Provide evidence that multi-factor authentication is required per CC6.1."
 - **GovRAMP assessor asks:** "Provide evidence of IA-2(1), IA-2(2), and IA-2(8) implementation."
 - **SOX auditor asks:** "Provide evidence of strong authentication for access to programs and data affecting financial reporting."
@@ -182,7 +182,7 @@ Create a one-page mapping document for the auditors:
 |------------|-------------|-----------|-------------|----------|-------------------|
 | ACC-01 | 7.2.1, 7.2.2, 8.2.1 | CC6.2, CC6.3 | AC-2, AC-6 | Access | `ACC-01 User Provisioning/` |
 | ACC-04 | 7.2.4 | CC6.2, CC6.3 | AC-2, AC-6(7) | Access | `ACC-04 Access Review/` |
-| ACC-06 | 8.4.2, 8.4.3 | CC6.1 | IA-2(1), IA-2(2), IA-2(8) | Access | `ACC-06 MFA/` |
+| ACC-06 | 8.4.1, 8.4.2, 8.4.3, 8.5.1 | CC6.1, CC6.6 | IA-2(1), IA-2(2), IA-2(8) | Access | `ACC-06 MFA/` |
 
 Give this mapping to each auditor at the start of the audit. They can see that one piece of evidence satisfies multiple requests and avoid asking for the same thing twice.
 

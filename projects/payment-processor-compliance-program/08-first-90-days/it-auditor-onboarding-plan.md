@@ -57,7 +57,7 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
   - What evidence did the QSA request that was difficult to provide?
 - [ ] **Read the most recent SOC 1 and SOC 2 reports** (user entity auditor perspective):
   - What exceptions were noted in the Type 2 report?
-  - What were the complementary user entity controls (CUECs) for the subservice orgs (AWS, SecureGate)?
+  - What were the complementary user entity controls (CUECs) for the subservice orgs (AWS, GatewayCo)?
   - Did any test of controls result in a qualified opinion?
 - [ ] **Review the GovRAMP POA&M** (current version):
   - What open findings exist?
@@ -224,7 +224,7 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
 
 - [ ] **Review past PCI, SOC, and GovRAMP evidence requests:**
   - For each piece of evidence provided (example: Okta System Log showing MFA challenges), list which audits requested it:
-    - PCI QSA requested it for 8.4.2 and 8.4.3.
+    - PCI QSA requested it for 8.4.1 to 8.4.3.
     - SOC auditor requested it for CC6.1.
     - GovRAMP assessor requested it for IA-2(1) and IA-2(2).
 - [ ] **Create a cross-reference table:**

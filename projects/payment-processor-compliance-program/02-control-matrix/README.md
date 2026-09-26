@@ -6,7 +6,7 @@
 
 The unified control matrix is the foundation of Keystone Civic Payments' multi-framework compliance program. It maps 76 controls across PCI DSS v4.0.1, SOC 2 (2017 Trust Services Criteria with 2022 Points of Focus), NIST SP 800-53 Revision 5 (GovRAMP Moderate baseline), and SOX IT General Controls (SOC 1 relevance).
 
-**The principle:** Test once, satisfy many. A single control, tested once, provides evidence for multiple audits.
+**The principle:** Map once, evidence once. A single control, with one owner and one evidence set, supports multiple assessments. Each assessor still performs its own testing.
 
 ## File
 
@@ -39,7 +39,7 @@ Download or view the CSV directly in GitHub for the full matrix.
 
 | Framework | Requirement | What It Asks For |
 |-----------|-------------|------------------|
-| PCI DSS | 7.2.4 | Review all user accounts and access at least once every six months; privileged access more frequently based on risk |
+| PCI DSS | 7.2.4 | Review all user accounts and access privileges, including vendor accounts, at least once every six months; address inappropriate access; management acknowledges the results |
 | SOC 2 | CC6.2, CC6.3 | Logical access is reviewed periodically and inappropriate access is removed |
 | NIST 800-53 | AC-2, AC-6(7) | Review accounts and privileges at organization-defined frequency |
 | SOX ITGC | Access to Programs and Data | Periodic access reviews are performed and inappropriate access is remediated |
@@ -50,14 +50,12 @@ Download or view the CSV directly in GitHub for the full matrix.
 
 | Framework | Requirement | What It Asks For |
 |-----------|-------------|------------------|
-| PCI DSS | 8.4.2 | MFA for all non-console access into the CDE; 8.4.3 MFA for all access into the CDE (future-dated, mandatory March 31, 2025) |
+| PCI DSS | 8.4.1, 8.4.2, 8.4.3 | 8.4.1: MFA for administrative non-console access into the CDE. 8.4.2: MFA for all non-console access into the CDE (future-dated, required from March 31, 2025). 8.4.3: MFA for all remote access from outside the network that could access or impact the CDE |
 | SOC 2 | CC6.1, CC6.6 | Multi-factor authentication is required; remote access is appropriately restricted |
 | NIST 800-53 | IA-2(1), IA-2(2), IA-2(8) | Multi-factor authentication for network and privileged access; phishing-resistant preferred |
 | SOX ITGC | Access to Programs and Data | Strong authentication is enforced for access to systems affecting financial reporting |
 
-**One control (ACC-06) satisfies all four.** Keystone enforces phishing-resistant MFA (FIDO2) for all workforce access through Okta, including all access into the CDE. That satisfies PCI 8.4.2 and the future-dated 8.4.3, SOC 2 CC6.1, NIST IA-2 enhancements, and provides SOX evidence for access to the payment database (which affects SOC 1 transaction completeness and accuracy assertions).
-
-The same Okta authentication policy configuration and Okta System Log showing per-session MFA challenges serve as evidence for all audits.
+**One control (ACC-06), one evidence set, four assessments.** Keystone enforces phishing-resistant MFA (FIDO2) for all workforce sign-ins through Okta, including all non-console access into the CDE and all remote access. The same design and evidence support PCI DSS 8.4.1 to 8.4.3 and 8.5.1, SOC 2 CC6.1 and CC6.6, NIST IA-2(1), IA-2(2), and IA-2(8), and the SOC 1 access control objective for the payment database. Each assessor still tests the control independently against its own criteria. Phishing-resistant MFA is Keystone's own standard. PCI DSS accepts any MFA that meets 8.5.1.
 
 ## Why This Matters
 
@@ -66,7 +64,7 @@ Before this matrix:
 - The PCI QSA requested an MFA report showing "all non-console CDE access requires MFA"
 - The SOC auditor requested "evidence that remote access requires multi-factor authentication"
 - The GovRAMP assessor requested "evidence of IA-2(1) and IA-2(2) implementation"
-- The financial statement auditor requested "controls over access to programs and data affecting financial reporting"
+- The SOC 1 service auditor requested "evidence supporting the access control objective for systems relevant to user entities' financial reporting"
 
 Each request was answered separately, often with overlapping evidence re-exported in different formats, because no one had mapped the underlying control once.
 
@@ -76,7 +74,7 @@ After this matrix:
 - One control owner: IAM Manager
 - One source of evidence: Okta authentication policy configuration, Okta System Log showing per-session MFA challenge, exception register
 - One test procedure: TP-STD (inspection of policy design, sample of access events to verify per-session MFA was challenged)
-- Four audits satisfied simultaneously
+- One evidence set provided to four assessments, each tested independently
 
 ## Key Control Designation
 
@@ -125,15 +123,15 @@ The matrix specifies evidence sources, but evidence must also meet quality stand
 - **Program Change** (5 controls): CHG-01, CHG-02, CHG-05 (overlap)
 - **Computer Operations** (4 controls): OPS-01, OPS-02, OPS-03, VEN-03, IR-04, BCP-01, BCP-02 (overlap)
 
-These controls are tested with the same rigor as SOC 2 controls, but the evidence is explicitly tied to systems affecting financial reporting (the payment database, transaction processing API, settlement batch processor). A user entity relying on Keystone's SOC 1 report must confirm that Keystone's controls operated effectively, so a financial statement auditor will inspect ITGC test results as part of the user auditor's procedures.
+These controls are tested with the same rigor as SOC 2 controls, but the evidence is explicitly tied to systems affecting financial reporting (the payment database, transaction processing API, settlement batch processor). State agency customers and their auditors (user auditors) rely on Keystone's SOC 1 report. They read its test results and deviations and confirm that they operate the complementary user entity controls. Keystone itself is a private LLC with no SOX audit; the "SOX ITGC Area" column uses the familiar ITGC categories to show SOC 1 relevance.
 
 ## PCI DSS v4.0.1 Future-Dated Requirements
 
-Several controls in the matrix address PCI DSS requirements that became mandatory on March 31, 2025 (the "future-dated" requirements from v4.0.1):
+Several controls in the matrix address PCI DSS requirements that became mandatory on March 31, 2025 (the "future-dated" requirements introduced in v4.0 and carried into v4.0.1):
 
 - **5.4.1:** Automated anti-phishing (HR-03)
 - **6.4.3:** Payment page script inventory and justification (CHG-07)
-- **8.4.2:** MFA for all access into the CDE, not just non-console (ACC-06, already phasing this in)
+- **8.4.2:** MFA for all non-console access into the CDE, not just administrators (ACC-06)
 - **10.4.1.1:** Automated log review mechanisms (LOG-03, SIEM correlation rules)
 - **11.6.1:** Payment page change and tamper detection (CHG-08, if frequency is not at least once every seven days, requires a TRA per 11.6.1; Keystone runs it every few hours)
 - **12.3.1:** Targeted risk analysis (TRA) for requirements allowing frequency flexibility (GOV-04)
@@ -159,7 +157,7 @@ When walking an auditor through the matrix:
 
 1. **Start with one control that maps across all frameworks.** ACC-04 (quarterly privileged access review) or ACC-06 (MFA) are good examples.
 2. **Show the control statement, evidence, and test procedure reference.** Point to the actual test procedure in `03-itgc-test-procedures/` if it exists.
-3. **Explain the "test once, satisfy many" principle.** One control owner, one source of evidence, tested once per period, satisfies PCI, SOC 2, NIST, and SOX simultaneously.
+3. **Explain the "test once, satisfy many" principle.** One control owner and one source of evidence per period, provided to every assessor that relies on the control.
 4. **Walk through a key control end to end.** Pick GOV-07 (issue tracking) or CHG-01 (change management). Show how the control operates, where the evidence comes from, and how exceptions are handled.
 5. **Acknowledge where you rely on subservice orgs.** Point to VEN-03 (SOC report review) and explain the CSOC/CUEC mapping in `01-scoping/system-description.md`.
 

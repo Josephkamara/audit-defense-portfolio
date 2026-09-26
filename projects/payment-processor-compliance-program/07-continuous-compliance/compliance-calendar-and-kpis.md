@@ -15,13 +15,13 @@ This calendar shows all recurring compliance activities for Keystone Civic Payme
 | **March** | Internal vulnerability scan | SOC 2 Type 2 fieldwork begins (period ending March 31); SOC 1 Type 2 fieldwork | Monthly ConMon submission | Annual incident response tabletop exercise |
 | **April** | ASV quarterly scan (Q2); Internal vulnerability scan | SOC audit fieldwork continues; Evidence requests due | Monthly ConMon submission | |
 | **May** | | SOC reports issued (SOC 1 Type 2, SOC 2 Type 2) | Monthly ConMon submission | |
-| **June** | Internal vulnerability scan; Policy annual review (12.1.3) | | Monthly ConMon submission | Semiannual access review (all non-privileged accounts) |
+| **June** | Internal vulnerability scan; Policy annual review (12.1.2) | | Monthly ConMon submission | Semiannual access review (all non-privileged accounts) |
 | **July** | ASV quarterly scan (Q3); Internal vulnerability scan | | Monthly ConMon submission | Annual technology EOL review (12.3.4) |
 | **August** | Segmentation penetration test (semiannual #2); PCI scope confirmation (semiannual #2) | | Monthly ConMon submission | |
 | **September** | Internal vulnerability scan; Annual penetration test (internal external application layer) | | Monthly ConMon submission | Annual DR test |
 | **October** | ASV quarterly scan (Q4); Internal vulnerability scan; PCI ROC planning meeting | | Monthly ConMon submission | |
 | **November** | Internal vulnerability scan | | Monthly ConMon submission | Annual cryptographic cipher and protocol review (12.3.3) |
-| **December** | PCI DSS ROC fieldwork begins; Internal vulnerability scan | | Monthly ConMon submission; Annual GovRAMP authorization renewal | Annual business continuity plan review |
+| **December** | PCI DSS ROC fieldwork begins; Internal vulnerability scan | | Monthly ConMon submission; GovRAMP annual 3PAO assessment | Annual business continuity plan review |
 
 ### Quarterly Activities (Every Quarter)
 
@@ -63,7 +63,7 @@ This calendar shows all recurring compliance activities for Keystone Civic Payme
 | Event | Target Date | Owner | Notes |
 |-------|-------------|-------|-------|
 | PCI DSS ROC fieldwork begins | December 2026 | Director of GRC | Annual assessment; QSA on-site or remote for 2-3 weeks |
-| PCI DSS ROC and AOC issued | February 2027 | Director of GRC | Must be completed before March 31, 2027 (prior to v4.0.1 future-dated requirements deadline) |
+| PCI DSS ROC and AOC issued | February 2027 | Director of GRC | Annual revalidation; new AOC delivered to the acquirer, card brands, and agency customers before the prior AOC is 12 months old. All future-dated v4.0 requirements have been mandatory since March 31, 2025. |
 | SOC 2 Type 2 report period ends | March 31, 2027 | Director of GRC | 12-month period (April 1, 2026 - March 31, 2027) |
 | SOC 1 and SOC 2 fieldwork | March - April 2027 | Director of GRC | Auditor on-site or remote for 3-4 weeks |
 | SOC 1 and SOC 2 reports issued | May 2027 | Director of GRC | Reports delivered to state agency customers |
