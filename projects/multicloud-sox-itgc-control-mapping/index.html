@@ -134,7 +134,7 @@ aws iam get-account-authorization-details > iam-authorization-details.json
 
 # AWS: pull IAM Access Analyzer findings for unused or externally reachable access
 aws accessanalyzer list-findings \
-  --analyzer-arn arn:aws:access-analyzer:us-east-1:111122223333:analyzer/meridian-analyzer
+  --analyzer-arn arn:aws:access-analyzer:us-east-1:111122223333:analyzer/kestrow-analyzer
 
 # GCP: search every IAM policy binding across the organization for a privileged role
 gcloud asset search-all-iam-policies \
@@ -143,14 +143,14 @@ gcloud asset search-all-iam-policies \
 
 # GCP: pull IAM Recommender's least-privilege recommendations for a project
 gcloud recommender recommendations list \
-  --project=meridian-prod \
+  --project=kestrow-prod \
   --location=global \
   --recommender=google.iam.policy.Recommender
 
 # GCP: query Cloud Audit Logs for every IAM policy change in the review period
 gcloud logging read \
   'protoPayload.methodName="SetIamPolicy"' \
-  --project=meridian-prod \
+  --project=kestrow-prod \
   --freshness=30d
 </pre>
 <p><strong>What each command returns, and why it is sufficient evidence:</strong> the credential report gives a point-in-time list of every IAM user with MFA status and credential age, which is what a test of "privileged accounts enforce MFA and rotate credentials" actually needs. The authorization-details call returns the full census of who holds what, which is the population the tester samples from, not who was granted access at onboarding but who holds it today. IAM Access Analyzer's findings identify access that is unused or reachable from outside the account, which is the specific defect a privileged-access-review control exists to catch. On the GCP side, Cloud Asset Inventory's org-wide policy search is the equivalent census, run once across every project instead of project by project. IAM Recommender's output is Google's own usage-based judgment on whether a grant is excessive, based on ninety days of actual activity, which gives the tester a documented basis for a finding rather than a reading of the policy text alone. The Cloud Audit Logs query returns every IAM policy change logged in the period, which is how the tester confirms a privileged grant was actually reviewed and acted on, not merely that it exists today.</p>
