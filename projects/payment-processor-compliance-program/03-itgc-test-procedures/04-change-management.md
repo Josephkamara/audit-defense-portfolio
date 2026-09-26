@@ -66,6 +66,6 @@ To ensure that changes to production systems are authorized, tested, and documen
 
 **Root Cause:** The GitHub Actions pipeline was unavailable due to a GitHub.com service disruption (confirmed by checking GitHub status page for May 20, 2026). The engineer used approved emergency access (just-in-time elevation, session logged in CloudTrail) to deploy the fix manually via AWS console.
 
-**Compensating Control:** The emergency change followed the documented break-glass procedure (ticket created, CISO notified, session logged). The change was reviewed and approved retrospectively the next business day.
+**Mitigating Factors:** The emergency change followed the documented break-glass procedure (ticket created, CISO notified, session logged). The change was reviewed and approved retrospectively the next business day.
 
 **Remediation:** No remediation required; this is a documented exception path for pipeline unavailability. The control operated as designed for 59 of 60 sampled changes.

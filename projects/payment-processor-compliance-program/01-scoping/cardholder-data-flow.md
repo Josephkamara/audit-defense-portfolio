@@ -43,7 +43,7 @@ graph TB
     I -->|4. Authorization response| D
     D -->|5. Token + auth result| E
     E -->|6. Store token<br/>+ transaction record| F
-    F -->|7. Encrypted PAN written<br/>column-level encryption| G
+    F -->|7. Token and truncated PAN written<br/>(pre-2025 rows: encrypted PAN)| G
     E -->|8. Return success + token| B
     B -->|9. Confirmation page| A
     
@@ -64,7 +64,7 @@ graph TB
 - The hosted payment page is CDE because it captures PAN, even though it immediately posts to the gateway. Keystone is responsible for PCI DSS 6.4.3 (script inventory and justification) and 11.6.1 (change and tamper detection). [See CHG-07 and CHG-08 in the control matrix.](../02-control-matrix/)
 - The agency's web server never receives PAN, so it remains out of Keystone's CDE scope. The agency operates under SAQ A-EP or its own validation as a merchant.
 - The gateway (GatewayCo) is a subservice organization. Keystone relies on GatewayCo's PCI DSS validation and reviews its AOC annually.
-- Keystone's tokenization service writes encrypted PAN to the database for legacy reporting requirements. New transactions after Q1 2025 store tokens only.
+- Encrypted PAN from before Q1 2025 remains in the database for legacy reporting until the DAT-01 purge. New transactions store gateway tokens and truncated PAN only.
 
 ## Flow 2: Settlement and Reconciliation
 
@@ -133,7 +133,7 @@ graph TB
 
 **Key scoping notes for Flow 3:**
 
-- This system does not process card payments but is in Keystone's CDE because it shares the same compliance program and is managed by the same team. It handles bank account numbers (not PAN) and is included in Keystone's PCI scope as a connected-to system.
+- This system is in the CDE because it still processes legacy card batch settlements for two state agencies (see system-description.md), in addition to ACH files. ACH bank account numbers are not PCI account data, but they are confidential agency data protected under DAT-03 and SOC 2 Confidentiality. Shared management alone would not put a system in PCI scope; storing, processing, or transmitting account data, or connectivity to the CDE, would.
 - Physical security is tested as part of PCI DSS Requirement 9. The colocation facility provides badge and biometric access, video surveillance, and visitor logs. [See PHY-01 in the control matrix.](../02-control-matrix/)
 - This system is out of GovRAMP scope because the two state agencies using it are not GovRAMP participants.
 
@@ -156,7 +156,7 @@ The CDE is segmented from corporate and out-of-scope systems using:
 
 ## Change Impact on Data Flows
 
-Any change to these flows triggers a scope impact review per PCI DSS 12.5.3:
+Any change to these flows triggers a scope impact review (PCI DSS 6.5.2 and 12.5.2.1):
 
 - New payment channel (example: mobile app, recurring billing API)
 - New subservice organization or gateway

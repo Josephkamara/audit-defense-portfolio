@@ -18,8 +18,8 @@ Keystone uses a 3×3 risk matrix:
 
 **Impact:**
 
-- **High (3):** Gap could lead to a PCI DSS compensating control or finding, SOC 2 qualified opinion, GovRAMP authorization denial, or unauthorized access to cardholder data.
-- **Medium (2):** Gap could lead to an observation in a report, increase audit testing, or result in a management letter comment.
+- **High (3):** Gap could leave a PCI DSS requirement Not in Place, cause a modified SOC opinion or reported deviations on a key control, trigger GovRAMP escalation, or allow unauthorized access to cardholder data.
+- **Medium (2):** Gap could produce a reported deviation, expand audit testing, or require management follow-up.
 - **Low (1):** Gap is a best-practice deviation with no expected audit impact.
 
 **Risk Score:** Likelihood × Impact (scale of 1 to 9)
@@ -32,13 +32,13 @@ Keystone uses a 3×3 risk matrix:
 
 ## Gap Summary
 
-The assessment identified 15 gaps across PCI DSS, SOC 2, and GovRAMP Moderate requirements. Of these:
+The assessment identified 15 gaps across PCI DSS, SOC 2, GovRAMP Moderate, and Keystone's own standards. Of these:
 
-- **2 high-risk gaps** (scores 8 and 7): Require immediate remediation.
-- **8 medium-risk gaps** (scores 4 to 6): Require remediation within 90 days.
-- **5 low-risk gaps** (scores 2 to 3): Require remediation within 180 days or risk acceptance.
+- **0 high-risk gaps** (scores 7 to 9).
+- **3 medium-risk gaps** (scores 4 to 6): GAP-002, GAP-010, GAP-014. Remediate within 90 days.
+- **12 low-risk gaps** (scores 1 to 3): Remediate within 180 days or accept with documented justification.
 
-As of this assessment (September 2026), 8 gaps have been remediated, 5 are in progress, and 2 are pending resource allocation.
+As of this assessment (September 2026), 7 gaps have been remediated, 5 are in progress, and 3 are pending or scheduled.
 
 ## Gap Detail
 
@@ -130,11 +130,11 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Risk Score:** 2 (Low risk)
 
-**Remediation:** Document a TRA for PCI DSS 7.2.5.1 justifying the semiannual frequency based on service account risk profile (least privilege, credentials stored in Secrets Manager with rotation, no interactive login). Target completion: October 2026.
+**Remediation:** Document a TRA for PCI DSS 7.2.5.1 justifying the semiannual frequency based on service account risk profile (least privilege, credentials stored in Secrets Manager with rotation, no interactive login). Completed September 2026.
 
 **Owner:** Director of GRC
 
-**Status:** Completed (TRA documented October 2026, filed under GOV-04)
+**Status:** Completed (TRA documented September 2026, filed under GOV-04)
 
 ---
 
@@ -150,7 +150,7 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Likelihood:** Low (1) - The role matrix is actively used and reasonably accurate, but the lack of formal approval could be flagged by a SOC auditor.
 
-**Impact:** Medium (2) - SOC 2 observation possible; unlikely to rise to a control deficiency unless the matrix is found to be inaccurate.
+**Impact:** Medium (2) - A SOC auditor could report a deviation; unlikely to rise to a control deficiency unless the matrix is found to be inaccurate.
 
 **Risk Score:** 2 (Low risk)
 
@@ -168,7 +168,7 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Requirement:** A1.1 - The entity maintains, monitors, and evaluates current processing capacity and use of system components (infrastructure, data, and software) to manage capacity and to enable the implementation of additional capacity to help meet its objectives.
 
-**Current State:** Keystone monitors capacity for the payment API tier (CloudWatch alarms, auto scaling) but does not have formal capacity monitoring for the customer portal (which is in SOC 2 scope for Availability). The portal is a static site (S3 + CloudFront) with no scaling constraints, but the lack of documented capacity monitoring could be flagged by a SOC auditor.
+**Current State:** Keystone monitors capacity for the payment API tier (CloudWatch alarms, auto scaling) but does not have formal capacity monitoring for the customer portal (which is in SOC 2 scope for Availability). The portal's front end is served from S3 and CloudFront and its API runs on the same auto-scaling tier as the payment API, but the lack of documented capacity monitoring could be flagged by a SOC auditor.
 
 **Gap:** No documented capacity monitoring for the customer portal.
 
@@ -226,11 +226,11 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Risk Score:** 2 (Low risk)
 
-**Remediation:** Document a TRA for PCI DSS 12.10.4.1 justifying annual training frequency based on low incident volume and low turnover in the incident response team. Target completion: October 2026.
+**Remediation:** Document a TRA for PCI DSS 12.10.4.1 justifying annual training frequency based on low incident volume and low turnover in the incident response team. Completed September 2026.
 
 **Owner:** Director of GRC
 
-**Status:** Completed (TRA documented October 2026, filed under GOV-04)
+**Status:** Completed (TRA documented September 2026, filed under GOV-04)
 
 ---
 
@@ -250,11 +250,11 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Risk Score:** 1 (Low risk)
 
-**Remediation:** Update the scope confirmation memo template to include a section "Non-Applicable Requirements" and list any requirements that do not apply (example: A3). Target completion: October 2026.
+**Remediation:** Update the scope confirmation memo template to include a section "Non-Applicable Requirements" and list any requirements that do not apply (example: A3). Completed September 2026.
 
 **Owner:** Director of GRC
 
-**Status:** Completed (template updated October 2026)
+**Status:** Completed (template updated September 2026)
 
 ---
 
@@ -286,7 +286,7 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Framework:** SOC 2, PCI DSS v4.0.1
 
-**Requirement:** CC9.2 (SOC 2), 12.8.4 (PCI DSS) - The entity obtains and reviews SOC reports for subservice organizations annually and maps complementary user entity controls (CUECs) to entity controls.
+**Requirement:** SOC 2 CC9.2 - vendor risk is assessed and monitored, including SOC report review and CUEC mapping. PCI DSS 12.8.4 - each TPSP's PCI DSS compliance status is monitored at least once every 12 months.
 
 **Current State:** Keystone obtains SOC reports for its two subservice organizations (GatewayCo (fictional) and AWS) annually. However, the SOC report review checklist (documented in VEN-03) was not completed for the AWS SOC 1 report review in Q1 2026. The Vendor Risk Manager reviewed the report but did not document the review using the checklist.
 
@@ -318,11 +318,11 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Likelihood:** Low (1) - Changes in cryptographic standards are announced years in advance; Keystone has time to respond.
 
-**Impact:** Low (1) - PCI QSA may note this as a best-practice gap, but it is not a current compliance requirement beyond documentation.
+**Impact:** Medium (2) - 12.3.3 requires a documented response strategy, so without it a QSA would mark 12.3.3 Not in Place.
 
-**Risk Score:** 1 (Low risk)
+**Risk Score:** 2 (Low risk)
 
-**Remediation:** Add a "Cryptographic Agility Plan" section to the cipher and protocol inventory: monitor NIST and PCI SSC guidance, participate in cloud provider (AWS) communications on cryptographic changes, allocate budget for cryptographic upgrades in annual planning. Target completion: December 2026.
+**Remediation:** Add a "Response strategy for changes in cryptographic strength (12.3.3)" section to the cipher and protocol inventory: monitor NIST and PCI SSC guidance, participate in cloud provider (AWS) communications on cryptographic changes, allocate budget for cryptographic upgrades in annual planning. Target completion: December 2026.
 
 **Owner:** Cloud Platform Engineering Manager
 
@@ -342,9 +342,9 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Likelihood:** Low (1) - The exercise tested the most critical sections; the notification procedures were not tested but are documented.
 
-**Impact:** Low (1) - PCI QSA or SOC auditor may note this as an observation, but it is unlikely to affect the opinion given that the exercise occurred and was documented.
+**Impact:** Low (1) - PCI QSA or SOC auditor may note this gap, but it is unlikely to affect the opinion given that the exercise occurred and was documented.
 
-**Risk Score:** 1 (Low risk)
+**Risk Score:** 2 (Low risk)
 
 **Remediation:** Expand the next annual tabletop exercise (scheduled March 2027) to include a notification simulation (mock email to state agency customers, mock call to payment brands). Target completion: March 2027.
 
@@ -360,7 +360,7 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Requirement:** 7.2.4 (PCI DSS), CC6.2 (SOC 2) - All user access is reviewed periodically.
 
-**Current State:** Keystone's quarterly access review process (ACC-04) covers Okta, AWS, ServiceNow, and GitHub. The legacy batch system (colocation) is in scope for PCI DSS, but its Linux OS accounts and PostgreSQL database users were not included in the quarterly access review. The IT Operations Manager manually reviewed legacy system access annually, but this was not documented in the formal access review process.
+**Current State:** Keystone's access review process (ACC-04) covers Okta, AWS, ServiceNow, and GitHub. Since Q2 2026 the legacy batch system's root and sudo accounts are included in the quarterly privileged review. Its standard Linux OS accounts and PostgreSQL database users are not in any formal review. The IT Operations Manager reviews them informally once a year, and that review is not documented in the access review process. The IT Operations Manager manually reviewed legacy system access annually, but this was not documented in the formal access review process.
 
 **Gap:** Legacy batch system accounts not included in quarterly access review process.
 
@@ -370,7 +370,7 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Risk Score:** 6 (Medium risk)
 
-**Remediation:** Add legacy batch system accounts to the quarterly access review process. The IT Operations Manager will export the Linux account list and PostgreSQL user list each quarter and submit them for review. Target completion: October 2026 (will be included in Q4 2026 access review).
+**Remediation:** Add the legacy batch system's standard OS and database accounts to the formal access review process (quarterly, because the system is in the CDE). The IT Operations Manager will export the Linux account list and PostgreSQL user list each quarter and submit them for review. Target completion: October 2026 (included in the Q3 2026 review campaign that starts October 1).
 
 **Owner:** IT Operations Manager / IAM Manager
 
@@ -394,11 +394,11 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 **Risk Score:** 1 (Low risk)
 
-**Remediation:** Create a memo documenting the business justification: state agency audit periods (12 months), dispute resolution windows (up to 180 days), and 6-month buffer for overlapping requirements. Obtain Director of GRC approval. Target completion: October 2026.
+**Remediation:** Create a memo documenting the business justification: state agency audit periods (12 months), dispute resolution windows (up to 180 days), and 6-month buffer for overlapping requirements. Obtain Director of GRC approval. Completed September 2026.
 
 **Owner:** Privacy and Data Governance Lead
 
-**Status:** Completed (memo approved October 2026)
+**Status:** Completed (memo approved September 2026)
 
 ---
 
@@ -406,33 +406,33 @@ As of this assessment (September 2026), 8 gaps have been remediated, 5 are in pr
 
 | Gap ID | Risk Score | Status | Target Completion |
 |--------|-----------|--------|-------------------|
-| GAP-001 | 3 (Low) | In progress | Nov 2026 |
-| GAP-002 | 4 (Medium) | Completed | Completed Oct 2026 |
-| GAP-003 | 2 (Low) | Completed | Completed Oct 2026 |
-| GAP-004 | 2 (Low) | Completed | Completed Oct 2026 |
+| GAP-001 | 2 (Low) | In progress | Nov 2026 |
+| GAP-002 | 4 (Medium) | In progress | Nov 2026 |
+| GAP-003 | 2 (Low) | Completed | Completed Sep 2026 |
+| GAP-004 | 2 (Low) | Completed | Completed Sep 2026 |
 | GAP-005 | 2 (Low) | In progress | Dec 2026 |
 | GAP-006 | 1 (Low) | Pending | Dec 2026 |
-| GAP-007 | 1 (Low) | Completed | Completed Aug 2026 |
-| GAP-008 | 2 (Low) | Completed | Completed Oct 2026 |
-| GAP-009 | 1 (Low) | Completed | Completed Oct 2026 |
+| GAP-007 | 2 (Low) | Completed | Completed Aug 2026 |
+| GAP-008 | 2 (Low) | Completed | Completed Sep 2026 |
+| GAP-009 | 1 (Low) | Completed | Completed Sep 2026 |
 | GAP-010 | 4 (Medium) | In progress | Nov 2026 |
 | GAP-011 | 2 (Low) | Completed | Completed Sep 2026 |
-| GAP-012 | 1 (Low) | Pending | Dec 2026 |
-| GAP-013 | 1 (Low) | Scheduled | Mar 2027 |
+| GAP-012 | 2 (Low) | Pending | Dec 2026 |
+| GAP-013 | 2 (Low) | Scheduled | Nov 2026 |
 | GAP-014 | 6 (Medium) | In progress | Oct 2026 |
-| GAP-015 | 1 (Low) | Completed | Completed Oct 2026 |
+| GAP-015 | 1 (Low) | Completed | Completed Sep 2026 |
 
-**Completed:** 8 gaps
+**Completed:** 7 gaps
 
 **In progress:** 5 gaps
 
-**Pending/Scheduled:** 2 gaps
+**Pending/Scheduled:** 3 gaps
 
 See `remediation-tracker.csv` for tracking details.
 
 ## Recommendations
 
-1. **Prioritize GAP-014** (legacy batch system not in quarterly access review): This is the highest-risk open gap (score 6). Complete by the Q4 2026 access review cycle.
-2. **Complete TRAs before the next PCI ROC:** All TRA-related gaps (GAP-002, GAP-003, GAP-004, GAP-008) have been remediated. Maintain the TRA library (GOV-04) going forward.
+1. **Prioritize GAP-014** (legacy batch system not in quarterly access review): This is the highest-risk open gap (score 6). Complete in the Q3 2026 review campaign that starts October 1.
+2. **Finish automated log review for the legacy system (GAP-002) before PCI ROC fieldwork in December.** The TRA gaps (GAP-004, GAP-008) are closed; maintain the TRA library (GOV-04) going forward.
 3. **Formalize role-based access documentation (GAP-005):** Low risk, but completing this will strengthen the SOC 2 Type 2 control environment for the next audit.
 4. **Review the remediation tracker monthly:** Add a standing agenda item to the Risk Committee meeting to review open gaps and confirm target dates are on track.

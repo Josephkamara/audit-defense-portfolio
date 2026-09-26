@@ -59,8 +59,8 @@ If the numbers do not match, document the difference:
 
 ### 5. Does the evidence tie to the period under audit?
 
-- SOC 2 Type 2: 12 months (example: October 1, 2025 to September 30, 2026).
-- PCI DSS ROC: The assessment period (typically 12 months).
+- SOC 2 Type 2: 12 months (Keystone: April 1, 2026 to March 31, 2027).
+- PCI DSS ROC: Evidence that periodic requirements were performed at their required frequency over the prior 12 months, plus current-state configuration.
 - GovRAMP ConMon: Monthly (current month and prior 11 months).
 - SOX ITGC: The financial statement period (typically fiscal year).
 
@@ -77,7 +77,7 @@ If the control statement says "reviewed by management" or "approved by the Direc
 - What they reviewed (the specific report, campaign, or results)
 - What decision they made (approved, escalated, remediation required)
 
-**Acceptable:** Email from the Director with "I reviewed the Q3 access review results, approved," dated October 10, 2026, with the access review summary attached.
+**Acceptable:** Email from the Director with "I reviewed the Q2 access review results, approved," dated July 10, 2026, with the access review summary attached.
 
 **Not acceptable:** The access review summary with no email, no signature, and the control owner saying "the Director reviewed it verbally."
 
@@ -135,7 +135,7 @@ Keystone is assessed by three different parties: the PCI QSA, the CPA firm that 
 **Example: ACC-06 (MFA for CDE access)**
 
 - **PCI QSA asks:** "Provide evidence that MFA is enforced for all non-console access into the CDE per 8.4.2, and for all remote access that could reach the CDE per 8.4.3."
-- **SOC auditor asks:** "Provide evidence that multi-factor authentication is required per CC6.1."
+- **SOC auditor asks:** "Provide evidence that the MFA control described in the system description operated throughout the period (CC6.1, CC6.6)."
 - **GovRAMP assessor asks:** "Provide evidence of IA-2(1), IA-2(2), and IA-2(8) implementation."
 - **SOC 1 service auditor asks:** "Provide evidence supporting the logical access control objective for the payment database."
 
@@ -148,7 +148,7 @@ Keystone is assessed by three different parties: the PCI QSA, the CPA firm that 
 **How to avoid re-requests:**
 
 - Map the control in advance using the unified control matrix. ACC-06 maps to PCI 8.4.1 to 8.4.3, SOC 2 CC6.1 and CC6.6, NIST IA-2 enhancements, and the SOC 1 access objective.
-- When the PCI QSA requests evidence for 8.4.2, provide the evidence once and note: "This evidence also satisfies SOC 2 CC6.1, NIST IA-2, and SOX ITGC access controls."
+- When the PCI QSA requests evidence for 8.4.2, provide the evidence once and note: "This evidence set is also provided for SOC 2 CC6.1, NIST IA-2, and the SOC 1 access objective."
 - Give each auditor a copy of the same evidence file, with the PBC request ID updated to match their request list. Do not re-export the same Okta System Log three times with three different filenames.
 
 ### Evidence Repository Structure
@@ -184,7 +184,7 @@ Create a one-page mapping document for the auditors:
 | ACC-04 | 7.2.4 | CC6.2, CC6.3 | AC-2, AC-6(7) | Access | `ACC-04 Access Review/` |
 | ACC-06 | 8.4.1, 8.4.2, 8.4.3, 8.5.1 | CC6.1, CC6.6 | IA-2(1), IA-2(2), IA-2(8) | Access | `ACC-06 MFA/` |
 
-Give this mapping to each auditor at the start of the audit. They can see that one piece of evidence satisfies multiple requests and avoid asking for the same thing twice.
+Give this mapping to each auditor at the start of the audit. They can see that one piece of evidence answers multiple requests and avoid asking for the same thing twice.
 
 ## Evidence Quality Failures (Examples)
 
@@ -214,9 +214,9 @@ Give this mapping to each auditor at the start of the audit. They can see that o
 
 ### Failure: Evidence outside the audit period
 
-**What the auditor received:** Internal vulnerability scan reports for January 2026 through November 2026 (11 months).
+**What the auditor received:** Internal vulnerability scan reports for January 2025 through November 2025 (11 months).
 
-**What was missing:** December 2026 scan report (the audit period is January 1, 2026 to December 31, 2026).
+**What was missing:** December 2025 scan report (the 12-month lookback was January 1, 2025 to December 31, 2025).
 
 **Result:** Auditor asked for the December scan report. One-day delay.
 

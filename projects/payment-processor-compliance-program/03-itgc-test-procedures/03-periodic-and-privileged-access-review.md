@@ -16,18 +16,18 @@
 
 ## Control Objective
 
-To ensure that user access to in-scope systems remains appropriate for current job responsibilities, that privileged and CDE access is reviewed more frequently than standard access due to higher risk, and that inappropriate access identified during reviews is promptly removed.
+To ensure that user access to in-scope systems remains appropriate for current job responsibilities, that privileged and CDE access is reviewed quarterly under Keystone policy (more often than the six-month minimum in PCI DSS 7.2.4), and that inappropriate access identified during reviews is promptly removed.
 
 ## Why This Matters
 
-Access reviews are a detective control. They do not prevent inappropriate access from being granted in the first place (that is ACC-01, provisioning with approval), but they catch access that should have been removed when someone changed roles or left the company, or access that was granted temporarily and never removed. For privileged access (admin, root, database DBA) and CDE access (systems that store, process, or transmit cardholder data), the risk of inappropriate access is higher, so PCI DSS 7.2.4 requires more frequent review.
+Access reviews are a detective control. They do not prevent inappropriate access from being granted in the first place (that is ACC-01, provisioning with approval), but they catch access that should have been removed when someone changed roles or left the company, or access that was granted temporarily and never removed. For privileged access (admin, root, database DBA) and CDE access (systems that store, process, or transmit cardholder data), the risk of inappropriate access is higher, so Keystone reviews it quarterly. PCI DSS 7.2.4 sets the floor at every six months for all accounts.
 
 ## Applicable Framework Requirements
 
 | Framework | Requirement | Specific Language |
 |-----------|-------------|-------------------|
-| PCI DSS v4.0.1 | 7.2.4 | "All user accounts and related access privileges, including third-party/vendor accounts, are reviewed as follows: At least once every six months. Privileged user accounts are reviewed at least once every three months. Anomalies are addressed." |
-| SOC 2 | CC6.2, CC6.3 | "Logical access is reviewed periodically. The entity authorizes, modifies, or removes access based on changes in job responsibilities, terminations, or changes in authorizations." |
+| PCI DSS v4.0.1 | 7.2.4 | All user accounts and related access privileges, including third-party/vendor accounts, are reviewed at least once every six months to ensure they remain appropriate based on job function; any inappropriate access is addressed; management acknowledges that access remains appropriate. |
+| SOC 2 | CC6.2, CC6.3 | Points of focus "Reviews Validity of Access Credentials" (CC6.2) and "Reviews Access Roles and Rules" (CC6.3). The criteria cover registering, authorizing, modifying, and removing access; the periodic review is how Keystone meets them. |
 | NIST SP 800-53 Rev 5 | AC-2, AC-6(7) | "Review accounts for compliance with account management requirements [Assignment: organization-defined frequency]; and if accounts are not in compliance, take [Assignment: organization-defined actions]. Review roles and privileges [Assignment: organization-defined frequency] to validate the need for such roles and privileges; and reassign or remove roles and privileges, if necessary." |
 | SOC 1 / ITGC | Access to Programs and Data | Periodic access reviews are performed and documented; inappropriate access is remediated in a timely manner. |
 

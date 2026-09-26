@@ -95,9 +95,9 @@ To ensure that security events and anomalies are detected through log review and
 
 **Root Cause:** The SOC analyst on shift was handling a concurrent critical alert (a GuardDuty finding of a compromised EC2 instance, which took priority). The excessive failed API calls alert was queued behind the critical alert. Once the critical alert was escalated to the Security Operations Manager, the analyst triaged the high-severity alert.
 
-**Compensating Control:** The failed API calls were investigated and determined to be a misconfigured CI/CD script (not an attack). The script was corrected. The 30-minute delay in triage did not result in any security impact.
+**Mitigating Factors:** The failed API calls were investigated and determined to be a misconfigured CI/CD script (not an attack). The script was corrected. The 30-minute delay in triage did not result in any security impact.
 
-**Remediation:** Recommended adding a second SOC analyst during peak hours (business day coverage) to reduce triage queue delays. Management approved additional staffing, implemented October 2026.
+**Remediation:** Recommended adding a second SOC analyst during peak hours (business day coverage) to reduce triage queue delays. Management approved additional staffing in September 2026, starting October 2026.
 
 ## Exception Example for LOG-04
 
@@ -105,6 +105,6 @@ To ensure that security events and anomalies are detected through log review and
 
 **Root Cause (inquiry with Security Operations Manager):** The analyst who investigated the alert verbally reported the issue to the manager (AWS service-side delay in log file validation, no actual tampering detected), but did not document the investigation in the alert record. The manager closed the alert after confirming the issue was benign.
 
-**Compensating Control:** CloudTrail logs were intact and unchanged (confirmed by spot-checking log files in S3 and verifying their signatures). No security impact occurred.
+**Mitigating Factors:** CloudTrail logs were intact and unchanged (confirmed by spot-checking log files in S3 and verifying their signatures). No security impact occurred.
 
 **Remediation:** Updated SOC procedures to require documenting the investigation outcome in the alert record before closing, even for false positives or benign findings. Training reminder sent to SOC team August 10, 2026.

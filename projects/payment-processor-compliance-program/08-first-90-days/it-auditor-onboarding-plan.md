@@ -58,7 +58,7 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
 - [ ] **Read the most recent SOC 1 and SOC 2 reports** (user entity auditor perspective):
   - What exceptions were noted in the Type 2 report?
   - What were the complementary user entity controls (CUECs) for the subservice orgs (AWS, GatewayCo)?
-  - Did any test of controls result in a qualified opinion?
+  - Was the opinion modified, and which deviations were reported in the tests of controls?
 - [ ] **Review the GovRAMP POA&M** (current version):
   - What open findings exist?
   - What are their due dates and risk levels?
@@ -98,7 +98,7 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
 
 **Objectives:**
 
-- Understand how the "test once, satisfy many" principle works in practice.
+- Understand how the "map once, evidence once" principle works in practice, and where each assessor still tests independently.
 - Identify where evidence for each control comes from.
 
 **Activities:**
@@ -176,7 +176,7 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
   - Select a sample per the sample size guidance.
   - Test each attribute (approvals, removal tickets, remediation evidence, etc.).
   - Document results in a workpaper (create your own using the sample workpaper format from 03-periodic-and-privileged-access-review.md as a template).
-  - If you find an exception, document the deviation, perform inquiry to determine root cause, check for compensating controls, and assess whether it is isolated or systemic.
+  - If you find an exception, document the deviation, perform inquiry to determine root cause, identify mitigating factors, and assess whether it is isolated or systemic.
 - [ ] **Review your workpaper with the Director of GRC:**
   - Ask for feedback: "Did I test the right attributes?" and "Would this workpaper satisfy an auditor?"
   - Discuss any exceptions you found: "Is this exception already tracked in the remediation tracker or POA&M?"
@@ -193,7 +193,7 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
 - [ ] **Identify the next audit on the calendar:**
   - Is it PCI DSS ROC fieldwork (December 2026)?
   - Is it SOC 1/SOC 2 fieldwork (March 2027)?
-  - Is it GovRAMP annual authorization renewal (December 2026)?
+  - Is it the GovRAMP annual 3PAO assessment (December 2026)?
 - [ ] **Review the PBC (provided by client) request list** from the prior year's audit:
   - What evidence did the auditor request last year?
   - What evidence was re-requested or flagged as incomplete?
@@ -218,7 +218,7 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
 **Objectives:**
 
 - Identify evidence that is requested by multiple auditors (PCI QSA, SOC auditor, GovRAMP assessor) and reduce duplication.
-- Create a cross-reference document so auditors know that one piece of evidence satisfies multiple requirements.
+- Create a cross-reference document so auditors know that one piece of evidence answers multiple requests.
 
 **Activities:**
 

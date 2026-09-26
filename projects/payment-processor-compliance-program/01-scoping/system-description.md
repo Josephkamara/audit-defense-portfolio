@@ -13,11 +13,11 @@ Keystone Civic Payments, LLC processes card and ACH payments for approximately 5
 | PCI DSS v4.0.1 | Level 1 Service Provider, Annual ROC and AOC | Cardholder data environment (CDE) as defined below |
 | SOC 1 Type 2 | SSAE 18 | Payment processing controls relevant to user entities' financial statement assertions |
 | SOC 2 Type 2 | Security, Availability, Confidentiality | Payment platform and customer portal |
-| GovRAMP Moderate | FedRAMP equivalency for state agencies | Cloud-hosted components serving state customers |
+| GovRAMP Moderate | NIST SP 800-53 Rev 5 based authorization, modeled on FedRAMP, for state and local government | Cloud-hosted components serving state customers |
 
 ## In-Scope System Components (Cardholder Data Environment)
 
-The CDE includes systems that store, process, or transmit cardholder data or that can affect the security of the CDE:
+The CDE includes system components that store, process, or transmit cardholder data, and components with unrestricted connectivity to them. Systems that can affect CDE security are in PCI scope as connected-to or security-impacting systems (next section):
 
 ### AWS VPC: Payment Processing Environment
 
@@ -117,14 +117,14 @@ CUECs are explicitly mapped back to Keystone controls in the unified control mat
 The SOC 2 system description in Keystone's Type 2 report describes:
 
 - **System:** Payment processing platform and customer portal for state agencies
-- **Trust Services Categories:** Security (all criteria), Availability (subset), Confidentiality (cardholder data and citizen PII)
-- **Period:** 12 months ending on the report date
+- **Trust Services Categories:** Security (common criteria CC1 to CC9), Availability (A1.1 to A1.3), Confidentiality (cardholder data and citizen PII)
+- **Period:** 12 months (April 1 to March 31); the report is issued after the period ends
 - **Boundaries:** Same as the PCI CDE plus the customer-facing agency portal (authentication, user management, transaction reporting), which does not handle raw card data but is in scope for SOC 2 Availability
 - **Carve-out subservice orgs:** GatewayCo (fictional) (gateway) and AWS (infrastructure) as described above
 
 ## GovRAMP Moderate Boundary
 
-GovRAMP (Government Risk and Authorization Management Program) is a state-level FedRAMP equivalency program. Keystone's GovRAMP authorization covers:
+GovRAMP (Government Risk and Authorization Management Program) (formerly StateRAMP) is a nonprofit program, modeled on FedRAMP and based on NIST SP 800-53 Rev 5, that verifies the security of cloud providers serving state and local government. Keystone's GovRAMP authorization covers:
 
 - **Cloud service offering:** Payment processing API and hosted payment page for state agencies
 - **Impact level:** Moderate (handles citizen PII and payment information, no classified or high-impact data)
@@ -141,10 +141,10 @@ The GovRAMP boundary is narrower than the full PCI CDE:
 ## How the Three Boundaries Relate
 
 ```
-Largest scope: PCI DSS CDE
+Largest scope: PCI DSS scope (CDE plus connected-to systems)
   ├─ Includes: AWS payment platform + colocation legacy system + all connected-to systems
   │
-  └─ SOC 2 system boundary
+  └─ SOC 2 system boundary (overlaps PCI scope; adds the portal, excludes the colocation system)
       ├─ Includes: AWS payment platform + agency customer portal
       ├─ Overlaps: Payment API, databases, some supporting infrastructure
       ├─ Adds: Customer portal (not in PCI CDE, no card data)
@@ -154,12 +154,12 @@ Largest scope: PCI DSS CDE
           └─ Excludes: Colocation legacy system, customer portal back-office features
 ```
 
-One control often satisfies all three frameworks. Example: ACC-04 (quarterly privileged access review) maps to PCI DSS 7.2.4, SOC 2 CC6.2, and NIST AC-2. That review covers privileged access to the payment database. The same evidence satisfies the PCI QSA, the SOC auditor, and the GovRAMP assessor.
+One control often supports all three frameworks. Example: ACC-04 (quarterly privileged access review) maps to PCI DSS 7.2.4, SOC 2 CC6.2 and CC6.3, and NIST AC-2 and AC-6(7). That review covers privileged access to the payment database. The same evidence goes to the PCI QSA, the SOC auditor, and the GovRAMP 3PAO, and each one tests it.
 
 ## Scoping Changes and Review Cadence
 
 - **PCI scope confirmation:** At least every six months per 12.5.2.1 (service provider requirement), signed by Director of GRC, includes updated data flows and inventory. [See GOV-05 in the control matrix.](../02-control-matrix/)
-- **Significant change review:** Any new system, network change, or organizational change that could affect scope triggers a documented scope impact review within 30 days per PCI DSS 12.5.3
+- **Significant change review:** Any new system, network change, or organizational change that could affect scope triggers a documented scope impact review before implementation (PCI DSS 6.5.2 and 12.5.2.1); changes to organizational structure also trigger the executive review required by 12.5.3
 - **SOC report period:** 12 months, updated annually, system description changes disclosed in the report
 - **GovRAMP inventory:** Updated monthly as part of continuous monitoring package
 

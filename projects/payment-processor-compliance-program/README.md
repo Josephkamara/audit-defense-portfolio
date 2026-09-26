@@ -22,7 +22,7 @@ If you have three minutes:
 ## Folder Map
 
 - **01-scoping:** System description, cardholder data flow diagram, CDE and connected-to systems, segmentation, SOC 2 boundary with carve-out subservice orgs and CUECs/CSOCs, GovRAMP boundary.
-- **02-control-matrix:** Unified control matrix CSV and explanation of the "test once, satisfy many" approach.
+- **02-control-matrix:** Unified control matrix CSV and explanation of the "map once, evidence once" approach.
 - **03-itgc-test-procedures:** One file per ITGC area with control objective, population, sample size, test steps, attributes, and sample workpapers with one realistic exception.
 - **04-evidence:** PBC request list, evidence quality checklist, guide on avoiding duplicate requests across audits.
 - **05-gap-analysis:** Readiness assessment with risk rating method, at least 12 gaps, and remediation tracker CSV.

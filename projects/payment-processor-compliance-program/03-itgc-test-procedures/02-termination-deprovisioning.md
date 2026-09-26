@@ -63,6 +63,6 @@ To ensure that access to in-scope systems is removed promptly when an individual
 
 **Root Cause:** The sponsoring manager was out of the office the week of May 15 and did not submit the offboarding task before leaving. No backup process existed for manager absences.
 
-**Compensating Control:** The contractor's Okta account was disabled on time, so the contractor could not authenticate to GitHub through SSO. GitHub access without SSO authentication was not possible because Keystone enforces SAML SSO for the organization.
+**Mitigating Factors:** The contractor's Okta account was disabled on time, so the contractor could not authenticate to GitHub through SSO. GitHub access without SSO authentication was not possible because Keystone enforces SAML SSO for the organization.
 
 **Remediation:** HR updated the offboarding checklist to require sponsoring managers to submit contractor offboarding tasks at least 3 business days before the end date. Implemented June 1, 2026.

@@ -35,7 +35,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 <p>Keystone Civic Payments (fictional, about 250 employees) processes card and ACH payments for state government agency portals. Level 1 PCI DSS service provider, annual SOC 1 Type 2 and SOC 2 Type 2, GovRAMP Moderate authorization. Hosted mostly in AWS, with one colocation site for a legacy batch system. Uses a payment gateway and cloud host as subservice organizations (carve-out method in SOC reports).</p>
 
 <h3>Frameworks</h3>
-<p>PCI DSS v4.0.1 (service provider), SOC 1 Type 2, SOC 2 Type 2 (Security, Availability, Confidentiality), GovRAMP Moderate (NIST SP 800-53 Rev 5), SOX IT General Controls</p>
+<p>PCI DSS v4.0.1 (service provider), SOC 1 Type 2, SOC 2 Type 2 (Security, Availability, Confidentiality), GovRAMP Moderate (NIST SP 800-53 Rev 5), IT general controls (SOX ITGC categories, supporting SOC 1)</p>
 
 <h3>Key Artifacts</h3>
 <p>Unified control matrix (76 controls mapped across all frameworks), system scoping and data flow diagrams, 7 detailed ITGC test procedures with sample workpapers and one realistic exception, gap analysis with 15 identified gaps and remediation tracker, vendor and penetration test oversight checklists, 12-month compliance calendar with KPIs, 30/60/90-day plan for a new IT auditor</p>
@@ -54,7 +54,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p>The challenge is scoping. A payment processor serving state agencies operates under PCI DSS as a service provider. At more than 300,000 card transactions a year it validates as a Level 1 service provider with an annual ROC by a QSA, and as a service provider it must pen test segmentation every six months under 11.4.6, on top of the annual test in 11.4.5. It also operates under SOC 1 and SOC 2 with subservice organizations (payment gateway, cloud provider) that require complementary user entity controls (CUECs) and complementary subservice organization controls (CSOCs) to be mapped back to the entity's own controls. And it operates under GovRAMP, which requires monthly continuous monitoring submissions (POA&M, inventory, scans, executive summary) and remediation of high findings within 30 days, moderate within 90, and low within 180.</p>
 
-<p>This program walks through how those boundaries relate, how one control satisfies multiple frameworks, how to test that control with the rigor a PCI QSA or SOC auditor expects, and how to track gaps and remediation across all three programs without losing sight of what has already been fixed.</p>
+<p>This program walks through how those boundaries relate, how one control and one evidence set support multiple assessments, how to test that control with the rigor a PCI QSA or SOC auditor expects, and how to track gaps and remediation across all three programs without losing sight of what has already been fixed.</p>
 
 <p><em>The company, systems, and data are fictional. Every scenario is built to demonstrate judgment and technical depth in a compliance program design. No real employer, client, or assessment is depicted.</em></p>
 
@@ -70,7 +70,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p><strong>Subservice organizations:</strong> Describes the payment gateway (GatewayCo (fictional)) and cloud provider (AWS) as carved-out subservice orgs, lists the CSOCs Keystone relies on, and maps the CUECs (complementary user entity controls) Keystone must operate back to controls in the unified matrix.</p>
 
-<p><strong>Why this matters:</strong> A QSA will ask "what is in scope?" before testing anything. If the scope is wrong, the entire assessment is wrong. If a vendor's CUECs are not covered by Keystone's own controls, Keystone is relying on controls nobody operates. <a href="README.md" target="_blank">Read the full system description and data flows.</a></p>
+<p><strong>Why this matters:</strong> A QSA will ask "what is in scope?" before testing anything. If the scope is wrong, the entire assessment is wrong. If a vendor's CUECs are not covered by Keystone's own controls, Keystone is relying on controls nobody operates. <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/README.md" target="_blank">Read the full system description and data flows.</a></p>
 
 <h3>2. Unified Control Matrix (Folder: 02-control-matrix)</h3>
 
@@ -80,7 +80,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p><strong>CSV format:</strong> Control ID, Domain, Control Statement, Control Owner (role), Frequency, Nature, Type, Key Control (Y/N), PCI DSS Req, SOC 2 TSC, NIST 800-53, SOX ITGC Area, Evidence, Test Procedure Reference.</p>
 
-<p><strong>Download:</strong> <a href="02-control-matrix/unified-control-matrix.csv" target="_blank">unified-control-matrix.csv</a> (viewable in GitHub, Excel, or any CSV reader). <a href="02-control-matrix/README.md" target="_blank">Read the full explanation of the "test once, satisfy many" approach.</a></p>
+<p><strong>Download:</strong> <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/02-control-matrix/unified-control-matrix.csv" target="_blank">unified-control-matrix.csv</a> (viewable in GitHub, Excel, or any CSV reader). <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/02-control-matrix/README.md" target="_blank">Read the full explanation of the "map once, evidence once" approach.</a></p>
 
 <h3>3. ITGC Test Procedures (Folder: 03-itgc-test-procedures)</h3>
 
@@ -98,23 +98,23 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p>Each procedure includes: control objective, applicable framework requirements, population definition and IPE (information produced by the entity), sample size guidance, test steps (inquiry, observation, inspection, reperformance), sample attributes table, and one sample workpaper showing results and exceptions.</p>
 
-<p><a href="03-itgc-test-procedures/03-periodic-and-privileged-access-review.md" target="_blank">Read the full access review test procedure with exception handling.</a></p>
+<p><a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/03-itgc-test-procedures/03-periodic-and-privileged-access-review.md" target="_blank">Read the full access review test procedure with exception handling.</a></p>
 
 <h3>4. Evidence Management (Folder: 04-evidence)</h3>
 
 <p><strong>PBC request list:</strong> 74 evidence requests mapped to controls, with owner, due date, format, and status. Shows how to organize evidence requests across PCI, SOC, and GovRAMP audits without duplicating requests. <a href="04-evidence/pbc-request-list.csv" target="_blank">Download pbc-request-list.csv.</a></p>
 
-<p><strong>Evidence quality checklist:</strong> 10-point checklist for evidence submission (system-generated vs. manual, parameters visible, population reconciles, source exports provided, ties to audit period, reviewer sign-off, stratified samples, exceptions documented, correct timezone, clear file names). Includes examples of evidence quality failures and how to avoid re-requests. <a href="04-evidence/evidence-quality-checklist.md" target="_blank">Read the full checklist.</a></p>
+<p><strong>Evidence quality checklist:</strong> 10-point checklist for evidence submission (system-generated vs. manual, parameters visible, population reconciles, source exports provided, ties to audit period, reviewer sign-off, stratified samples, exceptions documented, correct timezone, clear file names). Includes examples of evidence quality failures and how to avoid re-requests. <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/04-evidence/evidence-quality-checklist.md" target="_blank">Read the full checklist.</a></p>
 
 <h3>5. Gap Analysis and Remediation Tracking (Folder: 05-gap-analysis)</h3>
 
-<p><strong>Readiness assessment:</strong> 15 gaps identified across PCI DSS (including future-dated requirements that became mandatory March 31, 2025), SOC 2, and GovRAMP Moderate. Each gap rated by risk (likelihood × impact, 3×3 matrix). Includes gaps such as break-glass accounts on TOTP instead of Keystone's phishing-resistant standard, automated log review not yet implemented for the legacy batch system (PCI 10.4.1.1), and legacy system accounts not included in quarterly access reviews (PCI 7.2.4, highest risk score 6). <a href="05-gap-analysis/readiness-assessment.md" target="_blank">Read the full assessment.</a></p>
+<p><strong>Readiness assessment:</strong> 15 gaps identified across PCI DSS (including future-dated requirements that became mandatory March 31, 2025), SOC 2, and GovRAMP Moderate. Each gap rated by risk (likelihood × impact, 3×3 matrix). Includes gaps such as break-glass accounts on TOTP instead of Keystone's phishing-resistant standard, automated log review not yet implemented for the legacy batch system (PCI 10.4.1.1), and legacy system accounts not included in quarterly access reviews (PCI 7.2.4, highest risk score 6). <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/05-gap-analysis/readiness-assessment.md" target="_blank">Read the full assessment.</a></p>
 
-<p><strong>Remediation tracker:</strong> CSV tracking each gap with framework criteria, risk score, owner, action, target date, status, and validation evidence. 7 of 15 gaps completed, 5 in progress, 3 pending or scheduled. <a href="05-gap-analysis/remediation-tracker.csv" target="_blank">Download remediation-tracker.csv.</a></p>
+<p><strong>Remediation tracker:</strong> CSV tracking each gap with framework criteria, risk score, owner, action, target date, status, and validation evidence. 7 of 15 gaps completed, 5 in progress, 3 pending or scheduled. <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/05-gap-analysis/remediation-tracker.csv" target="_blank">Download remediation-tracker.csv.</a></p>
 
 <h3>6. Third-Party and Penetration Testing Oversight (Folder: 06-third-party-and-pentest)</h3>
 
-<p><strong>Vendor risk tiering:</strong> Three-tier model (critical, moderate, low-risk) scaling due diligence, contract terms, and monitoring cadence. Tier 1 vendors (payment gateway, cloud provider) require annual SOC report review and PCI AOC review.</p>
+<p><strong>Vendor risk tiering:</strong> Three-tier model (critical, moderate, low-risk) scaling due diligence, contract terms, and monitoring cadence. Tier 1 vendors (payment gateway, cloud provider, identity provider) require annual SOC report review and PCI AOC review.</p>
 
 <p><strong>SOC report review checklist:</strong> Step-by-step checklist for reviewing a subservice organization's SOC 1 or SOC 2 report (opinion type, period coverage and gaps, exceptions, subservice orgs, CUECs mapped back to entity controls, CSOCs confirmed in subservice org reports). Maps to control VEN-03.</p>
 
@@ -122,7 +122,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p><strong>ASV scan tracking:</strong> Quarterly external vulnerability scans per PCI DSS 11.3.2, with tracking table showing scan dates, results, rescans, and attestations of scan compliance.</p>
 
-<p><a href="06-third-party-and-pentest/vendor-and-pentest-oversight.md" target="_blank">Read the full vendor and pentest oversight guide.</a></p>
+<p><a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/06-third-party-and-pentest/vendor-and-pentest-oversight.md" target="_blank">Read the full vendor and pentest oversight guide.</a></p>
 
 <h3>7. Continuous Compliance Calendar and KPIs (Folder: 07-continuous-compliance)</h3>
 
@@ -130,7 +130,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p><strong>KPIs:</strong> Six key performance indicators tracked monthly and reported to the Risk Committee: overdue remediation items, access review completion rate, vulnerability remediation SLA compliance, control exceptions by domain, GovRAMP POA&M aging, and audit finding closure rate. Each KPI has a target, measurement frequency, escalation threshold, and owner.</p>
 
-<p><a href="07-continuous-compliance/compliance-calendar-and-kpis.md" target="_blank">Read the full compliance calendar.</a></p>
+<p><a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/07-continuous-compliance/compliance-calendar-and-kpis.md" target="_blank">Read the full compliance calendar.</a></p>
 
 <h3>8. First 90 Days for a New IT Auditor (Folder: 08-first-90-days)</h3>
 
@@ -172,7 +172,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 <li><strong>Related projects:</strong> the segmentation testing and shared MFA control deep dives.</li>
 </ol>
 
-<p><a href="README.md" target="_blank"><strong>Read the full program README with a 3-minute walkthrough path.</strong></a></p>
+<p><a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/README.md" target="_blank"><strong>Read the full program README with a 3-minute walkthrough path.</strong></a></p>
 
 </main>
 </body>

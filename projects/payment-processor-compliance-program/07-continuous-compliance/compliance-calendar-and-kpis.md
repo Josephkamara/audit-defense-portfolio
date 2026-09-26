@@ -10,7 +10,7 @@ This calendar shows all recurring compliance activities for Keystone Civic Payme
 
 | Month | PCI DSS | SOC 1 / SOC 2 | GovRAMP | Other |
 |-------|---------|---------------|---------|-------|
-| **January** | ASV quarterly scan (Q1); Internal vulnerability scan | SOC audit planning meeting (for period ending March 31, 2027) | Monthly ConMon submission (POA&M, scans, inventory) | Annual risk assessment kickoff |
+| **January** | ASV quarterly scan (Q1); Internal vulnerability scan | | Monthly ConMon submission (POA&M, scans, inventory) | Annual risk assessment kickoff |
 | **February** | Segmentation penetration test (semiannual #1); PCI scope confirmation (semiannual #1) | | Monthly ConMon submission | |
 | **March** | Internal vulnerability scan | SOC 2 Type 2 fieldwork begins (period ending March 31); SOC 1 Type 2 fieldwork | Monthly ConMon submission | Annual incident response tabletop exercise |
 | **April** | ASV quarterly scan (Q2); Internal vulnerability scan | SOC audit fieldwork continues; Evidence requests due | Monthly ConMon submission | |
@@ -39,7 +39,7 @@ This calendar shows all recurring compliance activities for Keystone Civic Payme
 
 ### Weekly Activities (Every Week or More Often)
 
-- **Payment page change detection:** CHG-08 (automated, runs every few hours; alerts reviewed weekly minimum per 11.6.1 TRA)
+- **Payment page change detection:** CHG-08 (automated, runs every few hours; alerts routed to the SOC queue and triaged per the IR plan (runs more often than the weekly minimum, so no TRA is needed))
 
 ### Daily Activities (Every Day)
 
@@ -67,12 +67,12 @@ This calendar shows all recurring compliance activities for Keystone Civic Payme
 | SOC 2 Type 2 report period ends | March 31, 2027 | Director of GRC | 12-month period (April 1, 2026 - March 31, 2027) |
 | SOC 1 and SOC 2 fieldwork | March - April 2027 | Director of GRC | Auditor on-site or remote for 3-4 weeks |
 | SOC 1 and SOC 2 reports issued | May 2027 | Director of GRC | Reports delivered to state agency customers |
-| GovRAMP annual authorization renewal | December 2026 | Director of GRC | Submitted to GovRAMP PMO; decision within 60 days |
+| GovRAMP annual assessment package | December 2026 | Director of GRC | 3PAO assesses about one third of controls plus an annual pen test; package due within 30 days of the authorization anniversary |
 | Annual penetration test | September 2026 | CISO | Internal, external, and application-layer testing; retest critical/high findings |
 | Segmentation testing (semiannual) | February and August 2026 | CISO | Service provider requirement (11.4.6); test all segmentation methods |
 | Annual risk assessment | January - March 2026 | Director of GRC | Enterprise risk assessment with Risk Committee approval |
 | Annual DR test | September 2026 | IT Operations Manager | Regional failover of payment API, legacy batch restore; results against RTO/RPO |
-| Annual IR tabletop | March 2026 | Security Operations Manager | Tabletop exercise with notification procedures included |
+| Annual IR tabletop | March 2026 | Security Operations Manager | Tabletop exercise (notification procedures not tested; see GAP-013) |
 
 ---
 
@@ -166,7 +166,7 @@ Keystone tracks the following key performance indicators monthly and reports the
 
 ### PCI DSS ROC
 
-- **Audit period:** 12 months (typically January 1, 2026 - December 31, 2026)
+- **Assessment cycle:** Annual; periodic requirements are sampled over the prior 12 months
 - **Fieldwork:** December 2026 - January 2027
 - **Report issuance:** February 2027
 - **Keystone's preparation:** Evidence requests due by mid-December; PBC list provided to QSA in November.
@@ -180,8 +180,8 @@ Keystone tracks the following key performance indicators monthly and reports the
 
 ### GovRAMP Continuous Monitoring
 
-- **Submission frequency:** Monthly (due by the 10th of the following month)
-- **Annual authorization renewal:** December 2026
+- **Submission frequency:** Monthly, on the schedule in Keystone's GovRAMP continuous monitoring plan (internal target: the 10th)
+- **Annual 3PAO assessment:** December 2026
 - **Keystone's preparation:** POA&M and scans prepared by the 5th of each month; reviewed by Director of GRC before submission.
 
 By following this calendar and tracking these KPIs, Keystone ensures that its multi-framework compliance program operates continuously and that audit-critical deadlines are never missed.
