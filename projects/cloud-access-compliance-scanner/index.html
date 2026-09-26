@@ -14,7 +14,7 @@
 
 <div class="summary-block">
 <h3>Scenario</h3>
-<p>Working Python code that checks a mocked AWS account for four access control conditions: stale access keys, IAM users without MFA, public S3 bucket ACLs, and IAM policies with wildcard permissions. Maps findings to SOC 2 CC6 and SOX ITGC access controls.</p>
+<p>A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Tested against a mocked copy of a Keystone Civic Payments (fictional) sandbox account, seeded with deliberate violations so every check fires. In Keystone's production accounts, these checks back up ACC-05 (no human IAM users), ACC-06 (MFA enforcement), ACC-08 (service account inventory), and ACC-14 (unused access removal). Expected production result: zero findings apart from the two documented break-glass users. See <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/01-scoping/how-controls-operate.md">how-controls-operate.md</a> for context.</p>
 
 <h3>Frameworks</h3>
 <p>SOC 2 (CC6: Logical and Physical Access Controls), SOX ITGC (Access to Programs and Data)</p>
