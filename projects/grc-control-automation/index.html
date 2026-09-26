@@ -109,8 +109,7 @@
 <tr><td>ISO 27001 Annex A.8.5</td><td>Secure authentication is implemented in line with an access control policy, with the standard leaving implementation specifics to the organization's own risk assessment</td><td>Held, for the same reason, and because Pellworth's own documented policy did not explicitly define session-level MFA as the standard of proof</td></tr>
 <tr><td>PCI DSS 8.4.1 and 8.5.1</td><td>MFA is required for all non-console administrative access into the CDE (8.4.1), and access must not be granted unless all required factors succeed on that session, with any bypass requiring a documented, management-approved exception (8.5.1)</td><td>Did not hold. Actual session logs showed password-only administrative access to the CDE during the trusted-device window, with no documented exception on file</td></tr>
 </tbody>
-</table></div></div>
-</div>
+</table></div>
 <h2>Why Automation Made This Worse, Not Better</h2>
 <p>A manual evidence request, asked three separate times by three separate auditors, has three separate chances for someone to phrase the question differently and catch the gap. One SOC 2 tester might ask for enrollment. Another ISO 27001 assessor might ask for a policy document. A PCI QSA, trained specifically on 8.5.1's session-level language, is more likely to ask for challenge logs regardless of what the other two accepted. Automating the evidence pull into a single shared query removed that redundancy. The same wrong answer went to all three frameworks at once, and the two audits that would not have caught it independently never got the chance to, because they never saw the underlying session data at all. Control automation is supposed to reduce risk by removing manual error. Here it concentrated risk, because a single flawed evidence source now fed every framework that shared the control, instead of failing quietly in just one.</p>
 <h2>What a QSA Will Push Back On</h2>
@@ -147,8 +146,7 @@
 <tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
 <tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
 </tbody>
-</table></div></div>
-</div>
+</table></div>
 <hr />
 <h2>What a Crosswalk Actually Has to Prove</h2>
 <p>The clause mapping in this case study was never wrong. MFA for administrative access genuinely satisfies SOC 2 CC6.1, ISO 27001 A.8.5, and PCI DSS 8.4.1 on paper, and a reviewer checking the citations alone would sign off on all three. The failure was one layer down, in the evidence that was supposed to prove the mapping was true in practice, and that is the layer most control-automation write-ups skip past on their way to the clause table.</p>

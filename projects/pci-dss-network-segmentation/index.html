@@ -104,8 +104,7 @@
 <tr><td>CDE to Shared Logging and Monitoring</td><td>All CDE system logs forwarded to a central SIEM that also ingests logs from every non-CDE system</td><td>Isolated at the network layer, monitored centrally</td></tr>
 <tr><td>Administrative Access to the CDE</td><td>A single bastion host provides SSH access to CDE systems for the payments engineering team</td><td>Controlled and audited</td></tr>
 </tbody>
-</table></div></div>
-</div>
+</table></div>
 <h2>Where the Claim Holds, and Where It Doesn't</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Boundary</th><th>Does the Segmentation Hold?</th><th>Why</th></tr></thead>
@@ -115,8 +114,7 @@
 <tr><td>CDE to Shared Logging and Monitoring</td><td>Does not hold as claimed</td><td>Web server access logs can carry card numbers in query strings when a client misconfigures a request. If those raw logs reach a SIEM that also holds non-CDE data, without a masking step in front of it, the SIEM is not outside the CDE. It is inside it, whatever the network diagram says, and every system that reads from that SIEM inherits the same scope.</td></tr>
 <tr><td>Administrative Access to the CDE</td><td>Conditionally holds</td><td>The claim is only as strong as the bastion host's own hardening. A shared bastion host with standing credentials, no per-session multi-factor prompt, or access from unmanaged laptops is a more direct path into the CDE than the firewall rule the rest of this table is built around.</td></tr>
 </tbody>
-</table></div></div>
-</div>
+</table></div>
 <h2>What an Auditor Will Push Back On</h2>
 <p>A network diagram and a tested boundary are not the same evidence, and a QSA is trained to ask for the second one specifically.</p>
 <div class="split">
@@ -151,8 +149,7 @@
 <tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
 <tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
 </tbody>
-</table></div></div>
-</div>
+</table></div>
 <hr />
 <h2>What a Diagram Alone Cannot Prove</h2>
 <p>The architecture diagram below shows four boundaries the same way Keystone's engineers have always drawn them: a box for the CDE, a box for everything else, and a line between them. That picture is where most segmentation assessments stop, because it is where the confirming evidence is easiest to find. A firewall rule set that matches the diagram gets read as proof the diagram is still true.</p>
