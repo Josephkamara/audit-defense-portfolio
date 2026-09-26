@@ -7,12 +7,12 @@ Eleven case studies. Each one is a realistic scenario, built to show the reasoni
 - [FedRAMP 20x Transition POA&M](fedramp-20x-poam/): closing the machine-readable evidence gap before FedRAMP 20x's Consolidated Rules take effect.
 - [Third-Party Risk Management](third-party-risk-management/): a benefits administrator's vendor risk program, tiered under NIST CSF 2.0's supply chain risk category.
 - [ISO/IEC 27001 Statement of Applicability](iso27001-statement-of-applicability/): justifying which Annex A controls apply, and which do not, for a remote-first SaaS company.
-- [PCI DSS Network Segmentation](pci-dss-network-segmentation/): defending which cardholder data environment boundaries actually hold up under testing.
+- [PCI DSS Network Segmentation](pci-dss-network-segmentation/): Keystone's September 2025 segmentation retest, defending which cardholder data environment boundaries actually hold up under testing.
 - [EU AI Act High-Risk Classification](eu-ai-act-high-risk-classification/): why a workforce monitoring feature can't claim the narrow-task exemption.
 - [GRC Control Automation](grc-control-automation/): why a shared MFA control passes SOC 2 and ISO 27001 but fails PCI DSS.
 - [Agentic AI Risk Assessment](agentic-ai-risk-assessment/): where an autonomous invoice-approval agent needs a human in the loop.
 
-- [Cloud Access Compliance Scanner](cloud-access-compliance-scanner/): working, tested Python code for four SOC 2 and SOX access controls.
+- [Cloud Access Compliance Scanner](cloud-access-compliance-scanner/): working, tested Python code for four SOC 2 and SOX access controls, tested against a mocked Keystone sandbox account.
 - [Multi-Cloud SOX ITGC Control Mapping](multicloud-sox-itgc-control-mapping/): mapping six SOX ITGC objectives to real AWS and GCP evidence sources.
 
 [Back to the portfolio](../)
