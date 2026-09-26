@@ -11,15 +11,22 @@
 <main>
 <h1>SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control</h1>
 <p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
-  <p>A company runs its quarterly access review the way most companies still do: an analyst pulls two exports, reconciles them by hand, and hopes nothing slipped through in the three months between reviews. This design document walks through what happens when that control gets rebuilt as a continuous, automated check under SOC 2 CC6, and where the automation has to stop and hand the decision back to a person.</p>
+  
+<div class="summary-block">
+<h3>Scenario</h3>
+<p>A quarterly access review done manually with reconciled exports. Design document rebuilds it as a continuous automated check under SOC 2 CC6, identifying where automation works and where human judgment is still required.</p>
 
-<p><strong>Scenario:</strong> A quarterly access review done manually with reconciled exports. Design document rebuilds it as a continuous automated check under SOC 2 CC6, identifying where automation works and where human judgment is still required.</p>
+<h3>Frameworks</h3>
+<p>SOC 2 Trust Services Criteria (CC6: Logical and Physical Access Controls)</p>
 
-<p><strong>Frameworks:</strong> SOC 2 Trust Services Criteria (CC6: Logical and Physical Access Controls)</p>
+<h3>Key Artifacts</h3>
+<p>Automated access review design; separation of automated checks vs. human judgment calls; continuous monitoring approach.</p>
 
-<p><strong>Key artifacts:</strong> Automated access review design; separation of automated checks vs. human judgment calls; continuous monitoring approach.</p>
+<h3>Takeaway</h3>
+<p>Access review automation catches terminated users and role changes daily, but judgment calls (business justification for standing access, separation of duties conflicts) still require human review. Automation changes the control from periodic to continuous.</p>
+</div>
 
-<p><strong>Takeaway:</strong> Access review automation catches terminated users and role changes daily, but judgment calls (business justification for standing access, separation of duties conflicts) still require human review. Automation changes the control from periodic to continuous.</p>
+<p>A company runs its quarterly access review the way most companies still do: an analyst pulls two exports, reconciles them by hand, and hopes nothing slipped through in the three months between reviews. This design document walks through what happens when that control gets rebuilt as a continuous, automated check under SOC 2 CC6, and where the automation has to stop and hand the decision back to a person.</p>
 
 <p><em>The company below is built for this walkthrough. The SOC 2 Trust Services Criteria referenced are real and current (AICPA, 2017 framework as revised 2022).</em></p>
   <p><em>Related reading: "<a href="https://josefkamara.com/automated-access-reviews/">Automated Access Reviews: From Audit Theater to Continuous Assurance</a>," josefkamara.com.</em></p>
@@ -34,7 +41,7 @@
 <strong>Status:</strong> Design sample, not a deployed automation</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>Keystone Civic Payments runs its quarterly user access review the way most companies still do: a control owner pulls an export from the identity provider, pulls a separate export from HR, and reconciles the two by hand in a spreadsheet. The review takes two to three days every quarter, covers a point-in-time snapshot, and catches a terminated employee's lingering access only if the reconciliation happens to surface it before the auditor asks.</p>
+<p>Keystone Civic Payments (fictional, about 250 employees) runs its quarterly ServiceNow access review campaign (ACC-04) covering Okta, AWS, and in-scope applications. The review relies on manual exports for legacy batch and database accounts, and role changes depend on ServiceNow tasks (ACC-11). The design adds a daily automated HRIS-to-Okta-to-legacy reconciliation as a detective layer. References the Q2 2026 exception (one removal 9 business days late, 4 past the 5-day standard) and GAP-014.</p>
 <p>This document designs the same control as a continuous, automated check under SOC 2 CC6, and then does the part that matters more: it draws the line between what the automation can safely do on its own and what still needs a GRC analyst to decide. The automation is the easy half. The judgment is the reason the control holds up under audit.</p>
 <h2>The Control Today: Manual, Quarterly, Sampled</h2>
 <p>A typical quarterly access review works like this. The control owner exports active user accounts from the identity provider (Okta, Entra ID, or equivalent), exports the current employee roster from the HRIS, and manually cross-references the two lists. Anyone in the identity provider export who is not an active employee is a finding. Anyone whose role changed but whose access did not is a finding the manual process usually misses, because role-to-access mapping is rarely reconciled at the same time.</p>

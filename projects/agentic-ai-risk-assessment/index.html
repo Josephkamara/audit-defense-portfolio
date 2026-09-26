@@ -11,15 +11,22 @@
 <main>
 <h1>Agentic AI Risk Assessment: Where an Autonomous Invoice-Approval Agent Needs a Human in the Loop</h1>
 <p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
-  <p>A distributor gives an AI agent the ability to read invoices, match them against purchase orders, and pay vendors on its own, below a set dollar threshold. This document assesses that design against three real frameworks: the OWASP catalog for agentic application risk, MITRE ATLAS as a threat model for one concrete attack path, and the NIST AI Risk Management Framework as the structure for the controls that keep the agent's authority inside a boundary the business actually agreed to.</p>
+  
+<div class="summary-block">
+<h3>Scenario</h3>
+<p>An AI agent with authority to autonomously pay vendors below a dollar threshold. Assessment tests the design against OWASP Top 10 for Agentic Applications, walks one attack path through MITRE ATLAS, and structures controls using NIST AI RMF.</p>
 
-<p><strong>Scenario:</strong> An AI agent with authority to autonomously pay vendors below a dollar threshold. Assessment tests the design against OWASP Top 10 for Agentic Applications, walks one attack path through MITRE ATLAS, and structures controls using NIST AI RMF.</p>
+<h3>Frameworks</h3>
+<p>OWASP Top 10 for Agentic Applications, MITRE ATLAS, NIST AI Risk Management Framework</p>
 
-<p><strong>Frameworks:</strong> OWASP Top 10 for Agentic Applications, MITRE ATLAS, NIST AI Risk Management Framework</p>
+<h3>Key Artifacts</h3>
+<p>Agentic AI risk assessment; attack path analysis; control design mapped to NIST AI RMF govern, map, measure, and manage functions.</p>
 
-<p><strong>Key artifacts:</strong> Agentic AI risk assessment; attack path analysis; control design mapped to NIST AI RMF govern, map, measure, and manage functions.</p>
+<h3>Takeaway</h3>
+<p>Agentic AI systems that take action without human review require layered controls: code-enforced authority limits, audit trails, and human oversight thresholds. Agent-specific threats, such as prompt injection that triggers unauthorized payments, need controls outside the model.</p>
+</div>
 
-<p><strong>Takeaway:</strong> Agentic AI systems that take action without human review require layered controls: code-enforced authority limits, audit trails, and human oversight thresholds. Agent-specific threats, such as prompt injection that triggers unauthorized payments, need controls outside the model.</p>
+<p>A distributor gives an AI agent the ability to read invoices, match them against purchase orders, and pay vendors on its own, below a set dollar threshold. This document assesses that design against three real frameworks: the OWASP catalog for agentic application risk, MITRE ATLAS as a threat model for one concrete attack path, and the NIST AI Risk Management Framework as the structure for the controls that keep the agent's authority inside a boundary the business actually agreed to.</p>
 
 <p><em>The company below is built for this walkthrough. The OWASP catalog, MITRE ATLAS tactics, and NIST framework referenced are real and current as of September 2026.</em></p>
 <hr />
@@ -33,7 +40,7 @@
 <strong>Status:</strong> Design assessment, not a deployed system</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>LogiFlow Distribution processes several thousand vendor invoices a month. Most of them are routine: a known vendor, an open purchase order, an amount inside normal variance. The company wants an AI agent to clear that routine volume on its own and only bring a person in when something doesn't match.</p>
+<p>Tamsford Distribution (fictional) processes several thousand vendor invoices a month. Most of them are routine: a known vendor, an open purchase order, an amount inside normal variance. The company wants an AI agent to clear that routine volume on its own and only bring a person in when something doesn't match.</p>
 <p>The design below gives the agent exactly that authority, and nothing past it. It can read the invoice queue, check an invoice against an open PO, and call a payment-initiation function when both match and the amount sits under a fixed ceiling. It cannot add a vendor, change a bank routing number, or approve anything above that ceiling. This document exists to test whether that boundary actually holds, using three frameworks built for exactly this question: what can go wrong in an agentic system, how an attacker would try to move through it, and how a risk program structures the controls that keep it contained.</p>
 <h2>The Agent as Deployed</h2>
 <p>The Invoice Agent runs against three tools: a read query against the ERP's open invoice queue, a read query against the vendor master and purchase order records, and a single scoped function, <code>initiate_payment(invoice_id, po_id, amount)</code>, that the agent may call only when the invoice references a PO already open in the system and the two amounts match within 2 percent.</p>

@@ -100,6 +100,56 @@ pre {
     padding: 12px;
     border-radius: 4px;
     overflow-x: auto;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    border: 1px solid #ddd;
+}
+
+/* Split Columns (automated vs. judgment boxes) */
+.split {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 1em 0 1.5em;
+}
+
+.split-col {
+    flex: 1;
+    min-width: 260px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 16px 18px;
+}
+
+.split-col.automate {
+    border-top: 4px solid #7a8a99;
+}
+
+.split-col.judge {
+    border-top: 4px solid #C5A55A;
+}
+
+.split-col.agent {
+    border-top: 4px solid #3d7a4d;
+}
+
+.split-col.human {
+    border-top: 4px solid #a8842e;
+}
+
+.split-col ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.split-col li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* Table Wrapper for Mobile */
+.table-wrap {
+    overflow-x: auto;
 }
 
 /* Header */

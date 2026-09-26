@@ -11,15 +11,22 @@
 <main>
 <h1>Multi-Cloud SOX ITGC Control Mapping: AWS and GCP Evidence Sources for a Shared-Responsibility Environment</h1>
 <p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
+
+<div class="summary-block">
+<h3>Scenario</h3>
+<p>A company runs production workloads split across AWS and GCP. The same six SOX IT general control objectives apply to both clouds, but AWS and GCP expose identity, change, and configuration evidence through different services, logs, and commands.</p>
+
+<h3>Frameworks</h3>
+<p>SOX Section 404 IT general controls (Access to Programs and Data, Program Change, Computer Operations)</p>
+
+<h3>Key Artifacts</h3>
+<p>Six control objective mappings showing native evidence sources in both AWS and GCP; separation of automated collection vs. tester judgment calls.</p>
+
+<h3>Takeaway</h3>
+<p>A control objective reads the same regardless of infrastructure, but the evidence trail does not. AWS uses CloudTrail and IAM Access Analyzer; GCP uses Cloud Audit Logs and IAM Recommender. Test plans built for one cloud do not transfer without a separate evidence map.</p>
+</div>
+
 <p><em>Portfolio note: This design document describes a fictional company. The SOX IT general control objectives and the AWS and GCP service names referenced are real and current as of September 2026. No client or employer information appears anywhere in this document.</em></p>
-
-<p><strong>Scenario:</strong> A company runs production workloads split across AWS and GCP. The same six SOX IT general control objectives apply to both clouds, but AWS and GCP expose identity, change, and configuration evidence through different services, logs, and commands.</p>
-
-<p><strong>Frameworks:</strong> SOX Section 404 IT general controls (Access to Programs and Data, Program Change, Computer Operations)</p>
-
-<p><strong>Key artifacts:</strong> Six control objective mappings showing native evidence sources in both AWS and GCP; separation of automated collection vs. tester judgment calls.</p>
-
-<p><strong>Takeaway:</strong> A control objective reads the same regardless of infrastructure, but the evidence trail does not. AWS uses CloudTrail and IAM Access Analyzer; GCP uses Cloud Audit Logs and IAM Recommender. Test plans built for one cloud do not transfer without a separate evidence map.</p>
 
 <hr />
 <h2>Document Header</h2>
@@ -32,7 +39,7 @@
 <strong>Status:</strong> Design sample, not a deployed audit or automation</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>PrecisionTech Manufacturing runs its production workloads split across AWS and GCP: the core transaction platform on AWS, and the analytics and reporting pipeline that feeds the general ledger on GCP. For SOX purposes, the same six IT general control objectives apply to both environments. The problem for whoever tests them is that AWS and GCP do not expose identity, change, and configuration evidence through the same service, the same log, or the same command. A tester who only knows where to look in one provider walks into the other one blind.</p>
+<p>Kestrow Manufacturing (fictional) runs its production workloads split across AWS and GCP: the core transaction platform on AWS, and the analytics and reporting pipeline that feeds the general ledger on GCP. For SOX purposes, the same six IT general control objectives apply to both environments. The problem for whoever tests them is that AWS and GCP do not expose identity, change, and configuration evidence through the same service, the same log, or the same command. A tester who only knows where to look in one provider walks into the other one blind.</p>
 <p>This document maps each control objective to the actual native evidence source in AWS and in GCP, so a tester or an engineer designing an automated check knows where the evidence lives before the walkthrough starts. It closes with the harder half: what a script can mechanically pull versus what a tester still has to decide before that evidence supports a control conclusion.</p>
 <h2>Why the Same Control Needs Two Evidence Trails</h2>
 <p>A control objective such as "only authorized users can access production" reads the same on paper regardless of the infrastructure underneath it. The evidence request list does not. AWS records identity and access events in AWS CloudTrail and exposes access analysis through IAM Access Analyzer and IAM Access Advisor. GCP records the same category of event in Cloud Audit Logs and exposes access analysis through IAM Recommender and Cloud Asset Inventory. Neither provider's tooling reads the other provider's logs. A test plan built against one cloud does not transfer to the other without a separate evidence map, which is what the six tables below provide.</p>

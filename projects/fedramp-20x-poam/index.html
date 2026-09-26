@@ -11,15 +11,22 @@
 <main>
 <h1>FedRAMP 20x Transition: Plan of Action &amp; Milestones for the Machine-Readable Evidence Gap</h1>
 <p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
-  <p>A cloud service provider holds a FedRAMP Rev5 Moderate authorization today and a hard deadline it cannot negotiate: FedRAMP 20x's Consolidated Rules become mandatory on January 1, 2027, and the program no longer accepts narrative compliance documents as evidence. This POA&amp;M walks through five specific gaps between where the provider stands and where 20x requires it to be, rated by likelihood and impact, and sequenced against the real published deadlines instead of internal guesses.</p>
+  
+<div class="summary-block">
+<h3>Scenario</h3>
+<p>A cloud provider with an existing FedRAMP Rev5 Moderate authorization must close five gaps before FedRAMP 20x's Consolidated Rules take mandatory effect January 1, 2027. Narrative evidence is no longer accepted.</p>
 
-<p><strong>Scenario:</strong> A cloud provider with an existing FedRAMP Rev5 Moderate authorization must close five gaps before FedRAMP 20x's Consolidated Rules take mandatory effect January 1, 2027. Narrative evidence is no longer accepted.</p>
+<h3>Frameworks</h3>
+<p>FedRAMP 20x Consolidated Rules, NIST SP 800-53 Rev 5</p>
 
-<p><strong>Frameworks:</strong> FedRAMP 20x Consolidated Rules, NIST SP 800-53 Rev 5</p>
+<h3>Key Artifacts</h3>
+<p>Plan of Action & Milestones (POA&M) with five gaps rated by likelihood and impact; sequenced remediation plan tied to published FedRAMP deadlines.</p>
 
-<p><strong>Key artifacts:</strong> Plan of Action & Milestones (POA&M) with five gaps rated by likelihood and impact; sequenced remediation plan tied to published FedRAMP deadlines.</p>
+<h3>Takeaway</h3>
+<p>FedRAMP 20x requires machine-readable evidence and automated compliance validation. Narrative documents that passed Rev5 audits will not meet 20x requirements. Transitioning to the new framework is not optional after January 1, 2027.</p>
+</div>
 
-<p><strong>Takeaway:</strong> FedRAMP 20x requires machine-readable evidence and automated compliance validation. Narrative documents that passed Rev5 audits will not meet 20x requirements. Transitioning to the new framework is not optional after January 1, 2027.</p>
+<p>A cloud service provider holds a FedRAMP Rev5 Moderate authorization today and a hard deadline it cannot negotiate: FedRAMP 20x's Consolidated Rules become mandatory on January 1, 2027, and the program no longer accepts narrative compliance documents as evidence. This POA&amp;M walks through five specific gaps between where the provider stands and where 20x requires it to be, rated by likelihood and impact, and sequenced against the real published deadlines instead of internal guesses.</p>
 
 <p><em>The provider named below is built for this walkthrough. Every framework fact, rule number, date, and requirement cited is real and current as of September 2026.</em></p>
   <p><em>Related reading: "<a href="https://josefkamara.com/rfc-0024-fedramp-machine-readable-compliance/">FedRAMP RFC-0024 (Rev5 Machine-Readable Proposal): What CR26 Changed</a>," josefkamara.com.</em></p>
@@ -29,13 +36,13 @@
 <strong>Date Prepared:</strong> September 2026<br/>
 <strong>Prepared By:</strong> Joseph Kamara, CPA, CISSP, CISA<br/>
 <strong>System Owner:</strong> VP, Compliance and Security<br/>
-<strong>System / Authorization Path:</strong> CloudGuard Services, existing FedRAMP Rev5 Moderate authorization, transitioning to FedRAMP 20x<br/>
+<strong>System / Authorization Path:</strong> Cindermoor Cloud Services (fictional), existing FedRAMP Rev5 Moderate authorization, transitioning to FedRAMP 20x<br/>
 <strong>Frameworks Referenced:</strong> FedRAMP 20x (RFC-0014, RFC-0022, RFC-0024, Notice 0004, Notice 0009), NIST SP 800-53 Rev. 5<br/>
 <strong>Next Review:</strong> 60 days from approval, or immediately upon any FedRAMP RFC update affecting the items below</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>Meridian holds an existing FedRAMP Rev5 Moderate authorization for its claims processing platform. FedRAMP 20x replaces Rev5's document-based control catalog with roughly 61 to 63 Key Security Indicators (KSIs) for Moderate, validated through machine-readable OSCAL evidence instead of narrative Word and Excel packages. The Consolidated Rules for 2026 (CR26) take mandatory effect for all stakeholders on January 1, 2027. RFC-0024 sets a September 30, 2026 deadline for machine-readable authorization packages, now enforced through a two-speed submission pipeline rather than outright rejection, per FedRAMP's July 13, 2026 clarification.</p>
-<p>This POA&amp;M documents five gaps between Meridian's current Rev5 posture and 20x readiness, rates each by likelihood and impact, and sets remediation milestones against FedRAMP's published phase dates rather than internal guesses. The goal is not to chase every 20x requirement at once. It is to close the gaps that carry a hard external deadline first, and sequence the rest behind them.</p>
+<p>Cindermoor holds an existing FedRAMP Rev5 Moderate authorization for its claims processing platform. FedRAMP 20x replaces Rev5's document-based control catalog with roughly 61 to 63 Key Security Indicators (KSIs) for Moderate, validated through machine-readable OSCAL evidence instead of narrative Word and Excel packages. The Consolidated Rules for 2026 (CR26) take mandatory effect for all stakeholders on January 1, 2027. RFC-0024 sets a September 30, 2026 deadline for machine-readable authorization packages, now enforced through a two-speed submission pipeline rather than outright rejection, per FedRAMP's July 13, 2026 clarification.</p>
+<p>This POA&amp;M documents five gaps between Cindermoor's current Rev5 posture and 20x readiness, rates each by likelihood and impact, and sets remediation milestones against FedRAMP's published phase dates rather than internal guesses. The goal is not to chase every 20x requirement at once. It is to close the gaps that carry a hard external deadline first, and sequence the rest behind them.</p>
 <h2>Background</h2>
 <p>FedRAMP 20x launched in March 2025 to fix a bottleneck that had produced fewer than 500 total authorizations across the program's history. Phase 1 authorized 12 of 13 reviewed submissions, a 92.3% success rate once capacity-constrained submissions are excluded. Phase 2 tested the Moderate baseline across thirteen pilot participants. Phase 3, opening in the second half of 2026, formalizes Low and Moderate requirements for wide-scale adoption. Authorization timelines under 20x drop from Rev5's 12 to 24 months to under two months, and initial costs fall by roughly 75 to 90 percent.</p>
 <p>The shift is not a smaller version of the same requirement. Rev5 asked an organization to write that a control works. FedRAMP 20x asks the system to prove it, through continuous telemetry submitted as SUM (implementation summary with pass/fail criteria), MAS (Minimum Assessment Scope documentation), and ORD (criticality ordering) for each KSI.</p>
@@ -70,7 +77,7 @@
 <tr>
 <td>POAM-041-4</td>
 <td>System Security Plan and customer-facing materials still reference the retired "FedRAMP Low / Moderate / High" impact-level labels instead of the new Class A through D system.</td>
-<td>Notice 0004 (Initial Outcome from RFC-0020, published February 25, 2026) replaces impact-level labels with a single "FedRAMP Certified" designation and a Class A to D scheme. Class C maps to the former Moderate baseline Meridian holds today.</td>
+<td>Notice 0004 (Initial Outcome from RFC-0020, published February 25, 2026) replaces impact-level labels with a single "FedRAMP Certified" designation and a Class A to D scheme. Class C maps to the former Moderate baseline Cindermoor holds today.</td>
 <td><strong>Low.</strong> Likelihood: High (a documentation gap, not a technical one). Impact: Low (no security exposure, but a credibility gap with agency reviewers who know the new terminology).</td>
 <td>Update the SSP, marketing collateral, and the FedRAMP Marketplace listing to Class C terminology.</td>
 <td>Documentation updated within 30 days.</td>
@@ -88,7 +95,7 @@
 <h2>Sequencing Rationale</h2>
 <p>POAM-041-1 and POAM-041-2 come first because they share the same September 30, 2026 and January 1, 2027 external dates and because the automated-evidence work directly feeds the OSCAL conversion: telemetry that already exists in machine-readable form is telemetry that does not need to be re-documented by hand. POAM-041-3 and POAM-041-4 are lower-effort, bounded fixes that a small team can close in parallel without competing for the same engineering time. POAM-041-5 depends on Phase 3 finalizing the Moderate KSI specification, so it is scoped now and executed once that specification is stable.</p>
 <h2>Residual Risk Statement</h2>
-<p>Even after every item above closes, Meridian's authorization will run on a framework two years into its own build-out, with a federal program office operating on a reduced headcount. FedRAMP's own Phase 2 experience shows a 44-day review delay caused by a government shutdown. A future shutdown or staffing change could slow review timelines regardless of how ready Meridian's submission is. That risk sits outside Meridian's control and is not remediated by this plan. It is tracked, not eliminated.</p>
+<p>Even after every item above closes, Cindermoor's authorization will run on a framework two years into its own build-out, with a federal program office operating on a reduced headcount. FedRAMP's own Phase 2 experience shows a 44-day review delay caused by a government shutdown. A future shutdown or staffing change could slow review timelines regardless of how ready Cindermoor's submission is. That risk sits outside Cindermoor's control and is not remediated by this plan. It is tracked, not eliminated.</p>
 <h2>Recommendation</h2>
 <p>Approve this POA&amp;M and fund the OSCAL tooling evaluation (POAM-041-1) and automated-evidence build-out (POAM-041-2) as the two priority workstreams for Q4 2026, ahead of the January 1, 2027 CR26 mandatory date. Track POAM-041-3 and POAM-041-4 as parallel, lower-effort items. Hold POAM-041-5 for Phase 3 finalization rather than building against a specification that has not stabilized.</p>
 <h2>Decision and Sign-off</h2>
@@ -103,7 +110,7 @@
 <hr />
 <h2>How to Read This POA&amp;M</h2>
 <p>Five weaknesses, five remediation items, and one column that matters more than the other four: Basis. Every row in the findings table traces to a specific RFC number, Notice number, or published date, not a paraphrase of "FedRAMP 20x requires more automation." A reviewer who checks that column against the actual RFC text can tell in minutes whether this plan was built from the source material or assembled from a conference talk about it.</p>
-<p>The sequencing section exists for the same reason. Five findings with no order of operations is an inventory, not a plan. POAM-041-1 and POAM-041-2 come first because they share the same external deadlines and because the automated-evidence work feeds the OSCAL conversion directly. And the residual risk statement does not pretend that closing all five items removes every risk to this authorization. A federal program running on reduced staff can still slow a review regardless of how ready Meridian's submission is, and a POA&amp;M that implies otherwise is not honest about what remediation controls and what it does not.</p>
+<p>The sequencing section exists for the same reason. Five findings with no order of operations is an inventory, not a plan. POAM-041-1 and POAM-041-2 come first because they share the same external deadlines and because the automated-evidence work feeds the OSCAL conversion directly. And the residual risk statement does not pretend that closing all five items removes every risk to this authorization. A federal program running on reduced staff can still slow a review regardless of how ready Cindermoor's submission is, and a POA&amp;M that implies otherwise is not honest about what remediation controls and what it does not.</p>
 <h2>Key Takeaways</h2>
 <ul>
 <li>Every finding needs to trace to a specific RFC or Notice number, not a paraphrase of what the framework is believed to require.</li>
