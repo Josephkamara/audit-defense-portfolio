@@ -30,7 +30,7 @@ A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level
 
 **Assessment**
 
-Keystone Civic Payments' (fictional) September 2025 segmentation retest. The segmentation attestation had been renewed every year without testing the parts that don't show up on the architecture diagram: a shared log pipeline, a bastion host used for three different purposes, and a batch export job nobody has re-reviewed since it was built. The QSA is about to start. This document is the segmentation testing scope the QSA will actually run, stating plainly which claimed boundaries hold up and which do not.
+Keystone Civic Payments' (fictional) September 2025 segmentation retest. The segmentation attestation had been renewed every year without testing the parts that don't show up on the architecture diagram: a shared log pipeline, a bastion host used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document is the segmentation testing scope the QSA will actually run, stating plainly which claimed boundaries hold up and which do not.
 
 `PCI DSS` `Cybersecurity`
 
