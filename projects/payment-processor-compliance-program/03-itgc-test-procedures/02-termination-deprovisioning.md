@@ -73,10 +73,12 @@ To ensure that access to in-scope systems is removed promptly when an individual
 
 ## Exception Example
 
-**Exception:** One contractor termination (john.tempworker@vendor.example, end date May 29, 2026) had Okta disabled on May 29 as expected, and SCIM removed GitHub on May 29. However, the contractor had two AWS IAM Identity Center permission sets assigned directly (outside Okta), and the ServiceNow offboarding task was not created until June 5, 2026. The Q2 2026 access review (certification date June 10) flagged the two remaining Identity Center assignments. Removal finished June 19, 2026, 9 business days after certification, 4 past the 5-business-day standard.
+**Exception:** One contractor termination (henry.contractor@contractorco.example, end date Friday, May 29, 2026). Okta was disabled on May 29 by the contractor end date, and SCIM removed GitHub the same day. The Identity Center analytic found two AWS permission sets assigned directly in IAM Identity Center (outside Okta groups, left over from a 2025 incident) that were still present after the termination date. The sponsoring manager's ServiceNow offboarding task was also created late (June 5). The Q2 2026 access review (TP-03) flagged the assignments on Monday, July 6, 2026; they were removed Friday, July 17, 2026, 49 days after termination.
 
-**Root Cause:** The sponsoring manager was out of the office the week of May 29 and did not submit the offboarding task before leaving. No backup process existed for manager absences. The direct Identity Center assignments were outside the Okta-to-AWS provisioning flow.
+**Root Cause:** The offboarding workflow does not cover permission sets assigned directly outside Okta groups. The sponsoring manager was out of the office the week of May 29, and no backup process existed for manager absences.
 
-**Mitigating Factors:** Okta was disabled on time, and SCIM deprovisioned GitHub. The contractor could not sign in to AWS because Keystone requires Okta SSO for console and CLI access. The direct assignments were read-only sandbox roles.
+**Mitigating Factors:** IAM Identity Center authenticates only through Okta SSO, and Okta was disabled on May 29. The IAM credential report shows no IAM user or access keys for this person. CloudTrail shows zero events for the identity between May 29 and July 17.
 
-**Remediation:** HR updated the offboarding checklist to require sponsoring managers to submit contractor offboarding tasks at least 3 business days before the end date. IAM Manager is adding Identity Center assignment reconciliation to the monthly review (ACC-14). Implemented June 2026.
+**Remediation:** HR updated the offboarding checklist to require sponsoring managers to submit contractor offboarding tasks at least 3 business days before the end date, effective June 2026. The IAM team is adding a check for direct Identity Center assignments at offboarding, and a monthly reconciliation of direct assignments (ACC-14).
+
+**Auditor's note:** For ACC-02 this is one exception (access remaining after termination), cross-referenced to the TP-03 exception detail for the same account.
