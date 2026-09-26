@@ -58,7 +58,8 @@ This 30/60/90-day plan is designed for an IT auditor joining Keystone Civic Paym
 - [ ] **Read the most recent SOC 1 and SOC 2 reports** (user entity auditor perspective):
   - What exceptions were noted in the Type 2 report?
   - What were the complementary user entity controls (CUECs) for the subservice orgs (AWS, GatewayCo)?
-  - Was the opinion modified, and which deviations were reported in the tests of controls?
+  - Which deviations were reported in the tests of controls, and how did management respond?
+  - Was the opinion unmodified? If it was modified, which control objectives or criteria were not achieved?
 - [ ] **Review the GovRAMP POA&M** (current version):
   - What open findings exist?
   - What are their due dates and risk levels?
