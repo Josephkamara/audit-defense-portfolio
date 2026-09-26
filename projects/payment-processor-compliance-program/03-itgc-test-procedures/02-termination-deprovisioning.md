@@ -2,13 +2,13 @@
 
 **Control Reference:** ACC-02
 
-**Control Statement:** Employee terminations entered in the HRIS trigger automated Okta deactivation on the termination date. Contractor terminations are submitted by the sponsoring manager through a ServiceNow offboarding task. Accounts outside Okta (legacy batch system, database local accounts) are removed by the system owner the same business day.
+**Control Statement:** Employee terminations entered in the HRIS trigger automated Okta deactivation on the termination date with SCIM deprovisioning to downstream apps (ServiceNow, GitHub, GRC platform, Splunk). Contractor terminations are submitted by the sponsoring manager through a ServiceNow offboarding task. Accounts outside Okta (legacy batch system local accounts, database local accounts) are removed manually by the system owner the same business day.
 
 **Control Owner:** IAM Manager
 
 **Frequency:** Recurring (event-driven)
 
-**Nature:** IT-dependent manual
+**Nature:** Hybrid
 
 **Type:** Preventive
 
@@ -27,9 +27,11 @@ To ensure that access to in-scope systems is removed promptly when an individual
 
 ## Population and Sample Size
 
-**Population:** All employee and contractor terminations during the review period (HRIS export and contractor roster with end dates).
+**For Okta-managed accounts (employees and most contractors):** Full-population analytic. Compare every HRIS termination date to the Okta `user.lifecycle.deactivate` timestamp and the SCIM deprovision events in downstream apps (ServiceNow, GitHub, GRC platform, Splunk). Flag any Okta deactivation later than the termination date or SCIM event later than same business day.
 
-**Sample size:** All terminations during the period if fewer than 30; otherwise 25 to 40 terminations stratified by employee vs. contractor and month.
+**For legacy batch and database accounts:** Sample-based. Sample 25 terminated users who had legacy system access, stratified by month.
+
+**Population:** All employee and contractor terminations during the review period (HRIS export and contractor roster with end dates).
 
 ## Test Steps
 
@@ -38,24 +40,30 @@ To ensure that access to in-scope systems is removed promptly when an individual
    - Contractor terminations: Contractor roster with end dates and sponsoring manager.
    - Reconcile to HR's official termination list to confirm completeness.
 
-2. **For each sampled termination:**
-   - **Okta deactivation:** Check Okta System Log for user.lifecycle.deactivate event. Confirm the deactivation occurred on the termination date (for employees) or within 1 business day (for contractors whose offboarding task may have been submitted the day before the last day).
-   - **AWS access removal:** Check AWS IAM Identity Center assignments; confirm no active permission sets. Check AWS IAM for any lingering IAM users; confirm deleted or access keys deactivated.
-   - **Legacy system accounts:** For terminated users who had legacy batch system access, SSH to the server and confirm the account is removed or disabled (`cat /etc/passwd`, `passwd -S username` to check lock status). For database accounts, confirm dropped or revoked (`psql -c "\du"`).
-   - **ServiceNow offboarding task (contractors):** Confirm a ServiceNow offboarding task was created by the sponsoring manager, assigned to the IAM team, and completed same business day or next business day.
+2. **For Okta-managed accounts (full population):**
+   - Export all HRIS terminations with termination date.
+   - Export all Okta `user.lifecycle.deactivate` events for the period with user identifier and timestamp.
+   - Export all SCIM deprovision events from downstream apps (ServiceNow, GitHub, GRC platform, Splunk) for the period.
+   - Join the exports on user identifier. Flag any row where:
+     - Okta deactivation timestamp is after the HRIS termination date (should be same day)
+     - SCIM deprovision timestamp in any downstream app is more than 1 business day after the Okta deactivation
+   - Investigate and document any flagged exceptions.
 
-3. **Check for any lingering access:**
-   - For a sample of terminated users, check current Okta directory, AWS, ServiceNow, GitHub to confirm the account is no longer active.
+3. **For legacy batch and database accounts (sample):**
+   - For each sampled termination who had legacy system access, SSH to the server and confirm the account is removed or disabled (`cat /etc/passwd`, `passwd -S username` to check lock status). For database accounts, confirm dropped or revoked (`psql -c "\du"`).
+   - Confirm removal occurred the same business day as the termination date.
+
+4. **Check for any lingering access:**
+   - For a sample of terminated users from both the Okta full-population test and the legacy system sample, check current Okta directory, AWS, ServiceNow, GitHub to confirm the account is no longer active.
 
 ## Sample Attributes
 
 | Attribute | Expected | How to Test |
 |-----------|----------|-------------|
-| Okta deactivation on termination date | Deactivate event date = termination date | Compare HRIS termination date to Okta log event timestamp |
-| AWS access removed | No active permission sets or IAM users | Query AWS for the terminated user's identity; confirm not found or inactive |
-| Legacy accounts removed same day | Account removed or disabled | Check /etc/passwd, database user list |
-| Offboarding task completed (contractors) | Task created, assigned, closed same/next day | Inspect ServiceNow offboarding task |
-| No lingering access | Account not present in current directory | Search Okta/AWS/etc. for the terminated user |
+| Okta deactivation on termination date | Deactivate event date = termination date | Full-population analytic: join HRIS terminations to Okta deactivate events and flag late deactivations |
+| SCIM deprovision within 1 business day | SCIM event within 1 business day of Okta deactivation | Full-population analytic: join Okta deactivations to SCIM deprovision events in downstream apps |
+| Legacy accounts removed same day | Account removed or disabled | Sample: check /etc/passwd, database user list for sampled terminations |
+| No lingering access | Account not present in current directory | Sample both Okta and legacy terminated users; search Okta/AWS/GitHub/ServiceNow |
 
 ## Exception Example
 

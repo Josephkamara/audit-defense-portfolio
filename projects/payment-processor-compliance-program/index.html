@@ -4,31 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Processor Compliance Program - Joseph Kamara</title>
-<style>
-body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-header { background:#002147; padding:20px 24px; }
-header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
-main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
-h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
-h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
-h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
-strong { color:#002147; }
-ul { padding-left:20px; margin-top:8px; }
-li { margin-bottom:8px; line-height:1.5; }
-table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
-th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
-td { border:1px solid #ccc; padding:8px; vertical-align:top; }
-hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
-.summary-block { background:#F4F6F8; border-left:4px solid #C5A55A; padding:16px 20px; margin:20px 0; }
-.summary-block h3 { margin-top:0; }
-.summary-block p { margin:6px 0; }
-.tag { display:inline-block; font-family: Arial, sans-serif; font-size:0.75em; color:#002147; background:#F4F6F8; border:1px solid #C5A55A; border-radius:12px; padding:3px 12px; margin:0 8px 8px 0; }
-</style>
+<link rel="stylesheet" href="../../assets/site.css">
 </head>
-<body>
-<header><a href="../../">&larr; Back to Portfolio</a></header>
+<body class="project-page">
+<header class="project-header"><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>Payment Processor Compliance Program</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
 
 <div class="summary-block">
 <h3>Scenario</h3>
@@ -38,7 +20,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 <p>PCI DSS v4.0.1 (service provider), SOC 1 Type 2, SOC 2 Type 2 (Security, Availability, Confidentiality), GovRAMP Moderate (NIST SP 800-53 Rev 5), IT general controls (SOX ITGC categories, supporting SOC 1)</p>
 
 <h3>Key Artifacts</h3>
-<p>Unified control matrix (76 controls mapped across all frameworks), system scoping and data flow diagrams, 7 detailed ITGC test procedures with sample workpapers and one realistic exception, gap analysis with 15 identified gaps and remediation tracker, vendor and penetration test oversight checklists, 12-month compliance calendar with KPIs, 30/60/90-day plan for a new IT auditor</p>
+<p>Unified control matrix (79 controls mapped across all frameworks), system scoping and data flow diagrams, 7 detailed ITGC test procedures with sample workpapers and one realistic exception, gap analysis with 15 identified gaps and remediation tracker, vendor and penetration test oversight checklists, 12-month compliance calendar with KPIs, 30/60/90-day plan for a new IT auditor</p>
 
 <h3>Takeaway</h3>
 <p>One well-designed control, with one owner and one evidence set, can support PCI DSS, SOC 1, SOC 2, and GovRAMP assessments at the same time. Each assessor still tests it independently. This program shows how to scope a multi-framework environment, build a unified control matrix, test controls with audit-grade rigor, track gaps, and run continuous compliance without duplicating work across audits.</p>
@@ -58,6 +40,40 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <p><em>The company, systems, and data are fictional. Every scenario is built to demonstrate judgment and technical depth in a compliance program design. No real employer, client, or assessment is depicted.</em></p>
 
+<h2>How Controls Operate (Scenario Assumptions)</h2>
+
+<p><strong>AWS controls are built as code.</strong> Network security controls (security groups, NACLs, Transit Gateway routes), IAM Identity Center permission sets, S3 bucket policies, KMS key policies, CloudTrail, AWS Config rules, and logging settings are defined in Terraform in GitHub. Changes go through a pull request with terraform plan output attached, peer review under branch protection (CHG-02), and a linked ServiceNow change record (CHG-01). Only the GitHub Actions deployment role, through OIDC, applies to production (CHG-05).</p>
+
+<p><strong>Continuous monitoring.</strong> AWS Config rules and conformance packs detect drift from the Terraform baseline. AWS Security Hub runs the AWS Foundational Security Best Practices standard and the PCI DSS v4.0.1 standard, which Security Hub has supported since December 2024. GuardDuty findings and failed Config and Security Hub checks open ServiceNow tickets automatically. The GRC platform (a Vanta, Drata, Secureframe, or OneTrust class tool) pulls pass/fail results from AWS, Okta, GitHub, and ServiceNow as automated evidence.</p>
+
+<p><strong>Legacy colocation batch system stays manual.</strong> The batch server and its database cannot be managed by Terraform. Its controls are manual or IT-dependent manual, with a defined cadence: local account listing reviewed quarterly (GAP-014 scope), OS and database security parameters exported and compared to the baseline quarterly, firewall rule review every six months (NET-02), nightly backup job check and quarterly restore test (OPS-02), cage access list reviewed quarterly (PHY-01), wireless scan quarterly (NET-06).</p>
+
+<p><strong>How testing changes:</strong> Automated, Terraform-defined configuration can be tested as a test of one: inspect the configuration once at a point in time and confirm it matches the requirement. That works only if the IT general controls over that configuration operated all period: change management (CHG-01, CHG-02, CHG-05) and privileged access (ACC-05, ACC-13). Add the AWS Config compliance timeline for the period, which shows no unremediated drift. If the ITGCs are not effective, fall back to testing the configuration at multiple points in the period. Manual controls keep frequency-based samples. PCI QSAs examine configurations and do not use the term "test of one". The same evidence still supports their testing.</p>
+
+<p><strong>Where automated evidence can mislead:</strong> <a href="../grc-control-automation/">See the GRC Control Automation project</a>, which shows how an automated check that proves the wrong thing (MFA enrollment instead of a per-session challenge) passes two audits and fails PCI. Automated evidence needs a human-reviewed evidence specification.</p>
+
+<p><strong>Worked example:</strong> <a href="../cloud-access-compliance-scanner/">See the Cloud Access Compliance Scanner</a> as the primary worked example. It is working boto3 code that runs repeatable access checks against an AWS account and produces workpaper-shaped findings on every run. That is the kind of continuous, automated evidence this section describes.</p>
+
+<p><strong>Full documentation:</strong> <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/01-scoping/how-controls-operate.md" target="_blank">Read the full how-controls-operate.md document.</a></p>
+
+<h2>Identity and Access (Scenario Assumptions)</h2>
+
+<p><strong>Workforce identity:</strong> Okta is the single identity provider. Every in-scope application federates with SAML 2.0 or OIDC. Apps that cannot do SSO are listed as exceptions with a local-account review (ACC-12).</p>
+
+<p><strong>Joiner, mover, leaver:</strong> The HRIS is the source of truth. Joiner: birthright groups are provisioned through Okta with SCIM to downstream apps (ServiceNow, GitHub, the GRC platform, Splunk). Non-birthright access is requested and approved in ServiceNow (ACC-01). Mover: an HRIS job change creates a ServiceNow task, and SCIM removes the old birthright groups (ACC-11). Leaver: the HRIS termination deactivates Okta, and SCIM deprovisions downstream accounts (ACC-02).</p>
+
+<p><strong>AWS access:</strong> Humans use Okta SSO into IAM Identity Center permission sets. There are no human IAM users, and two vaulted break-glass users are the documented exception (ACC-05, GAP-001).</p>
+
+<p><strong>Privileged access (PAM, just-in-time):</strong> Production write and legacy root/sudo access are not standing. Engineers request time-bound elevation tied to a ServiceNow ticket. Elevation expires automatically: default 4 hours, maximum 8. Sessions run through AWS Systems Manager Session Manager or the PAM tool, with session logging (ACC-13).</p>
+
+<p><strong>Authentication:</strong> Phishing-resistant MFA (FIDO2 security keys or platform authenticators) for all workforce sign-ins and required for all administrators (ACC-06). Break-glass is the GAP-001 exception.</p>
+
+<p><strong>Unused and external access:</strong> IAM Access Analyzer, organization-level unused access analyzer with a 90-day window, reports unused roles, unused access keys and passwords, and unused permissions. External access findings are also reviewed. Findings are reviewed monthly. Removals go through Terraform and CHG-01 (ACC-14).</p>
+
+<p><strong>Access review evidence:</strong> Quarterly privileged and CDE reviews and semiannual general reviews run as ServiceNow review campaigns (ACC-04, TP-03). The source listings include Okta group exports, Identity Center assignments, and legacy account listings.</p>
+
+<p><strong>Full documentation:</strong> <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/01-scoping/identity-and-access.md" target="_blank">Read the full identity-and-access.md document.</a></p>
+
 <h2>Program Structure</h2>
 
 <p>The program is organized into eight folders, each representing a phase of the compliance lifecycle:</p>
@@ -74,7 +90,7 @@ hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
 
 <h3>2. Unified Control Matrix (Folder: 02-control-matrix)</h3>
 
-<p><strong>The matrix:</strong> 76 controls across 14 domains (Governance, Access, Change, Operations, Logging, Vulnerability, Network, Encryption, Incident Response, Vendor, Physical, HR, Data Retention, Business Continuity). Each control maps to PCI DSS v4.0.1 requirements, SOC 2 Trust Services Criteria (2017 with 2022 Points of Focus), NIST SP 800-53 Rev 5 (GovRAMP Moderate baseline), and SOX ITGC areas where applicable.</p>
+<p><strong>The matrix:</strong> 79 controls across 14 domains (Governance, Access, Change, Operations, Logging, Vulnerability, Network, Encryption, Incident Response, Vendor, Physical, HR, Data Retention, Business Continuity). 38 are key controls. 28 map to SOX ITGC areas: 15 to Access to Programs and Data (ACC-01 through ACC-14, PHY-01), 5 to Program Change (CHG-01 through CHG-05), and 8 to Computer Operations (OPS-01 through OPS-04, IR-04, BCP-01, BCP-02, VEN-03). Each control maps to PCI DSS v4.0.1 requirements, SOC 2 Trust Services Criteria (2017 with 2022 Points of Focus), NIST SP 800-53 Rev 5 (GovRAMP Moderate baseline), and SOX ITGC areas where applicable.</p>
 
 <p><strong>Example:</strong> ACC-04 (quarterly privileged access review) maps to PCI DSS 7.2.4, SOC 2 CC6.2 and CC6.3, NIST AC-2 and AC-6(7), and the SOC 1 access control objective. One ServiceNow access review campaign provides the evidence each assessor tests.</p>
 

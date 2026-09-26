@@ -31,6 +31,20 @@ To ensure that changes to production systems are authorized, tested, and documen
 
 **Sample size:** 25 to 60 changes, stratified by change type (application, infrastructure, emergency), risk level (standard, normal, high), and month.
 
+### Infrastructure as Code
+
+For infrastructure changes managed as Terraform code, the population comes from two directions to test completeness:
+
+1. **Merged pull requests reconciled to ServiceNow change records:** All merged pull requests in the Terraform repositories during the period should have a linked ServiceNow change record. This tests that no infrastructure change bypassed change control.
+2. **ServiceNow infrastructure changes reconciled back to pull requests:** All ServiceNow change records tagged as infrastructure or Terraform should link back to a merged GitHub pull request. This tests that the change record population is complete.
+
+For sampled Terraform changes, add these attributes:
+- `terraform plan` output is attached to the pull request or change record
+- Reviewer is not the author (branch protection enforces this, but verify)
+- Applied only by the pipeline role (GitHub Actions OIDC deployer)
+
+This is the ITGC that lets TP-AUTO rows (ACC-03, ACC-05, ACC-06, ACC-12, CHG-09, LOG-02, LOG-05, LOG-06, NET-03, NET-05, VUL-06, CRY-02) be tested as a test of one. If change management over Terraform has an exception, TP-AUTO controls expand to multiple points in the period.
+
 ## Test Steps
 
 1. **Obtain the change population:**
@@ -42,8 +56,8 @@ To ensure that changes to production systems are authorized, tested, and documen
    - **Risk rating documented:** Confirm risk rating (standard/normal/high) is filled in.
    - **Test evidence attached:** Confirm test results, staging deployment log, or pre-production validation is attached or referenced.
    - **Approval before deployment:**
-     - For normal and high-risk changes: Confirm CAB approval or Director of Engineering approval is documented in ServiceNow before the deployment timestamp.
-     - For standard changes: Confirm the change matches a pre-approved standard change model (example: routine patch, certificate renewal).
+     - For normal and high-risk changes: Confirm the change record shows CAB or standard change approval (for pre-approved models) before the deployment timestamp.
+     - For standard changes: Confirm the change matches a pre-approved standard change model (example: routine patch, certificate renewal, Terraform apply for a low-risk config).
      - For emergency changes: Confirm retrospective CAB approval occurred within 2 business days.
    - **GitHub pull request linked:** Confirm the change record links to a GitHub pull request (for code/IaC changes).
    - **Branch protection enforced:** Open the linked pull request in GitHub; confirm at least one approving review from someone other than the author, and that status checks (CI pipeline) passed before merge.
