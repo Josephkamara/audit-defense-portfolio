@@ -64,7 +64,7 @@ A Python scanner that pulls real evidence for four controls: stale IAM keys, mis
 
 ### [SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control](https://josephkamara.github.io/audit-defense-portfolio/projects/soc2-access-review-automation/)
 
-**Automation Design**
+**Memo**
 
 Keystone Civic Payments' (fictional) quarterly ServiceNow access review, redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.
 

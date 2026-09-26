@@ -45,7 +45,7 @@ Sessions run through AWS Systems Manager Session Manager or the PAM tool, with s
 
 Quarterly privileged and CDE reviews and semiannual general reviews run as ServiceNow review campaigns (ACC-04, TP-03). The source listings include Okta group exports, Identity Center assignments, and legacy account listings.
 
-The Q2 2026 access review flagged a contractor's two AWS permission sets assigned directly in IAM Identity Center, outside Okta. Removal finished 9 business days after the review certification, 4 past the 5-business-day standard. Okta had been disabled on the end date, so the contractor could not sign in. This is the realistic exception example in TP-03. A daily automated HRIS-to-Okta-to-legacy reconciliation is being added as a detective layer (see [../soc2-access-review-automation/](../../soc2-access-review-automation/)).
+The Q2 2026 access review flagged a contractor's two AWS permission sets assigned directly in IAM Identity Center, outside Okta. Removal finished 9 business days after the review flagged it, 4 past the 5-business-day standard. Okta had been disabled on the end date, so the contractor could not sign in. This is the realistic exception example in TP-03. A daily automated HRIS-to-Okta-to-legacy reconciliation is being added as a detective layer (see [../soc2-access-review-automation/](../../soc2-access-review-automation/)).
 
 Standard Linux OS accounts and PostgreSQL database users on the legacy batch system are not yet in the quarterly review (GAP-014); root and sudo have been reviewed quarterly since Q2 2026.
 
