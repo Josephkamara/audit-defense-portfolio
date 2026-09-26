@@ -48,7 +48,7 @@
 <h2>Where the Risk Actually Sits: The OWASP Catalog</h2>
 <p>OWASP published the Top 10 for Agentic Applications in December 2025, cataloging the ways an autonomous system with tool access fails that a standard application threat model does not cover. Six categories apply directly to this design.</p>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>OWASP Category</th><th>What It Looks Like Here</th><th>How the Design Answers It</th></tr></thead>
 <tbody>
 <tr><td><strong>ASI01</strong> Agent Goal Hijack</td><td>A vendor invoice PDF contains hidden text instructing the agent to approve an amount above the ceiling</td><td>The ceiling check runs in code after the model's output, not inside the model's own reasoning, so a hijacked goal still hits a wall it cannot argue with</td></tr>
@@ -58,7 +58,7 @@
 <tr><td><strong>ASI08</strong> Cascading Failures</td><td>A single bad rule or a stream of similar fraudulent invoices draining funds before anyone notices</td><td>A daily circuit breaker caps total autonomous payment volume and halts the agent for human review if it trips</td></tr>
 <tr><td><strong>ASI10</strong> Rogue Agents</td><td>A compromised agent acting harmfully while still appearing to follow its instructions</td><td>Every autonomous payment logs the matched invoice, PO, amount, and the agent's stated reasoning to a store the agent has no write access to alter</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <h2>Threat Modeling One Attack Path: MITRE ATLAS</h2>
 <p>The OWASP catalog names categories of failure. MITRE ATLAS gives a vocabulary for the sequence an attacker actually follows, and walking one path through it is a better test of a control than describing the control in the abstract.</p>

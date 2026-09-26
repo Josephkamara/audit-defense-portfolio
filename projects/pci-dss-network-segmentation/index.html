@@ -97,7 +97,7 @@
 <p style="font-size:0.85em;color:#7a8a99;text-align:center;margin-top:-4px;">Figure 1. The four claimed segmentation boundaries around Keystone's CDE. Three hold under testing. The SIEM ingestion path does not, because it can carry raw card data into infrastructure shared with non-CDE systems.</p>
 <h2>Claimed Segmentation Boundaries</h2>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Boundary</th><th>Control in Place</th><th>Claim</th></tr></thead>
 <tbody>
 <tr><td>CDE to Corporate Network</td><td>Stateful firewall, default-deny, with a narrow allow list for specific internal API calls</td><td>Fully isolated</td></tr>
@@ -105,11 +105,11 @@
 <tr><td>CDE to Shared Logging and Monitoring</td><td>All CDE system logs forwarded to a central SIEM that also ingests logs from every non-CDE system</td><td>Isolated at the network layer, monitored centrally</td></tr>
 <tr><td>Administrative Access to the CDE</td><td>A single bastion host provides SSH access to CDE systems for the payments engineering team</td><td>Controlled and audited</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <h2>Where the Claim Holds, and Where It Doesn't</h2>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Boundary</th><th>Does the Segmentation Hold?</th><th>Why</th></tr></thead>
 <tbody>
 <tr><td>CDE to Corporate Network</td><td>Holds</td><td>Ninety days of firewall change logs show no ad hoc rule additions, and the last segmentation penetration test confirmed no reachable path from the corporate network into the CDE's allow-listed ports.</td></tr>
@@ -117,7 +117,7 @@
 <tr><td>CDE to Shared Logging and Monitoring</td><td>Does not hold as claimed</td><td>Web server access logs can carry card numbers in query strings when a client misconfigures a request. If those raw logs reach a SIEM that also holds non-CDE data, without a masking step in front of it, the SIEM is not outside the CDE. It is inside it, whatever the network diagram says, and every system that reads from that SIEM inherits the same scope.</td></tr>
 <tr><td>Administrative Access to the CDE</td><td>Conditionally holds</td><td>The claim is only as strong as the bastion host's own hardening. A shared bastion host with standing credentials, no per-session multi-factor prompt, or access from unmanaged laptops is a more direct path into the CDE than the firewall rule the rest of this table is built around.</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <h2>What an Auditor Will Push Back On</h2>
 <p>A network diagram and a tested boundary are not the same evidence, and a QSA is trained to ask for the second one specifically.</p>
@@ -147,14 +147,14 @@
 <p>Insert a masking step in front of the shared SIEM so that CDE-originated logs are scrubbed of any card data before they reach infrastructure shared with non-CDE systems, or bring the SIEM itself under full CDE-level controls if masking cannot be guaranteed. Formally classify the bastion host as an in-scope CDE system, requiring per-session multi-factor authentication and eliminating standing credentials. Schedule the next full segmentation penetration test within six months of the last one, per 11.4.6, and add a standing requirement that any new microservice or merchant onboarding affecting network topology triggers a boundary review before launch, not at the next scheduled test.</p>
 <h2>Decision and Sign-off</h2>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
 <tbody>
 <tr><td>Program Owner (Director of Payment Security)</td><td></td><td>Approve / Reject</td><td></td></tr>
 <tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
 <tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <hr />
 <h2>What a Diagram Alone Cannot Prove</h2>

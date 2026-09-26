@@ -49,7 +49,7 @@
 <p>Three facts about Harlowden's operating model drive almost every exclusion and scope modification in this SoA: production infrastructure is 100% AWS IaaS and PaaS under an enterprise agreement, no company-owned server or storage hardware exists anywhere, and all product development is performed by employees, with no outsourced development firm holding source code access as of this SoA's effective date. Where a control exists to manage a risk Harlowden has moved to AWS under the shared responsibility model, or a risk that does not exist because the underlying activity does not happen at Harlowden, that reasoning appears in the tables below with the specific control it replaces or the specific fact that makes it inapplicable.</p>
 <h2>Applicability Summary</h2>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Theme</th><th>Total Controls</th><th>Fully Applicable</th><th>Applicable, Scope-Modified</th><th>Not Applicable</th></tr></thead>
 <tbody>
 <tr><td>Organizational (A.5)</td><td>37</td><td>37</td><td>0</td><td>0</td></tr>
@@ -58,23 +58,23 @@
 <tr><td>Technological (A.8)</td><td>34</td><td>33</td><td>0</td><td>1</td></tr>
 <tr><td><strong>Total</strong></td><td><strong>93</strong></td><td><strong>85</strong></td><td><strong>5</strong></td><td><strong>3</strong></td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <p>Three exclusions and five scope narrowings out of 93. Every Organizational and People control applies without modification, which is expected: those controls govern policy, roles, training, and accountability, none of which depend on whether infrastructure is owned or leased. The judgment calls sit almost entirely in Physical and one Technological control, which is where the tables below focus.</p>
 <h2>Controls Marked Not Applicable, and Why</h2>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Control</th><th>Title</th><th>Justification</th></tr></thead>
 <tbody>
 <tr><td>A.7.11</td><td>Supporting Utilities</td><td>Harlowden owns no data center or server room. Production infrastructure runs entirely on AWS under a signed enterprise agreement. Power, HVAC, and utility redundancy for that infrastructure are AWS's responsibility under the shared responsibility model, verified annually through AWS's own ISO/IEC 27001 certificate and SOC 2 Type II report, reviewed under A.5.23 (Information security for use of cloud services) and A.5.19 through A.5.22 (supplier relationship controls). The leased office suite has no computing equipment requiring dedicated utility redundancy beyond standard commercial building service.</td></tr>
 <tr><td>A.7.12</td><td>Cabling Security</td><td>No structured cabling plant exists to secure. The office network runs on a single managed ISP circuit terminating at a standard commercial demarcation point. No cable run on the premises carries production traffic, and no server or storage equipment is cabled on site. Production network security is addressed under A.8.20 through A.8.22 (Network Security, Security of Network Services, Segregation of Networks) inside AWS's virtual network layer, not through physical cabling Harlowden controls.</td></tr>
 <tr><td>A.8.30</td><td>Outsourced Development</td><td>All product development is performed by Harlowden's in-house engineering organization. No third-party development firm, contractor, or offshore team holds source code access as of this SoA's effective date. This exclusion is reassessed at every vendor onboarding review and at minimum annually, since it becomes invalid the day a contracted developer is granted access, not at the next scheduled SoA update.</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <h2>Controls Marked Applicable, Scope-Modified</h2>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Control</th><th>Title</th><th>How the Scope Is Limited</th></tr></thead>
 <tbody>
 <tr><td>A.7.1</td><td>Physical security perimeter</td><td>Applies to the interior perimeter of Harlowden's single leased office suite, controlled by card-key entry. The building's exterior perimeter, lobby, and shared common areas are the landlord's control, addressed through the lease agreement's security provisions rather than Harlowden's ISMS.</td></tr>
@@ -83,7 +83,7 @@
 <tr><td>A.7.8</td><td>Equipment siting and protection</td><td>Applies to the office's single locked network closet, which houses a router and a network switch and nothing else. No servers, no storage arrays, no equipment requiring environmental protection beyond a standard interior room.</td></tr>
 <tr><td>A.7.14</td><td>Secure disposal or re-use of equipment</td><td>Applies to end-user devices only: laptops, monitors, and office network equipment, decommissioned through a certified IT asset disposition vendor with a certificate of destruction retained as evidence. Decommissioning of cloud compute and storage volumes is handled by AWS under its own attested data destruction procedures. Harlowden's responsibility is limited to confirming deletion and retaining that confirmation.</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <p>One Technological control is applicable without modification but worth naming directly: A.8.33 (Test Information). Harlowden's test and staging environments use synthetic data only. Production customer data is never copied into a non-production environment. That is not an exclusion. It is a control decision that makes several other risks smaller, and it is the kind of detail an SoA line item does not show unless someone writes it down.</p>
 <h2>What an Auditor Will Push Back On</h2>
@@ -114,14 +114,14 @@
 <p>Approve this Statement of Applicability as the basis for Stage 1 certification audit readiness. Assign an owner to document the office's specific physical setup, the single network closet, the card-key perimeter, the landlord-operated monitoring, in Harlowden's Physical Security Procedure before the Stage 1 audit, so the scope-modified controls above have a supporting document an auditor can read. Confirm AWS's current ISO/IEC 27001 certificate and SOC 2 Type II report are on file and less than twelve months old before citing them as evidence for A.7.11 and A.7.12. Re-run this exclusion analysis at the next material change to infrastructure, vendor relationships, or office footprint, not only at the annual review date.</p>
 <h2>Decision and Sign-off</h2>
 <div class="table-wrap">
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
 <tbody>
 <tr><td>ISMS Owner (Director of Information Security)</td><td></td><td>Approve / Reject</td><td></td></tr>
 <tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
 <tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 <hr />
 <h2>What Eight Rows of Justification Are Actually For</h2>
