@@ -19,7 +19,7 @@ This calendar shows all recurring compliance activities for Keystone Civic Payme
 | **July** | ASV quarterly scan (Q3); Internal vulnerability scan | | Monthly ConMon submission | Annual technology EOL review (12.3.4) |
 | **August** | Segmentation penetration test (semiannual #2); PCI scope confirmation (semiannual #2) | | Monthly ConMon submission | |
 | **September** | Internal vulnerability scan; Annual penetration test (internal external application layer) | | Monthly ConMon submission | Annual DR test |
-| **October** | ASV quarterly scan (Q4); Internal vulnerability scan; PCI ROC planning meeting | | Monthly ConMon submission | |
+| **October** | ASV quarterly scan (Q4); Internal vulnerability scan; PCI ROC planning meeting | SOC planning meeting | Monthly ConMon submission | |
 | **November** | Internal vulnerability scan | | Monthly ConMon submission | Annual cryptographic cipher and protocol review (12.3.3) |
 | **December** | PCI DSS ROC fieldwork begins; Internal vulnerability scan | | Monthly ConMon submission; GovRAMP annual 3PAO assessment | Annual business continuity plan review |
 

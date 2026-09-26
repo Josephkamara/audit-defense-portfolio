@@ -4,38 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Joseph Kamara - Audit Defense Portfolio</title>
-<style>
-body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-header { background:#002147; color:#fff; padding:48px 24px; text-align:center; }
-header h1 { margin:0 0 8px; font-family: Arial, sans-serif; font-size:2em; }
-header p { margin:0; color:#C5A55A; font-family: Arial, sans-serif; letter-spacing:0.5px; }
-header nav { margin-top:12px; }
-header nav a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; margin-right:16px; font-size:0.9em; }
-header nav a:hover { color:#fff; }
-main { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
-.intro { font-size:1.05em; line-height:1.6; margin-bottom:40px; background:#fff; border:1px solid #e0e0e0; border-radius:6px; padding:24px 28px; }
-h2.section { font-family: Arial, sans-serif; color:#002147; border-bottom:2px solid #C5A55A; padding-bottom:6px; margin-top:48px; }
-.project { background:#fff; border:1px solid #e0e0e0; border-radius:6px; padding:24px 28px; margin:20px 0; }
-.project h3 { margin:0 0 10px; font-family: Arial, sans-serif; color:#002147; }
-.project p { margin:0 0 14px; line-height:1.6; }
-.project p:last-of-type { margin-top:14px; margin-bottom:0; }
-.project a { color:#002147; font-family: Arial, sans-serif; font-weight:bold; text-decoration:none; border-bottom:2px solid #C5A55A; }
-.project a:hover { color:#C5A55A; }
-.project .what-this-shows { font-style:italic; color:#555; margin-bottom:14px; }
-.project .type-label { display:inline-block; font-family: Arial, sans-serif; font-size:0.7em; color:#fff; background:#7a8a99; border-radius:3px; padding:2px 8px; margin-left:8px; }
-.tag { display:inline-block; font-family: Arial, sans-serif; font-size:0.75em; color:#002147; background:#F4F6F8; border:1px solid #C5A55A; border-radius:12px; padding:3px 12px; margin:0 8px 8px 0; }
-.featured { border-top:4px solid #C5A55A; }
-.placeholder { border-style:dashed; color:#7a8a99; text-align:center; padding:32px 24px; }
-footer { text-align:center; padding:32px 24px; font-family: Arial, sans-serif; font-size:0.85em; color:#7a8a99; }
-footer a { color:#002147; }
-.last-updated { text-align:right; font-size:0.8em; color:#7a8a99; margin-top:40px; }
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body class="home">
 <header>
 <h1>Joseph Kamara</h1>
 <p>GRC &amp; IT AUDIT PORTFOLIO - CPA, CISSP, CISA</p>
 <nav>
+<a href="https://github.com/Josephkamara" target="_blank">GitHub</a>
 <a href="https://www.linkedin.com/in/joseph-kamara" target="_blank">LinkedIn</a>
 <a href="https://josefkamara.com" target="_blank">josefkamara.com</a>
 </nav>
@@ -47,12 +23,12 @@ footer a { color:#002147; }
 <p><strong>Note:</strong> Every scenario is fictional and built to demonstrate reasoning and technical depth. No real employer or client is named.</p>
 </div>
 
-<h2 class="section">Start Here</h2>
+<h2 class="section">PCI and Payments</h2>
 
 <div class="project featured">
 <h3>Payment Processor Compliance Program<span class="type-label">Program Design</span></h3>
 <p class="what-this-shows">What this shows: How to scope, map, test, and manage a multi-framework compliance program where one control and one evidence set support PCI DSS, SOC 1, SOC 2, and GovRAMP assessments.</p>
-<p>A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level 1 service provider), SOC 1 Type 2, SOC 2 Type 2, and GovRAMP Moderate. Unified control matrix mapping 76 controls across all frameworks. Seven detailed ITGC test procedures with sample workpapers and one realistic exception with root cause analysis. Gap analysis, remediation tracker, 12-month compliance calendar, and 30/60/90-day plan for a new IT auditor.</p>
+<p>A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level 1 service provider), SOC 1 Type 2, SOC 2 Type 2, and GovRAMP Moderate. Unified control matrix mapping 79 controls across all frameworks. Seven detailed ITGC test procedures with sample workpapers and one realistic exception with root cause analysis. Gap analysis, remediation tracker, 12-month compliance calendar, and 30/60/90-day plan for a new IT auditor.</p>
 <span class="tag">PCI DSS</span><span class="tag">SOC 2</span><span class="tag">GovRAMP</span><span class="tag">SOX ITGC</span>
 <p><a href="projects/payment-processor-compliance-program/">Read the program design &rarr;</a></p>
 </div>
@@ -60,7 +36,7 @@ footer a { color:#002147; }
 <div class="project featured">
 <h3>PCI DSS Network Segmentation<span class="type-label">Assessment</span></h3>
 <p class="what-this-shows">What this shows: How to test segmentation controls under QSA scrutiny and name the boundary that fails before an auditor finds it first.</p>
-<p>A payment platform's segmentation attestation was renewed every year without testing the parts that don't show up on the architecture diagram. This report builds the testing scope a QSA will actually run: a shared log pipeline, a jump box, and a batch export job. Three boundaries hold up. The SIEM ingestion path does not, because raw card data can reach infrastructure shared with non-CDE systems.</p>
+<p>Keystone Civic Payments' September 2025 segmentation retest (fictional company), one year before the readiness assessment. A multi-tenant payment service provider tests four segmentation boundaries under PCI DSS 11.4.6 and 11.4.7: the corporate network, an analytics export, a shared log pipeline, and a bastion host. Three boundaries hold up. The SIEM ingestion path does not, because raw card data can reach infrastructure shared with non-CDE systems. All findings were remediated before the 2026 readiness assessment.</p>
 <span class="tag">PCI DSS</span><span class="tag">Cybersecurity</span>
 <p><a href="projects/pci-dss-network-segmentation/">Read the segmentation report &rarr;</a></p>
 </div>
@@ -86,7 +62,7 @@ footer a { color:#002147; }
 <div class="project">
 <h3>Cloud Access Compliance Scanner<span class="type-label">Working Code</span></h3>
 <p class="what-this-shows">What this shows: How to automate evidence collection for four access and data-protection controls with real working code and a test suite.</p>
-<p>A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Built against the real boto3 SDK and verified with a 10-test pytest suite against a mocked AWS account. This one is working code, not a design sample.</p>
+<p>A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Built against the real boto3 SDK and verified with a 10-test pytest suite. Tested against a mocked copy of a Keystone Civic Payments (fictional) sandbox account seeded with deliberate violations. In production, these checks back up ACC-05, ACC-06, ACC-08, and ACC-14.</p>
 <span class="tag">Cloud Security</span><span class="tag">SOC 2</span><span class="tag">Automation</span>
 <p><a href="projects/cloud-access-compliance-scanner/">Read the write-up and see the code &rarr;</a></p>
 </div>
@@ -96,7 +72,7 @@ footer a { color:#002147; }
 <div class="project">
 <h3>SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control<span class="type-label">Memo</span></h3>
 <p class="what-this-shows">What this shows: How to redesign a manual quarterly review as a continuous, automated check without replacing the analyst.</p>
-<p>A manual quarterly access review gets redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.</p>
+<p>Keystone Civic Payments' (fictional) quarterly ServiceNow access review campaign (ACC-04) relies on manual exports for legacy batch and database accounts, and role changes depend on ServiceNow tasks (ACC-11). The design adds a daily automated HRIS-to-Okta-to-legacy reconciliation as a detective layer. The automation replaces the reconciliation, not the analyst. References the Q2 2026 exception and GAP-014.</p>
 <span class="tag">SOC 2</span><span class="tag">Automation</span>
 <p><a href="projects/soc2-access-review-automation/">Read the design document &rarr;</a></p>
 </div>
@@ -128,7 +104,7 @@ footer a { color:#002147; }
 </div>
 
 <div class="project">
-<h3>FedRAMP 20x Transition: Plan of Action &amp; Milestones<span class="type-label">POA&amp;M</span></h3>
+<h3>FedRAMP 20x Transition: Plan of Action &amp; Milestones<span class="type-label">Plan of Action</span></h3>
 <p class="what-this-shows">What this shows: How to sequence remediation against real published deadlines rather than internal guesses.</p>
 <p>A cloud service provider holding an existing FedRAMP Rev5 Moderate authorization has to close five gaps before FedRAMP 20x's Consolidated Rules take mandatory effect on January 1, 2027. Every finding cites a specific RFC or Notice number, rated by likelihood and impact, and sequenced against real published deadlines rather than internal guesses.</p>
 <span class="tag">Cloud Security</span><span class="tag">FedRAMP</span>
@@ -156,7 +132,7 @@ footer a { color:#002147; }
 <p class="last-updated">Last updated: September 2026</p>
 </main>
 <footer>
-Joseph Kamara, CPA, CISSP, CISA &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/joseph-kamara" target="_blank">LinkedIn</a> &nbsp;|&nbsp; <a href="https://josefkamara.com">josefkamara.com</a>
+Joseph Kamara, CPA, CISSP, CISA &nbsp;|&nbsp; <a href="https://github.com/Josephkamara" target="_blank">GitHub</a> &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/joseph-kamara" target="_blank">LinkedIn</a> &nbsp;|&nbsp; <a href="https://josefkamara.com">josefkamara.com</a>
 </footer>
 </body>
 </html>

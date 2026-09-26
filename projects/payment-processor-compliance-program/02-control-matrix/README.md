@@ -4,13 +4,13 @@
 
 ## Overview
 
-The unified control matrix is the foundation of Keystone Civic Payments' multi-framework compliance program. It maps 76 controls across PCI DSS v4.0.1, SOC 2 (2017 Trust Services Criteria with 2022 Points of Focus), NIST SP 800-53 Revision 5 (GovRAMP Moderate baseline), and SOX IT General Controls (SOC 1 relevance).
+The unified control matrix is the foundation of Keystone Civic Payments' multi-framework compliance program. It maps 79 controls across PCI DSS v4.0.1, SOC 2 (2017 Trust Services Criteria with 2022 Points of Focus), NIST SP 800-53 Revision 5 (GovRAMP Moderate baseline), and SOX IT General Controls (SOC 1 relevance).
 
 **The principle:** Map once, evidence once. A single control, with one owner and one evidence set, supports multiple assessments. Each assessor still performs its own testing.
 
 ## File
 
-`unified-control-matrix.csv` (76 controls, 14 columns)
+`unified-control-matrix.csv` (79 controls, 14 columns)
 
 Download or view the CSV directly in GitHub for the full matrix.
 
@@ -23,7 +23,7 @@ Download or view the CSV directly in GitHub for the full matrix.
 | Control Statement | What the control does, with enough detail to test |
 | Control Owner (role) | Role responsible for operating the control (not a person's name) |
 | Frequency | How often the control operates (Continuous, Daily, Weekly, Monthly, Quarterly, Semiannual, Annual, Recurring event-driven, As needed) |
-| Nature | Manual, Automated, or IT-dependent manual |
+| Nature | Manual, Automated, IT-dependent manual, or Hybrid (automated for AWS and Okta components, manual for the legacy colocation batch system) |
 | Type | Preventive, Detective, or Corrective |
 | Key Control (Y/N) | Whether the control is a key control (higher evidence standard, management review, direct testing) |
 | PCI DSS v4.0.1 Req | Requirement numbers this control satisfies, or N/A |
@@ -31,7 +31,19 @@ Download or view the CSV directly in GitHub for the full matrix.
 | NIST SP 800-53 Rev 5 | Control families this control maps to (GovRAMP Moderate baseline), or N/A |
 | SOX ITGC Area | ITGC area this control supports for SOC 1 Type 2 relevance (Access to Programs and Data, Program Change, Computer Operations), or N/A |
 | Evidence | What evidence demonstrates the control is designed and operating |
-| Test Procedure Ref | Reference to the detailed test procedure (TP-01 through TP-07 in `03-itgc-test-procedures/`, or TP-STD for standard inspection-based testing) |
+| Test Procedure Ref | Reference to the detailed test procedure (TP-01 through TP-07 in `03-itgc-test-procedures/`, TP-STD for standard inspection-based testing, or TP-AUTO for test-of-one plus ITGC reliance) |
+
+**Nature counts:** Manual 29, Automated 27, IT-dependent manual 20, Hybrid 3 (ACC-02, ACC-07, NET-01).
+
+### Test Procedure Ref: TP-AUTO (Test of One with ITGC Reliance)
+
+**TP-AUTO** applies to controls that are automated, Terraform-defined, or platform-enforced (such as AWS Config, Security Hub, or Okta policy). The test approach is:
+
+1. Inspect the Terraform-defined or platform-enforced configuration at one point in time and confirm it meets the requirement.
+2. Obtain the AWS Config or Security Hub compliance history for the period showing no unremediated drift.
+3. Rely on tested ITGCs over the configuration: change management (CHG-01, CHG-02, CHG-05) and privileged access (ACC-05, ACC-13).
+
+If any of those ITGCs has an exception, expand to multiple points in the period. PCI QSAs examine configurations and do not use the term "test of one", but the same evidence supports their testing. See `01-scoping/how-controls-operate.md` for the full explanation.
 
 ## How the Mapping Works
 
@@ -78,7 +90,7 @@ After this matrix:
 
 ## Key Control Designation
 
-37 of the 76 controls are marked as key controls (Y in the Key Control column). These are controls that:
+38 of the 79 controls are marked as key controls (Y in the Key Control column). These are controls that:
 
 1. Directly prevent or detect a significant risk (example: ACC-06 MFA for CDE access prevents unauthorized access to cardholder data)
 2. Have a higher evidence standard (design and operating effectiveness must be tested directly, not through inquiry alone)
@@ -117,9 +129,9 @@ The matrix specifies evidence sources, but evidence must also meet quality stand
 
 ## Controls That Map to SOX ITGC
 
-25 controls in the matrix carry an ITGC area, meaning they support SOC 1 Type 2 control objectives relevant to user entities' financial reporting:
+28 controls in the matrix carry an ITGC area, meaning they support SOC 1 Type 2 control objectives relevant to user entities' financial reporting:
 
-- **Access to Programs and Data** (12 controls): ACC-01 through ACC-11, PHY-01 (physical)
+- **Access to Programs and Data** (15 controls): ACC-01 through ACC-14, PHY-01 (physical)
 - **Program Change** (5 controls): CHG-01 through CHG-05
 - **Computer Operations** (8 controls): OPS-01 through OPS-04, IR-04, BCP-01, BCP-02, VEN-03 (subservice organization monitoring)
 

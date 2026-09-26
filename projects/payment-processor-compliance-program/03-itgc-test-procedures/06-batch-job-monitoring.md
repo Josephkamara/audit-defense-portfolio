@@ -75,7 +75,7 @@ To ensure that critical nightly batch jobs run successfully, that failures are d
 
 **Root Cause:** The on-call engineer followed the verbal approval process (called the Payment Operations Manager, received verbal approval to rerun), but the approval was not documented in the ServiceNow incident before the rerun.
 
-**Compensating Control:** The rerun was approved verbally, and the job rerun was logged in the incident record. The Payment Operations Manager confirmed the verbal approval occurred (inquiry with the manager).
+**Mitigating Factor:** The rerun was approved verbally, and the job rerun was logged in the incident record. The Payment Operations Manager confirmed the verbal approval occurred (inquiry with the manager).
 
 **Remediation:** Updated the incident response runbook to require documenting approval in the ServiceNow incident comments before executing a rerun. Training reminder sent to the Payment Operations team on June 20, 2026.
 

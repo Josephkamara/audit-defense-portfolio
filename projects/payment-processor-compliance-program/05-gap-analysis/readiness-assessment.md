@@ -342,11 +342,11 @@ As of this assessment (September 2026), 7 gaps have been remediated, 5 are in pr
 
 **Likelihood:** Low (1) - The exercise tested the most critical sections; the notification procedures were not tested but are documented.
 
-**Impact:** Low (1) - PCI QSA or SOC auditor may note this gap, but it is unlikely to affect the opinion given that the exercise occurred and was documented.
+**Impact:** Medium (2) - If an incident involving customer notification occurred, the notification process would need to be walked through under pressure instead of being tested in advance. The gap could require management follow-up with customers or regulators if a notification misstep occurs.
 
-**Risk Score:** 2 (Low risk)
+**Risk Score:** 1 × 2 = 2 (Low risk)
 
-**Remediation:** Expand the next annual tabletop exercise (scheduled March 2027) to include a notification simulation (mock email to state agency customers, mock call to payment brands). Target completion: March 2027.
+**Remediation:** Run a supplemental notification-only tabletop in November 2026, with the full annual exercise still in March 2027. Target completion for supplemental exercise: November 2026.
 
 **Owner:** Security Operations Manager
 
@@ -354,15 +354,15 @@ As of this assessment (September 2026), 7 gaps have been remediated, 5 are in pr
 
 ---
 
-### GAP-014: Legacy Batch System Not Included in Quarterly Access Reviews
+### GAP-014: Standard Linux OS Accounts and PostgreSQL Database Users Not Included in Quarterly Access Reviews
 
 **Framework:** PCI DSS v4.0.1, SOC 2
 
 **Requirement:** 7.2.4 (PCI DSS), CC6.2 (SOC 2) - All user access is reviewed periodically.
 
-**Current State:** Keystone's access review process (ACC-04) covers Okta, AWS, ServiceNow, and GitHub. Since Q2 2026 the legacy batch system's root and sudo accounts are included in the quarterly privileged review. Its standard Linux OS accounts and PostgreSQL database users are not in any formal review. The IT Operations Manager reviews them informally once a year, and that review is not documented in the access review process. The IT Operations Manager manually reviewed legacy system access annually, but this was not documented in the formal access review process.
+**Current State:** Keystone's access review process (ACC-04) covers Okta, AWS, ServiceNow, and GitHub. Since Q2 2026 the legacy batch system's root and sudo accounts are included in the quarterly privileged review. Its standard Linux OS accounts and PostgreSQL database users are not in any formal review. The IT Operations Manager reviews them informally once a year, and that review is not documented in the access review process.
 
-**Gap:** Legacy batch system accounts not included in quarterly access review process.
+**Gap:** Standard Linux OS accounts and PostgreSQL database users on the legacy batch system not included in quarterly access review process.
 
 **Likelihood:** Medium (2) - The legacy system has only 4 to 5 user accounts, but they are in the CDE. The informal annual review does not meet the PCI DSS 7.2.4 minimum of every six months, and Keystone policy requires quarterly review of privileged and CDE access.
 
@@ -370,7 +370,7 @@ As of this assessment (September 2026), 7 gaps have been remediated, 5 are in pr
 
 **Risk Score:** 6 (Medium risk)
 
-**Remediation:** Add the legacy batch system's standard OS and database accounts to the formal access review process (quarterly, because the system is in the CDE). The IT Operations Manager will export the Linux account list and PostgreSQL user list each quarter and submit them for review. Target completion: October 2026 (included in the Q3 2026 review campaign that starts October 1).
+**Remediation:** Add standard Linux OS accounts and PostgreSQL database users on the legacy batch system to the formal access review process (quarterly, because the system is in the CDE). Root and sudo are already reviewed quarterly. The IT Operations Manager will export the Linux account list and PostgreSQL user list each quarter and submit them for review. Target completion: October 2026 (included in the Q3 2026 review campaign that starts October 1).
 
 **Owner:** IT Operations Manager / IAM Manager
 
@@ -432,7 +432,7 @@ See `remediation-tracker.csv` for tracking details.
 
 ## Recommendations
 
-1. **Prioritize GAP-014** (legacy batch system not in quarterly access review): This is the highest-risk open gap (score 6). Complete in the Q3 2026 review campaign that starts October 1.
+1. **Prioritize GAP-014** (standard Linux OS accounts and PostgreSQL database users not in quarterly access review): This is the highest-risk open gap (score 6). Complete in the Q3 2026 review campaign that starts October 1.
 2. **Finish automated log review for the legacy system (GAP-002) before PCI ROC fieldwork in December.** The TRA gaps (GAP-004, GAP-008) are closed; maintain the TRA library (GOV-04) going forward.
 3. **Formalize role-based access documentation (GAP-005):** Low risk, but completing this will strengthen the SOC 2 Type 2 control environment for the next audit.
 4. **Review the remediation tracker monthly:** Add a standing agenda item to the Risk Committee meeting to review open gaps and confirm target dates are on track.

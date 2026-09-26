@@ -73,6 +73,14 @@ See `cardholder-data-flow.md` for the Mermaid diagram showing:
 3. Settlement flow: Keystone settlement processor → acquiring bank SFTP
 4. ACH flow: Legacy batch system → NACHA file to state treasury
 
+
+## GRC Platform and Tools
+
+The GRC platform (a Vanta, Drata, Secureframe, or OneTrust class tool) serves as the system of record for controls, policies, and evidence. The platform:
+- Integrates with Okta, AWS, GitHub, and ServiceNow for automated tests
+- Tracks policy acknowledgments
+- Manages vendor due diligence questionnaires through its vendor risk module
+
 ## Subservice Organizations (Carve-Out Method)
 
 Keystone uses the carve-out method for two subservice organizations in its SOC 1 and SOC 2 reports:
@@ -129,7 +137,7 @@ GovRAMP (Government Risk and Authorization Management Program) (formerly StateRA
 - **Cloud service offering:** Payment processing API and hosted payment page for state agencies
 - **Impact level:** Moderate (handles citizen PII and payment information, no classified or high-impact data)
 - **Baseline:** NIST SP 800-53 Revision 5 Moderate baseline controls
-- **FedRAMP equivalency:** Accepted by 8 of the 12 states Keystone serves in lieu of a separate state security review
+- **State acceptance of GovRAMP:** Accepted by 8 of the 12 states Keystone serves in lieu of a separate state security review
 
 The GovRAMP boundary is narrower than the full PCI CDE:
 
@@ -155,6 +163,15 @@ Largest scope: PCI DSS scope (CDE plus connected-to systems)
 ```
 
 One control often supports all three frameworks. Example: ACC-04 (quarterly privileged access review) maps to PCI DSS 7.2.4, SOC 2 CC6.2 and CC6.3, and NIST AC-2 and AC-6(7). That review covers privileged access to the payment database. The same evidence goes to the PCI QSA, the SOC auditor, and the GovRAMP 3PAO, and each one tests it.
+
+
+## Scenario Assumptions
+
+The following assumptions shape this environment:
+- **Infrastructure:** Primary AWS region plus a warm disaster recovery environment in a second US region, tested annually by failover (see BCP-02). One legacy colocation data center hosting the batch system.
+- **External scanning:** An Approved Scanning Vendor runs quarterly external vulnerability scans (see VUL-02).
+- **Customer access to compliance artifacts:** The annual AOC is shared with agency customers on request (see VEN-04).
+- **Segmentation testing:** See the [PCI DSS Network Segmentation project](../../pci-dss-network-segmentation/) for the September 2025 retest that shaped the current CDE-dedicated Splunk Cloud index, Session Manager replacement of the bastion, and semiannual cadence restoration.
 
 ## Scoping Changes and Review Cadence
 

@@ -4,49 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud Access Compliance Scanner: Working Code for Four SOC 2 and SOX Access Controls</title>
-<style>
-  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-  header { background:#002147; padding:20px 24px; }
-  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
-  main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
-  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
-  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
-  h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
-  strong { color:#002147; }
-  table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
-  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
-  td { border:1px solid #ccc; padding:8px; vertical-align:top; }
-  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
-  em { color:#555; }
-  code, pre { background:#F4F6F8; font-family: 'Courier New', monospace; font-size:0.88em; }
-  code { padding:1px 5px; border-radius:3px; }
-  pre { padding:14px; border-radius:4px; border:1px solid #ddd; overflow-x:auto; line-height:1.5; white-space:pre-wrap; }
-  .split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
-  .split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
-  .split-col.automate { border-top:4px solid #7a8a99; }
-  .split-col.judge { border-top:4px solid #C5A55A; }
-  .split-col h3 { margin-top:0; }
-  .split-col ul { margin:0; padding-left:20px; }
-  .split-col li { margin-bottom:8px; line-height:1.5; }
-  main > ul { padding-left:20px; margin-top:8px; }
-  main > ul li { margin-bottom:8px; line-height:1.5; }
-  .sev-high { color:#a33; font-weight:bold; }
-  .sev-medium { color:#946200; font-weight:bold; }
-</style>
+<link rel="stylesheet" href="../../assets/site.css">
 </head>
-<body>
-<header><a href="../../">&larr; Back to Portfolio</a></header>
+<body class="project-page">
+<header class="project-header"><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>Cloud Access Compliance Scanner: Working Code for Four SOC 2 and SOX Access Controls</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
+
+<div class="summary-block">
+<h3>Scenario</h3>
+<p>A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Tested against a mocked copy of a Keystone Civic Payments (fictional) sandbox account, seeded with deliberate violations so every check fires. In Keystone's production accounts, these checks back up ACC-05 (no human IAM users), ACC-06 (MFA enforcement), ACC-08 (service account inventory), and ACC-14 (unused access removal). Expected production result: zero findings apart from the two documented break-glass users. See <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/01-scoping/how-controls-operate.md">how-controls-operate.md</a> for context.</p>
+
+<h3>Frameworks</h3>
+<p>SOC 2 (CC6: Logical and Physical Access Controls), SOX ITGC (Access to Programs and Data)</p>
+
+<h3>Key Artifacts</h3>
+<p>Working Python scanner (boto3) with a 10-test pytest suite run against a mocked AWS account (moto); mapping of each check to SOC 2 and SOX control objectives; severity-rated findings output.</p>
+
+<h3>Takeaway</h3>
+<p>Automated checks catch stale keys, missing MFA, public buckets, and wildcard policies that manual reviews miss. The scanner produces repeatable evidence on each run, and separates mechanical checks from human judgment on appropriateness of access.</p>
+</div>
+
 <p><em>Portfolio note: this project is real, working Python code, not a design document. It runs against a mocked AWS account (via the <code>moto</code> library). No real AWS account, credentials, or cost is involved. The account, users, keys, policies, and buckets described below are fictional, created only to exercise the code.</em></p>
-
-<p><strong>Scenario:</strong> Working Python code that checks a mocked AWS account for four access control conditions: stale access keys, IAM users without MFA, public S3 bucket ACLs, and IAM policies with wildcard permissions. Maps findings to SOC 2 CC6 and SOX ITGC access controls.</p>
-
-<p><strong>Frameworks:</strong> SOC 2 (CC6: Logical and Physical Access Controls), SOX ITGC (Access to Programs and Data)</p>
-
-<p><strong>Key artifacts:</strong> Working Python scanner (boto3) with a 10-test pytest suite run against a mocked AWS account (moto); mapping of each check to SOC 2 and SOX control objectives; severity-rated findings output.</p>
-
-<p><strong>Takeaway:</strong> Automated checks catch stale keys, missing MFA, public buckets, and wildcard policies that manual reviews miss. The scanner produces repeatable evidence on each run, and separates mechanical checks from human judgment on appropriateness of access.</p>
 
 <hr />
 <h2>Document Header</h2>
@@ -62,13 +42,13 @@
 <p>A stale IAM access key, a user with no MFA device, a public S3 bucket, and a wildcard IAM policy are four of the most common findings in a cloud access review, and four of the easiest to test with code instead of a manual walkthrough. This scanner automates all four checks against a real AWS account, using the same <code>boto3</code> SDK that runs against production. Every check in it executes and passes an automated test, run against a mocked account with no real credentials or cost.</p>
 <p>The output is a structured finding, not a pass or fail count: resource, condition, severity, control reference, and detail. That is the same shape as audit workpaper evidence, because that is what it is meant to support.</p>
 <h2>The Four Checks</h2>
-<table>
+<div class="table-wrap"><table>
 <tr><th>Check</th><th>Control Mapping</th><th>What It Catches</th></tr>
 <tr><td>Stale IAM access keys</td><td>SOC 2 CC6.1 / ITGC credential rotation</td><td>Active access keys older than 90 days</td></tr>
 <tr><td>Missing MFA</td><td>SOC 2 CC6.1 / ITGC authentication control</td><td>IAM users with no MFA device registered</td></tr>
 <tr><td>Public S3 buckets</td><td>SOC 2 CC6.6-CC6.7 / data protection</td><td>Bucket ACLs granting access to AllUsers or AuthenticatedUsers</td></tr>
 <tr><td>Wildcard IAM policies</td><td>SOC 2 CC6.1 / least-privilege provisioning</td><td>Customer-managed policies allowing Action:* on Resource:*</td></tr>
-</table>
+</table></div>
 <h2>How It Was Built and Verified</h2>
 <p>The scanner is written against the real <code>boto3</code> AWS SDK, so the same code runs against a real AWS account without modification. Three tools made it possible to build and prove this without touching a real cloud account:</p>
 <ul>

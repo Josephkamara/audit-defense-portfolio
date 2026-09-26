@@ -152,7 +152,7 @@ The CDE is segmented from corporate and out-of-scope systems using:
 3. **Transit Gateway route tables:** On-premises connectivity (colocation to AWS) flows through Transit Gateway with explicit route tables. No default route to the internet from CDE databases.
 4. **Colocation hardware firewall:** Legacy system protected by a stateful firewall with explicit allow rules for the two state agencies only. All other traffic denied by default.
 
-**Segmentation testing cadence:** At least every six months per PCI DSS 11.4.6 (service provider requirement), covering all segmentation methods in use. [See VUL-05 in the control matrix and the existing PCI DSS Network Segmentation project for detailed testing approach.](../02-control-matrix/)
+**Segmentation testing cadence:** At least every six months per PCI DSS 11.4.6 (service provider requirement), covering all segmentation methods in use. The September 2025 segmentation retest in the PCI DSS Network Segmentation project shaped the current design (CDE-dedicated Splunk index, Session Manager in place of the bastion, semiannual cadence). [See VUL-05 in the control matrix and the existing PCI DSS Network Segmentation project for detailed testing approach.](../02-control-matrix/)
 
 ## Change Impact on Data Flows
 

@@ -22,7 +22,7 @@ I write at [josefkamara.com](https://josefkamara.com) and publish [The Authority
 
 **Program Design**
 
-A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level 1 service provider), SOC 1 Type 2, SOC 2 Type 2, and GovRAMP Moderate. Unified control matrix mapping 76 controls across all frameworks. Seven detailed ITGC test procedures with sample workpapers and one realistic exception with root cause analysis. Gap analysis, remediation tracker, 12-month compliance calendar, and 30/60/90-day plan for a new IT auditor.
+A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level 1 service provider), SOC 1 Type 2, SOC 2 Type 2, and GovRAMP Moderate. Unified control matrix mapping 79 controls across all frameworks. Seven detailed ITGC test procedures with sample workpapers and one realistic exception with root cause analysis. Gap analysis, remediation tracker, 12-month compliance calendar, and 30/60/90-day plan for a new IT auditor.
 
 `PCI DSS` `SOC 2` `GovRAMP` `SOX ITGC`
 
@@ -30,7 +30,7 @@ A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level
 
 **Assessment**
 
-A payment platform's segmentation attestation was renewed every year without testing the parts that don't show up on the architecture diagram. This report builds the testing scope a QSA will actually run: a shared log pipeline, a jump box, and a batch export job. Three boundaries hold up. The SIEM ingestion path does not.
+Keystone Civic Payments' (fictional) September 2025 segmentation retest. The segmentation attestation had been renewed every year without testing the parts that don't show up on the architecture diagram: a shared log pipeline, a bastion host used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document is the segmentation testing scope the QSA will actually run, stating plainly which claimed boundaries hold up and which do not.
 
 `PCI DSS` `Cybersecurity`
 
@@ -56,7 +56,7 @@ A company running production across both AWS and GCP tests the same six SOX IT g
 
 **Working Code**
 
-A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies. Built against the real boto3 SDK and verified with a 10-test pytest suite against a mocked AWS account.
+A Python scanner that pulls real evidence for four controls: stale IAM keys, missing MFA, public S3 buckets, and wildcard IAM policies, verified with a 10-test pytest suite against a mocked Keystone Civic Payments (fictional) sandbox account. The design states what each control requires, what exact evidence proves it, and why each check would pass or fail a third-party test. The test suite itself runs through pytest in under 2 seconds.
 
 `Cloud Security` `SOC 2` `Automation`
 
@@ -66,7 +66,7 @@ A Python scanner that pulls real evidence for four controls: stale IAM keys, mis
 
 **Memo**
 
-A manual quarterly access review gets redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.
+Keystone Civic Payments' (fictional) quarterly ServiceNow access review, redesigned as a continuous, automated check under SOC 2 CC6. The automation replaces the reconciliation. It does not replace the analyst: the document draws a hard line between what a script can safely decide and what still needs judgment.
 
 `SOC 2` `Automation`
 
