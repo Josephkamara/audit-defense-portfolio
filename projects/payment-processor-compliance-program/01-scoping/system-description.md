@@ -129,7 +129,7 @@ GovRAMP (Government Risk and Authorization Management Program) (formerly StateRA
 - **Cloud service offering:** Payment processing API and hosted payment page for state agencies
 - **Impact level:** Moderate (handles citizen PII and payment information, no classified or high-impact data)
 - **Baseline:** NIST SP 800-53 Revision 5 Moderate baseline controls
-- **FedRAMP equivalency:** Accepted by 8 of the 12 states Keystone serves in lieu of a separate state security review
+- **State acceptance of GovRAMP:** Accepted by 8 of the 12 states Keystone serves in lieu of a separate state security review
 
 The GovRAMP boundary is narrower than the full PCI CDE:
 

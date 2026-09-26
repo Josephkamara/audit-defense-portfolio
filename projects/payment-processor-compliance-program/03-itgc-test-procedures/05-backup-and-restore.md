@@ -90,6 +90,6 @@ To ensure that critical systems and data can be recovered in the event of data l
 
 **Root Cause:** The IT Operations Manager who normally performs restore tests was on extended leave in late June, and the backup restore test was not assigned to a backup team member. The test was completed 8 days late when the manager returned.
 
-**Compensating Control:** Daily backups continued to run successfully during the period (confirmed by sampling daily backup jobs for June 2026). No data loss occurred, and the late restore test confirmed that backups were recoverable.
+**Mitigating Factor:** Daily backups continued to run successfully during the period (confirmed by sampling daily backup jobs for June 2026). No data loss occurred, and the late restore test confirmed that backups were recoverable.
 
 **Remediation:** Cross-training plan implemented for restore test procedures; a backup team member (senior systems administrator) was trained and added to the quarterly restore test schedule.
