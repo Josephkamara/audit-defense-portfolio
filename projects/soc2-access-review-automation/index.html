@@ -4,38 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control</title>
-<style>
-  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-  header { background:#002147; padding:20px 24px; }
-  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
-  main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
-  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
-  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
-  h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
-  strong { color:#002147; }
-  table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
-  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
-  td { border:1px solid #ccc; padding:8px; vertical-align:top; }
-  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
-  em { color:#555; }
-  code, pre { background:#F4F6F8; font-family: 'Courier New', monospace; font-size:0.88em; }
-  code { padding:1px 5px; border-radius:3px; }
-  pre { padding:14px; border-radius:4px; border:1px solid #ddd; overflow-x:auto; line-height:1.5; }
-  .split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
-  .split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
-  .split-col.automate { border-top:4px solid #7a8a99; }
-  .split-col.judge { border-top:4px solid #C5A55A; }
-  .split-col h3 { margin-top:0; }
-  .split-col ul { margin:0; padding-left:20px; }
-  .split-col li { margin-bottom:8px; line-height:1.5; }
-  main > ul { padding-left:20px; margin-top:8px; }
-  main > ul li { margin-bottom:8px; line-height:1.5; }
-</style>
+<link rel="stylesheet" href="../../assets/site.css">
 </head>
-<body>
-<header><a href="../../">&larr; Back to Portfolio</a></header>
+<body class="project-page">
+<header class="project-header"><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
   <p>A company runs its quarterly access review the way most companies still do: an analyst pulls two exports, reconciles them by hand, and hopes nothing slipped through in the three months between reviews. This design document walks through what happens when that control gets rebuilt as a continuous, automated check under SOC 2 CC6, and where the automation has to stop and hand the decision back to a person.</p>
 
 <p><strong>Scenario:</strong> A quarterly access review done manually with reconciled exports. Design document rebuilds it as a continuous automated check under SOC 2 CC6, identifying where automation works and where human judgment is still required.</p>
@@ -59,7 +34,7 @@
 <strong>Status:</strong> Design sample, not a deployed automation</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>Meridian Data Systems runs its quarterly user access review the way most companies still do: a control owner pulls an export from the identity provider, pulls a separate export from HR, and reconciles the two by hand in a spreadsheet. The review takes two to three days every quarter, covers a point-in-time snapshot, and catches a terminated employee's lingering access only if the reconciliation happens to surface it before the auditor asks.</p>
+<p>Keystone Civic Payments runs its quarterly user access review the way most companies still do: a control owner pulls an export from the identity provider, pulls a separate export from HR, and reconciles the two by hand in a spreadsheet. The review takes two to three days every quarter, covers a point-in-time snapshot, and catches a terminated employee's lingering access only if the reconciliation happens to surface it before the auditor asks.</p>
 <p>This document designs the same control as a continuous, automated check under SOC 2 CC6, and then does the part that matters more: it draws the line between what the automation can safely do on its own and what still needs a GRC analyst to decide. The automation is the easy half. The judgment is the reason the control holds up under audit.</p>
 <h2>The Control Today: Manual, Quarterly, Sampled</h2>
 <p>A typical quarterly access review works like this. The control owner exports active user accounts from the identity provider (Okta, Entra ID, or equivalent), exports the current employee roster from the HRIS, and manually cross-references the two lists. Anyone in the identity provider export who is not an active employee is a finding. Anyone whose role changed but whose access did not is a finding the manual process usually misses, because role-to-access mapping is rarely reconciled at the same time.</p>

@@ -4,27 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Risk Acceptance Memorandum: Legacy EDI Gateway TLS Encryption Gap</title>
-<style>
-  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-  header { background:#002147; padding:20px 24px; }
-  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
-  main { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
-  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.6em; }
-  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
-  strong { color:#002147; }
-  table { border-collapse: collapse; width:100%; margin-top:12px; }
-  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.9em; }
-  td { border:1px solid #ccc; padding:8px; }
-  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
-  em { color:#555; }
-  main > ul { padding-left:20px; margin-top:8px; }
-  main > ul li { margin-bottom:8px; line-height:1.5; }
-</style>
+<link rel="stylesheet" href="../../assets/site.css">
 </head>
-<body>
-<header><a href="../../">&larr; Back to Portfolio</a></header>
+<body class="project-page">
+<header class="project-header"><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>Risk Acceptance Memorandum: Legacy EDI Gateway TLS Encryption Gap</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
   <p>A healthcare claims processor is caught between two bad options: cut a live claims connection today, or run a known encryption gap for six months while a vendor finishes a migration it cannot speed up. This memo walks through how that decision gets made: the vulnerability, the risk it creates, the controls that reduce it, and the sign-off that puts a clock on how long the business gets to live with it.</p>
 
 <p><strong>Scenario:</strong> A claims processor faces a choice: cut a live vendor connection immediately or accept a known encryption gap for six months during the vendor's migration. Risk acceptance requires documented vulnerability analysis, compensating controls, time-bound approval, and executive sign-off.</p>
@@ -47,7 +33,7 @@
 <strong>Review / Expiration Date:</strong> 180 days from approval, or upon vendor platform migration completion, whichever comes first</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>Meridian Health Partners exchanges claims data with an external clearinghouse through a legacy EDI gateway. The gateway currently supports TLS 1.0, a protocol version that no longer meets current encryption standards. The clearinghouse vendor cannot support TLS 1.2 or higher until its own platform migration completes, expected in the first quarter of 2027.</p>
+<p>MediClaim Gateway Services exchanges claims data with an external clearinghouse through a legacy EDI gateway. The gateway currently supports TLS 1.0, a protocol version that no longer meets current encryption standards. The clearinghouse vendor cannot support TLS 1.2 or higher until its own platform migration completes, expected in the first quarter of 2027.</p>
 <p>Cutting the connection today would stop claims processing for roughly 40,000 members. Waiting for the vendor's migration means operating a known encryption gap for up to 180 days. This memo recommends accepting that risk for a fixed period, under compensating controls, rather than disrupting claims payment for members who depend on it.</p>
 <h2>Vulnerability</h2>
 <p>The EDI gateway's TLS configuration is limited to TLS 1.0 and 1.1. Both versions have known cryptographic weaknesses (including BEAST and POODLE-class attacks) and are excluded from PCI DSS and most current security baselines. The limitation sits on the vendor's side of the connection, not Meridian's. Meridian's own systems support TLS 1.2 and 1.3.</p>

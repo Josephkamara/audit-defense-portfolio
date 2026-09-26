@@ -4,35 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ISO/IEC 27001:2022 Statement of Applicability: Justifying Control Exclusions for a Remote-First SaaS Company</title>
-<style>
-body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-header { background:#002147; padding:20px 24px; }
-header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
-main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
-h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
-h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
-h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
-strong { color:#002147; }
-table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
-th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
-td { border:1px solid #ccc; padding:8px; vertical-align:top; }
-hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
-em { color:#555; }
-.split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
-.split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
-.split-col.automate { border-top:4px solid #7a8a99; }
-.split-col.judge { border-top:4px solid #C5A55A; }
-.split-col h3 { margin-top:0; }
-.split-col ul { margin:0; padding-left:20px; }
-.split-col li { margin-bottom:8px; line-height:1.5; }
-main > ul { padding-left:20px; margin-top:8px; }
-main > ul li { margin-bottom:8px; line-height:1.5; }
-</style>
+<link rel="stylesheet" href="../../assets/site.css">
 </head>
-<body>
-<header><a href="../../">&larr; Back to Portfolio</a></header>
+<body class="project-page">
+<header class="project-header"><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>ISO/IEC 27001:2022 Statement of Applicability: Justifying Control Exclusions for a Remote-First SaaS Company</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
 <p>A workflow automation company is six months into its first ISO 27001 certification push, driven by three enterprise deals that will not close without it. The draft Statement of Applicability an outside consultant delivered marks all 93 Annex A controls "Applicable." That looks thorough. It is actually the first thing a certification auditor will flag, because a company with no data center, no outsourced developers, and a single leased office does not have 93 controls that apply the same way a bank does. This document rebuilds the SoA from the actual infrastructure up: which controls apply in full, which apply with the scope narrowed to what the company actually operates, and which do not apply at all, with the reasoning an auditor can test.</p>
 
 <p><strong>Scenario:</strong> A workflow automation company's draft Statement of Applicability marks all 93 Annex A controls "Applicable." A company with no data center, no outsourced developers, and one leased office cannot justify applicability for all controls the same way a bank does.</p>
@@ -55,7 +33,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <strong>Review Cycle:</strong> Annual, or upon material change to infrastructure, vendors, or operating model</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>Meridian Workflow Systems builds operations automation software for mid-market finance and healthcare teams, roughly 140 employees, remote-first, one leased office suite for local staff, no owned servers or data centers. All production infrastructure runs on AWS. All product development is done in-house. Three enterprise prospects have told Meridian's sales team that ISO 27001 certification is a contract requirement, not a preference.</p>
+<p>DataSync Software builds operations automation software for mid-market finance and healthcare teams, roughly 140 employees, remote-first, one leased office suite for local staff, no owned servers or data centers. All production infrastructure runs on AWS. All product development is done in-house. Three enterprise prospects have told Meridian's sales team that ISO 27001 certification is a contract requirement, not a preference.</p>
 <p>The SoA a consulting firm delivered as a starting point marks all 93 Annex A controls "Applicable," with a one-line implementation note for each. It was built from a template, not from Meridian's actual environment. This document replaces it with an SoA built the way Clause 6.1.3(d) requires: the controls that are necessary, a justification for each inclusion and exclusion, and an honest account of what changes if Meridian's infrastructure changes.</p>
 <h2>The 93/93 Problem</h2>
 <p>Marking every Annex A control "Applicable" feels safer than excluding anything. It is not. An SoA that shows 93 out of 93 applicable to a 140-person SaaS company with no physical data center tells a certification auditor one of two things: either the company operates infrastructure the auditor has not been told about, or nobody actually reviewed the list against the business before signing it. Both conclusions extend the audit and invite closer scrutiny of everything else in the ISMS.</p>

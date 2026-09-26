@@ -4,35 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Third-Party Risk Management: Building a Risk-Tiered Vendor Program Under NIST CSF 2.0</title>
-<style>
-body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-header { background:#002147; padding:20px 24px; }
-header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
-main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
-h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.5em; }
-h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
-h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
-strong { color:#002147; }
-table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
-th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
-td { border:1px solid #ccc; padding:8px; vertical-align:top; }
-hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
-em { color:#555; }
-.split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
-.split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
-.split-col.automate { border-top:4px solid #7a8a99; }
-.split-col.judge { border-top:4px solid #C5A55A; }
-.split-col h3 { margin-top:0; }
-.split-col ul { margin:0; padding-left:20px; }
-.split-col li { margin-bottom:8px; line-height:1.5; }
-main > ul { padding-left:20px; margin-top:8px; }
-main > ul li { margin-bottom:8px; line-height:1.5; }
-</style>
+<link rel="stylesheet" href="../../assets/site.css">
 </head>
-<body>
-<header><a href="../../">&larr; Back to Portfolio</a></header>
+<body class="project-page">
+<header class="project-header"><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>Third-Party Risk Management: Building a Risk-Tiered Vendor Program Under NIST CSF 2.0</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
 <p>A benefits administrator has been adding vendors for three years the way most mid-size companies do: whoever signs the contract sends the same questionnaire to every vendor, files the answers, and moves on. A payroll integration partner with live access to member data gets the same one-time review as a vendor that prints envelopes. This program design walks through what changes when vendor risk gets tiered by actual exposure, mapped to NIST CSF 2.0's supply chain risk category, and where a risk score can make the call and where it still needs a person.</p>
 
 <p><strong>Scenario:</strong> A benefits administrator treats all vendors the same: one questionnaire, filed and forgotten. A payroll partner with live member data access gets the same review as an envelope printer. Program design tiers vendors by exposure and maps to the NIST CSF 2.0 GV.SC category.</p>
@@ -55,7 +33,7 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <strong>Review Cycle:</strong> Annual, or upon material change to the vendor portfolio</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>Meridian Benefits Administrators manages COBRA administration, FSA and HSA claims, and dependent eligibility verification for roughly 60 self-insured employer clients. That work depends on four outside vendors: a pharmacy benefit manager integration, an identity and eligibility verification service, a print and mail vendor for COBRA notices, and an HR compliance training platform. Every one of them received the same intake questionnaire, filed once at signing, never looked at again.</p>
+<p>VitaCare Benefits Administration manages COBRA administration, FSA and HSA claims, and dependent eligibility verification for roughly 60 self-insured employer clients. That work depends on four outside vendors: a pharmacy benefit manager integration, an identity and eligibility verification service, a print and mail vendor for COBRA notices, and an HR compliance training platform. Every one of them received the same intake questionnaire, filed once at signing, never looked at again.</p>
 <p>This document designs a third-party risk management program that tiers vendors by what they actually touch, not by how the relationship happened to start. It maps the program to NIST CSF 2.0's Govern function, specifically the GV.SC category for cybersecurity supply chain risk management, and does the harder part: deciding how much diligence each tier actually needs, and where a scoring rule stops being enough.</p>
 <h2>The Program Today: One Questionnaire, Every Vendor, Once</h2>
 <p>Meridian's current process runs the same way regardless of what a vendor does. Procurement sends a standard security questionnaire before signature, files the completed copy, and the vendor moves into an active relationship with no scheduled reassessment. A pharmacy benefit manager with a live API connection to member eligibility data completes the same eleven-question form as a vendor with no access to Meridian's systems at all.</p>

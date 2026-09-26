@@ -4,36 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agentic AI Risk Assessment: Where an Autonomous Invoice-Approval Agent Needs a Human in the Loop</title>
-<style>
-  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:#F4F6F8; color:#2C3E50; }
-  header { background:#002147; padding:20px 24px; }
-  header a { color:#C5A55A; font-family: Arial, sans-serif; text-decoration:none; font-size:0.9em; }
-  main { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; background:#fff; }
-  h1 { color:#002147; font-family: Arial, sans-serif; font-size:1.45em; }
-  h2 { color:#002147; font-family: Arial, sans-serif; border-bottom:1px solid #C5A55A; padding-bottom:4px; margin-top:36px; }
-  h3 { color:#002147; font-family: Arial, sans-serif; font-size:1.05em; margin-top:24px; }
-  strong { color:#002147; }
-  table { border-collapse: collapse; width:100%; margin-top:12px; font-size:0.92em; }
-  th { background:#002147; color:#fff; padding:8px; text-align:left; font-family: Arial, sans-serif; font-size:0.85em; }
-  td { border:1px solid #ccc; padding:8px; vertical-align:top; }
-  hr { border:none; border-top:1px solid #C5A55A; margin:32px 0; }
-  em { color:#555; }
-  code { background:#F4F6F8; font-family: 'Courier New', monospace; font-size:0.88em; padding:1px 5px; border-radius:3px; }
-  .split { display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; }
-  .split-col { flex:1; min-width:260px; border:1px solid #ddd; border-radius:6px; padding:16px 18px; }
-  .split-col.agent { border-top:4px solid #3d7a4d; }
-  .split-col.human { border-top:4px solid #a8842e; }
-  .split-col h3 { margin-top:0; }
-  .split-col ul { margin:0; padding-left:20px; }
-  .split-col li { margin-bottom:8px; line-height:1.5; }
-  main > ul { padding-left:20px; margin-top:8px; }
-  main > ul li { margin-bottom:8px; line-height:1.5; }
-</style>
+<link rel="stylesheet" href="../../assets/site.css">
 </head>
-<body>
-<header><a href="../../">&larr; Back to Portfolio</a></header>
+<body class="project-page">
+<header class="project-header"><a href="../../">&larr; Back to Portfolio</a></header>
 <main>
 <h1>Agentic AI Risk Assessment: Where an Autonomous Invoice-Approval Agent Needs a Human in the Loop</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
   <p>A distributor gives an AI agent the ability to read invoices, match them against purchase orders, and pay vendors on its own, below a set dollar threshold. This document assesses that design against three real frameworks: the OWASP catalog for agentic application risk, MITRE ATLAS as a threat model for one concrete attack path, and the NIST AI Risk Management Framework as the structure for the controls that keep the agent's authority inside a boundary the business actually agreed to.</p>
 
 <p><strong>Scenario:</strong> An AI agent with authority to autonomously pay vendors below a dollar threshold. Assessment tests the design against OWASP Top 10 for Agentic Applications, walks one attack path through MITRE ATLAS, and structures controls using NIST AI RMF.</p>
@@ -56,7 +33,7 @@
 <strong>Status:</strong> Design assessment, not a deployed system</p>
 <hr />
 <h2>Executive Summary</h2>
-<p>Meridian Industrial Supply processes several thousand vendor invoices a month. Most of them are routine: a known vendor, an open purchase order, an amount inside normal variance. The company wants an AI agent to clear that routine volume on its own and only bring a person in when something doesn't match.</p>
+<p>LogiFlow Distribution processes several thousand vendor invoices a month. Most of them are routine: a known vendor, an open purchase order, an amount inside normal variance. The company wants an AI agent to clear that routine volume on its own and only bring a person in when something doesn't match.</p>
 <p>The design below gives the agent exactly that authority, and nothing past it. It can read the invoice queue, check an invoice against an open PO, and call a payment-initiation function when both match and the amount sits under a fixed ceiling. It cannot add a vendor, change a bank routing number, or approve anything above that ceiling. This document exists to test whether that boundary actually holds, using three frameworks built for exactly this question: what can go wrong in an agentic system, how an attacker would try to move through it, and how a risk program structures the controls that keep it contained.</p>
 <h2>The Agent as Deployed</h2>
 <p>The Invoice Agent runs against three tools: a read query against the ERP's open invoice queue, a read query against the vendor master and purchase order records, and a single scoped function, <code>initiate_payment(invoice_id, po_id, amount)</code>, that the agent may call only when the invoice references a PO already open in the system and the two amounts match within 2 percent.</p>
