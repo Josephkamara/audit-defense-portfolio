@@ -26,7 +26,7 @@ A fictional payment processor serving state agencies under PCI DSS v4.0.1 (Level
 
 `PCI DSS` `SOC 2` `GovRAMP` `SOX ITGC`
 
-### [PCI DSS Network Segmentation](https://josephkamara.github.io/audit-defense-portfolio/projects/pci-dss-network-segmentation/)
+### [PCI DSS Network Segmentation](https://josephkamara.github.io/audit-defense-portfolio/projects/pci-dss-network-segmentation (Keystone's September 2025 segmentation retest)/)
 
 **Assessment**
 
@@ -52,7 +52,7 @@ A company running production across both AWS and GCP tests the same six SOX IT g
 
 `Cloud Security` `SOX`
 
-### [Cloud Access Compliance Scanner](https://josephkamara.github.io/audit-defense-portfolio/projects/cloud-access-compliance-scanner/)
+### [Cloud Access Compliance Scanner](https://josephkamara.github.io/audit-defense-portfolio/projects/cloud-access-compliance-scanner (tested against a mocked Keystone sandbox account)/)
 
 **Working Code**
 
@@ -62,7 +62,7 @@ A Python scanner that pulls real evidence for four controls: stale IAM keys, mis
 
 ## SOC 2 and Attestation
 
-### [SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control](https://josephkamara.github.io/audit-defense-portfolio/projects/soc2-access-review-automation/)
+### [SOC 2 Evidence Automation: Quarterly Access Review as a Continuous Control](https://josephkamara.github.io/audit-defense-portfolio/projects/soc2-access-review-automation (Keystone's quarterly ServiceNow review redesigned as a continuous control)/)
 
 **Memo**
 
