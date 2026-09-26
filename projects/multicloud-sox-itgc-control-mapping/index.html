@@ -56,68 +56,62 @@
 
 <h2>1. Logical Access Provisioning and Deprovisioning</h2>
 <p>The auditor tests whether a new hire's access matches their approved role and whether a terminated employee's access is removed within a defined window, typically same day or next business day for a high-risk system.</p>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
 <tr><td>Native evidence source</td><td>AWS IAM Identity Center, provisioned through SCIM from the HR system or identity provider; AWS CloudTrail management events for IAM user, role, and login profile changes</td><td>Cloud Identity, provisioned through SCIM from the same HR system; Cloud Audit Logs Admin Activity log for identity lifecycle and IAM policy events</td></tr>
 <tr><td>How the evidence is pulled</td><td>Export IAM Identity Center assignment status and cross-reference it against CloudTrail events for CreateUser, DeleteLoginProfile, and DetachUserPolicy in the review window</td><td>Export Cloud Identity user status and cross-reference it against Cloud Audit Logs entries for user suspend or delete actions and SetIamPolicy calls in the review window</td></tr>
 <tr><td>What it demonstrates</td><td>A dated, immutable record of exactly when an account was created or disabled, not the account's state today</td><td>The same before-and-after picture, since Cloud Audit Logs entries are also immutable and timestamped</td></tr>
-</table></div>
+</table></div></div>
 </div>
 
 <h2>2. Privileged Access Review</h2>
 <p>The auditor tests who currently holds administrative rights in each environment, whether that access is still needed, and whether the review that is supposed to catch excess access actually happened this period. This is the objective worked through end to end in the example below.</p>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
 <tr><td>Native evidence source</td><td>IAM Access Analyzer (external and unused access findings), IAM Access Advisor (service-last-accessed data), the IAM credential report</td><td>IAM Recommender (least-privilege recommendations based on ninety days of usage), Cloud Asset Inventory's IAM policy search, Cloud Audit Logs for privileged role grants</td></tr>
 <tr><td>How the evidence is pulled</td><td>Generate the IAM credential report for account-wide access-key age and MFA status, then run IAM Access Analyzer to flag unused permissions on privileged roles</td><td>Run an IAM Recommender query against each project holding privileged roles, then run a Cloud Asset Inventory search across the organization for every principal holding an owner or editor role</td></tr>
 <tr><td>What it demonstrates</td><td>A dated snapshot of every privileged identity, its credential hygiene, and whether its granted permissions have actually been used</td><td>The same snapshot for GCP, plus Google's own usage-based recommendation for whether a grant is excessive, which gives the tester a documented basis for that judgment</td></tr>
-</table></div>
+</table></div></div>
 </div>
 
 <h2>3. Change Management and SDLC Controls for Production Changes</h2>
 <p>The auditor tests whether a production change was authorized, tested, and approved before it was deployed, and whether the record of that approval exists independently of the person who made the change.</p>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
 <tr><td>Native evidence source</td><td>AWS Systems Manager Change Manager (formal change request and approval workflow), AWS CodePipeline manual approval action history, AWS Config resource timeline</td><td>Cloud Deploy release and rollout approval gates, Cloud Build build history, Cloud Audit Logs Admin Activity events for the underlying resource change</td></tr>
 <tr><td>How the evidence is pulled</td><td>Pull the Change Manager request record and the CodePipeline approval history for the release, then confirm against the Config timeline that the resource change occurred only after the approval timestamp</td><td>Pull the Cloud Deploy rollout history for the approval event, then confirm against Cloud Audit Logs that the underlying resource change timestamp follows the approval</td></tr>
 <tr><td>What it demonstrates</td><td>A change occurred only after a documented, timestamped approval, not merely that an approval exists somewhere in a ticketing system</td><td>The same sequencing proof, built entirely from GCP-native logs rather than a ticketing system the tester has to trust separately</td></tr>
-</table></div>
+</table></div></div>
 </div>
 
 <h2>4. Security Configuration and Hardening Baselines</h2>
 <p>The auditor tests whether production resources are configured to an approved baseline, such as no public storage buckets and encryption at rest enabled, and whether drift away from that baseline is detected.</p>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
 <tr><td>Native evidence source</td><td>AWS Config conformance pack for the CIS AWS Foundations Benchmark, AWS Config rules such as s3-bucket-public-read-prohibited and encrypted-volumes, AWS Security Hub aggregated findings</td><td>Security Command Center's Security Health Analytics module, which includes built-in detectors mapped to the CIS GCP Foundation Benchmark, plus Organization Policy Service constraints</td></tr>
 <tr><td>How the evidence is pulled</td><td>Pull the conformance pack compliance summary for the review period and the Security Hub finding history for any resource that failed a rule and when it was remediated</td><td>Pull the Security Health Analytics finding history and the active Organization Policy constraints in effect for the same period</td></tr>
 <tr><td>What it demonstrates</td><td>Continuous, rule-based monitoring against a named benchmark, with a timestamp for both the failure and the remediation</td><td>The same continuous monitoring on the GCP side, against the same benchmark family, so the tester is comparing like evidence across both providers</td></tr>
-</table></div>
+</table></div></div>
 </div>
 
 <h2>5. Segregation of Duties Over Privileged Administrative Functions</h2>
 <p>The auditor tests that no single identity can both make a sensitive change and approve it, such as modifying an IAM policy and approving that same policy change, or pushing code and approving its own deployment.</p>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
 <tr><td>Native evidence source</td><td>IAM Access Analyzer policy validation, the AWS Config rule iam-policy-no-statements-with-admin-access, CloudTrail records correlating the requester identity against the approver identity on a CodePipeline manual approval</td><td>IAM Deny policies and Organization Policy constraints that block a principal from holding conflicting roles, Policy Simulator to test a proposed grant before it is applied, Cloud Audit Logs distinguishing the committer from the approver on a Cloud Build or Cloud Deploy release</td></tr>
 <tr><td>How the evidence is pulled</td><td>Cross-reference the CodePipeline approval log's requester and approver fields against IAM to confirm they are different identities, then check the Config rule's finding history for any policy granting both capabilities to one role</td><td>Cross-reference the Cloud Deploy release record's committer and approver fields, then check active Organization Policy constraints for any exception allowing a single principal both privileges</td></tr>
 <tr><td>What it demonstrates</td><td>A structural control, enforced by policy rather than by a person remembering not to approve their own change</td><td>The same structural enforcement on GCP, verifiable from Cloud Audit Logs rather than from a self-reported process description</td></tr>
-</table></div>
+</table></div></div>
 </div>
 
 <h2>6. Backup and Recovery</h2>
 <p>The auditor tests that production data is backed up on a defined schedule, retained per policy, and that a restore actually works, not just that a backup job reports success.</p>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <tr><th>Aspect</th><th>AWS</th><th>GCP</th></tr>
 <tr><td>Native evidence source</td><td>AWS Backup centralized backup plans, with AWS Backup Audit Manager reporting compliance against the defined frequency and retention rules, S3 Versioning and Object Lock for immutability</td><td>Google Cloud's Backup and DR Service, with its own policy-based backup plans and compliance reporting, Persistent Disk snapshot schedules, Cloud Storage Object Versioning and Bucket Lock retention policies</td></tr>
 <tr><td>How the evidence is pulled</td><td>Pull the Backup Audit Manager compliance report for the period and the CloudTrail record of a completed restore test</td><td>Pull the Backup and DR Service compliance report for the period and the Cloud Audit Logs record of a completed restore test</td></tr>
 <tr><td>What it demonstrates</td><td>Backups ran on schedule, are retained per policy, and were proven recoverable, not just present</td><td>The same three-part proof on the GCP side, from the provider's own audit-focused backup service rather than a manually maintained backup log</td></tr>
-</table></div>
+</table></div></div>
 </div>
 
 <h2>Worked Example: Pulling Privileged Access Review Evidence</h2>

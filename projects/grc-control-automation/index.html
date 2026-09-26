@@ -102,7 +102,6 @@
 </div>
 <p style="font-size:0.85em;color:#7a8a99;text-align:center;margin-top:-4px;">Figure 1. One evidence pull, three frameworks. SOC 2 and ISO 27001 accepted enrollment status without asking for session-level logs. PCI DSS 8.5.1 tests the session itself, and the enrollment flag never proved what happened there.</p>
 <h2>The Shared Control Against Each Framework</h2>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <thead><tr><th>Framework</th><th>What the Requirement Actually Tests</th><th>Did the Enrollment-Based Evidence Hold?</th></tr></thead>
 <tbody>
@@ -110,7 +109,7 @@
 <tr><td>ISO 27001 Annex A.8.5</td><td>Secure authentication is implemented in line with an access control policy, with the standard leaving implementation specifics to the organization's own risk assessment</td><td>Held, for the same reason, and because Pellworth's own documented policy did not explicitly define session-level MFA as the standard of proof</td></tr>
 <tr><td>PCI DSS 8.4.1 and 8.5.1</td><td>MFA is required for all non-console administrative access into the CDE (8.4.1), and access must not be granted unless all required factors succeed on that session, with any bypass requiring a documented, management-approved exception (8.5.1)</td><td>Did not hold. Actual session logs showed password-only administrative access to the CDE during the trusted-device window, with no documented exception on file</td></tr>
 </tbody>
-</table></div>
+</table></div></div>
 </div>
 <h2>Why Automation Made This Worse, Not Better</h2>
 <p>A manual evidence request, asked three separate times by three separate auditors, has three separate chances for someone to phrase the question differently and catch the gap. One SOC 2 tester might ask for enrollment. Another ISO 27001 assessor might ask for a policy document. A PCI QSA, trained specifically on 8.5.1's session-level language, is more likely to ask for challenge logs regardless of what the other two accepted. Automating the evidence pull into a single shared query removed that redundancy. The same wrong answer went to all three frameworks at once, and the two audits that would not have caught it independently never got the chance to, because they never saw the underlying session data at all. Control automation is supposed to reduce risk by removing manual error. Here it concentrated risk, because a single flawed evidence source now fed every framework that shared the control, instead of failing quietly in just one.</p>
@@ -141,7 +140,6 @@
 <h2>Recommendation</h2>
 <p>Switch the automated evidence collector to query per-session MFA challenge status for administrative logins into the CDE, not enrollment status, and backfill a documented, management-approved exception for the trusted-device window or disable it for CDE-adjacent administrative accounts specifically. Add a standing rule to the control crosswalk process: any control shared across frameworks with different evidence standards must be evidenced to the strictest framework in the mapping, with the others inheriting that same evidence rather than a looser one. Re-test every other control currently shared across Pellworth's three frameworks against this same enrollment-versus-challenge question before the next audit cycle.</p>
 <h2>Decision and Sign-off</h2>
-<div class="table-wrap">
 <div class="table-wrap"><table>
 <thead><tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr></thead>
 <tbody>
@@ -149,7 +147,7 @@
 <tr><td>Security and Compliance (GRC)</td><td>Joseph Kamara</td><td>Recommend Approval</td><td></td></tr>
 <tr><td>Executive Sponsor</td><td></td><td>Approve / Reject</td><td></td></tr>
 </tbody>
-</table></div>
+</table></div></div>
 </div>
 <hr />
 <h2>What a Crosswalk Actually Has to Prove</h2>
