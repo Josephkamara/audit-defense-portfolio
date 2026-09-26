@@ -432,7 +432,7 @@ See `remediation-tracker.csv` for tracking details.
 
 ## Recommendations
 
-1. **Prioritize GAP-014** (legacy batch system not in quarterly access review): This is the highest-risk open gap (score 6). Complete in the Q3 2026 review campaign that starts October 1.
+1. **Prioritize GAP-014** (standard Linux OS accounts and PostgreSQL database users not in quarterly access review): This is the highest-risk open gap (score 6). Complete in the Q3 2026 review campaign that starts October 1.
 2. **Finish automated log review for the legacy system (GAP-002) before PCI ROC fieldwork in December.** The TRA gaps (GAP-004, GAP-008) are closed; maintain the TRA library (GOV-04) going forward.
 3. **Formalize role-based access documentation (GAP-005):** Low risk, but completing this will strengthen the SOC 2 Type 2 control environment for the next audit.
 4. **Review the remediation tracker monthly:** Add a standing agenda item to the Risk Committee meeting to review open gaps and confirm target dates are on track.

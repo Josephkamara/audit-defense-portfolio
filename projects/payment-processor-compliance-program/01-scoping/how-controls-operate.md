@@ -44,11 +44,11 @@ If the ITGCs are not effective, fall back to testing the configuration at multip
 
 An automated check that proves the wrong thing (MFA enrollment instead of a per-session challenge) passes two audits and fails PCI. Automated evidence needs a human-reviewed evidence specification.
 
-See [../grc-control-automation/](../../grc-control-automation/) for the cautionary tale: a GRC engineering team built one control crosswalk to satisfy SOC 2, ISO 27001, and PCI DSS at once. The mapping was correct. The automated evidence was not. Two audits missed it. A PCI QSA didn't.
+See [the GRC Control Automation project](../../grc-control-automation/) for the cautionary tale: a GRC engineering team built one control crosswalk to satisfy SOC 2, ISO 27001, and PCI DSS at once. The mapping was correct. The automated evidence was not. Two audits missed it. A PCI QSA didn't.
 
 ## Worked Example: Cloud Access Compliance Scanner
 
-See [../cloud-access-compliance-scanner/](../../cloud-access-compliance-scanner/) as the primary worked example. It is working boto3 code that runs repeatable access checks against an AWS account and produces workpaper-shaped findings on every run. That is the kind of continuous, automated evidence this section describes.
+See [the Cloud Access Compliance Scanner](../../cloud-access-compliance-scanner/) as the primary worked example. It is working boto3 code that runs repeatable access checks against an AWS account and produces workpaper-shaped findings on every run. That is the kind of continuous, automated evidence this section describes.
 
 The scanner is tested against a mocked copy of a Keystone sandbox account, seeded with deliberate violations so every check fires. In Keystone's production accounts, these checks back up ACC-05 (no human IAM users), ACC-06 (MFA enforcement), ACC-08 (service account inventory), and ACC-14 (unused access removal). The expected production result is zero findings apart from the two documented break-glass users.
 

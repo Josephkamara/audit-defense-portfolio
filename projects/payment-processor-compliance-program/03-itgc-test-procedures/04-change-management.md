@@ -56,7 +56,7 @@ This is the ITGC that lets TP-AUTO rows (ACC-03, ACC-05, ACC-06, ACC-12, CHG-09,
    - **Risk rating documented:** Confirm risk rating (standard/normal/high) is filled in.
    - **Test evidence attached:** Confirm test results, staging deployment log, or pre-production validation is attached or referenced.
    - **Approval before deployment:**
-     - For normal and high-risk changes: Confirm the change record shows CAB or standard change approval (for pre-approved models) before the deployment timestamp.
+     - For normal and high-risk changes: Confirm CAB approval recorded before the deployment timestamp.
      - For standard changes: Confirm the change matches a pre-approved standard change model (example: routine patch, certificate renewal, Terraform apply for a low-risk config).
      - For emergency changes: Confirm retrospective CAB approval occurred within 2 business days.
    - **GitHub pull request linked:** Confirm the change record links to a GitHub pull request (for code/IaC changes).
