@@ -39,6 +39,15 @@
 <main>
 <h1>Cloud Access Compliance Scanner: Working Code for Four SOC 2 and SOX Access Controls</h1>
 <p><em>Portfolio note: this project is real, working Python code, not a design document. It runs against a mocked AWS account (via the <code>moto</code> library). No real AWS account, credentials, or cost is involved. The account, users, keys, policies, and buckets described below are fictional, created only to exercise the code.</em></p>
+
+<p><strong>Scenario:</strong> Working Python code that scans AWS IAM for four access control violations: abandoned keys, excessive permissions, unrotated passwords, and public S3 buckets. Maps findings to SOC 2 CC6 and SOX ITGC access controls.</p>
+
+<p><strong>Frameworks:</strong> SOC 2 (CC6: Logical and Physical Access Controls), SOX ITGC (Access to Programs and Data)</p>
+
+<p><strong>Key artifacts:</strong> Production-ready Python scanner with mocked AWS testing environment; mapping of each check to SOC 2 and SOX control objectives; severity-rated findings output.</p>
+
+<p><strong>Takeaway:</strong> Automated compliance scanning catches configuration drift (unused keys, excessive permissions) that manual reviews miss. Code runs continuously, provides audit evidence, and separates mechanical checks from human judgment on appropriateness of access.</p>
+
 <hr />
 <h2>Document Header</h2>
 <p><strong>Document ID:</strong> CTRL-AUTO-2026-01<br/>

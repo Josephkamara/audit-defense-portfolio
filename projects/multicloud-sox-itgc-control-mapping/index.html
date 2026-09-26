@@ -37,6 +37,15 @@
 <main>
 <h1>Multi-Cloud SOX ITGC Control Mapping: AWS and GCP Evidence Sources for a Shared-Responsibility Environment</h1>
 <p><em>Portfolio note: This design document describes a fictional company. The SOX IT general control objectives and the AWS and GCP service names referenced are real and current as of September 2026. No client or employer information appears anywhere in this document.</em></p>
+
+<p><strong>Scenario:</strong> A company runs production workloads split across AWS and GCP. The same six SOX IT general control objectives apply to both clouds, but AWS and GCP expose identity, change, and configuration evidence through different services, logs, and commands.</p>
+
+<p><strong>Frameworks:</strong> SOX Section 404 IT general controls (Access to Programs and Data, Program Change, Computer Operations)</p>
+
+<p><strong>Key artifacts:</strong> Six control objective mappings showing native evidence sources in both AWS and GCP; separation of automated collection vs. tester judgment calls.</p>
+
+<p><strong>Takeaway:</strong> A control objective reads the same regardless of infrastructure, but the evidence trail does not. AWS uses CloudTrail and IAM Access Analyzer; GCP uses Cloud Audit Logs and IAM Recommender. Test plans built for one cloud do not transfer without a separate evidence map.</p>
+
 <hr />
 <h2>Document Header</h2>
 <p><strong>Document ID:</strong> CTRL-DESIGN-2026-08<br/>

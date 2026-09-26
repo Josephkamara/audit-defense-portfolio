@@ -34,6 +34,15 @@ main > ul li { margin-bottom:8px; line-height:1.5; }
 <main>
 <h1>PCI DSS Network Segmentation: Defending the CDE Boundary Under QSA Scrutiny</h1>
 <p>A payment platform's security team built network segmentation two years ago and has renewed the same one-page attestation every year since: "the cardholder data environment is segmented from the corporate network." The attestation was never wrong exactly. It was also never tested against the parts of the environment that don't show up on the architecture diagram: a shared log pipeline, a jump box used for three different purposes, and a batch export job nobody has re-reviewed since it was built. This document builds the segmentation testing scope a QSA will actually run, and states plainly which claimed boundaries hold up and which do not.</p>
+
+<p><strong>Scenario:</strong> A multi-tenant payment platform serving 200 merchants under PCI DSS as a service provider, with an 11-month-old segmentation test and a six-month requirement clock under 11.4.6.</p>
+
+<p><strong>Frameworks:</strong> PCI DSS v4.0.1 (Requirements 1, 11.4.5, 11.4.6, 11.4.7)</p>
+
+<p><strong>Key artifacts:</strong> Segmentation testing scope with three boundaries examined (log pipeline, jump box, batch export); penetration test design; findings on one non-compliant boundary.</p>
+
+<p><strong>Takeaway:</strong> Service providers face a six-month segmentation testing clock (11.4.6), not the twelve-month merchant cycle (11.4.5). Testing only what appears on the architecture diagram misses the connections that actually expand CDE scope.</p>
+
 <p><em>The company below is built for this walkthrough. The PCI DSS v4.0.1 requirement numbers and testing cadences cited are real and current, verified against the published standard and independent technical summaries of it.</em></p>
 <hr />
 <h2>Segmentation Testing Information</h2>
