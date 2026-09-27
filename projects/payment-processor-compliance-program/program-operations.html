@@ -19,7 +19,7 @@
 <p>PCI DSS v4.0.1, SOC 1 Type 2, SOC 2 Type 2 (Security, Availability, Confidentiality), GovRAMP Moderate (NIST SP 800-53 Rev 5), IT general controls</p>
 
 <h3>Key Artifacts</h3>
-<p>DR test workpaper with one exception (reporting schema RPO, remediated and retested), 12-month unified calendar (October 2026 to September 2027), shared evidence table mapped to PCI, SOC 2 and NIST, GovRAMP phases and gap areas table, contract obligations by agency (5 fictional agencies), leadership dashboard with control health by framework, 30/60/90 acquisition onboarding plan</p>
+<p>DR test workpaper with one exception (reporting schema RPO, remediated and retested), 12-month unified calendar (October 2026 to September 2027), shared evidence table mapped to PCI, SOC 2 and NIST, GovRAMP phases and gap areas table, contract obligations for 5 sample agencies (fictional names), leadership dashboard with control health by framework, 30/60/90 acquisition onboarding plan</p>
 
 <h3>Takeaway</h3>
 <p>One audit calendar, one evidence request list, tested once by each assessor. One DR test satisfies BCP-02 and informs the SOC A1.3 availability testing. The same monthly authenticated internal scans (VUL-01) support PCI DSS 11.3.1 and the monthly GovRAMP continuous monitoring package. This page shows how those activities interlock without duplicating work, and how a dashboard keeps leadership and auditors aligned on what is ready and what is not.</p>
@@ -184,7 +184,7 @@
 
 <p><strong>Effect:</strong> Up to 11 minutes of reporting data could be lost in a regional failure. The transaction ledger itself met the 5-minute RPO, and transactions could still be rebuilt from GatewayCo settlement files using transaction-based recovery (NIST CP-10(2)).</p>
 
-<p><strong>Remediation:</strong> The reporting schema was moved into continuous cross-region replication through a Terraform configuration change. The change was approved through the CHG-01 change process (ServiceNow change record with CAB approval). A replication-lag CloudWatch alarm was added to alert when lag exceeds the 5-minute target.</p>
+<p><strong>Remediation:</strong> The reporting schema was moved into continuous cross-region replication through a Terraform configuration change. The Terraform pull request, with plan output attached, was peer reviewed under branch protection (CHG-02), linked to a ServiceNow change record approved by the change advisory board (CHG-01), and applied by the GitHub Actions deployment role (CHG-05). A replication-lag CloudWatch alarm was added to alert when lag exceeds the 5-minute target.</p>
 
 <p><strong>Retest:</strong> A targeted retest on September 25, 2026 measured RPO of 2 minutes for the reporting schema. The exception was closed. Because the exception was remediated and retested within the same period, it is not recorded as a new readiness gap and the gap count remains 15.</p>
 
@@ -426,7 +426,7 @@
 
 <ul>
 <li><strong>Security Snapshot:</strong> An initial maturity scoring by the GovRAMP PMO.</li>
-<li><strong>Progressing Security Snapshot Program:</strong> A provider that is not yet verified can be listed as progressing and is re-scored quarterly and listed on GovRAMP's Progressing Product List while it closes gaps.</li>
+<li><strong>Progressing Security Snapshot Program:</strong> A provider that is not yet verified can join this program, is re-scored quarterly, and appears on GovRAMP's Progressing Product List while it closes gaps.</li>
 <li><strong>Verified statuses:</strong> GovRAMP Core (a smaller focused control set assessed by the PMO, no 3PAO), Ready (3PAO readiness assessment), Provisionally Authorized, and Authorized (full 3PAO security assessment, PMO validation). Verified products appear on GovRAMP's published product list.</li>
 <li><strong>Continuous monitoring:</strong> Authorized providers submit continuous monitoring monthly (POA&amp;M, scan results, inventory) and complete an annual assessment by a 3PAO.</li>
 <li><strong>3PAO:</strong> A third-party assessment organization registered with GovRAMP and accredited by A2LA. GovRAMP adopted the same 3PAO accreditation standard FedRAMP uses.</li>
@@ -526,7 +526,7 @@
 
 <h2>4. Contract Obligations Tracker</h2>
 
-<p>The tracker below shows five of the roughly 50 agency customers Keystone serves (agency names are fictional). The following table tracks contractual obligations by agency, covering SOC 2 and PCI AOC delivery, state right to pen test, breach notification windows, data residency, background checks and GovRAMP status maintenance.</p>
+<p>This table tracks contract obligations for five of the roughly 50 agency customers Keystone serves (agency names are fictional): SOC 1 and SOC 2 report delivery, PCI AOC delivery, the agency's right to pen test, breach notification windows, data residency, background checks, and maintaining GovRAMP status.</p>
 
 <div class="table-wrap">
 <table>
