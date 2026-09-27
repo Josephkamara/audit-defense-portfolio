@@ -9,8 +9,8 @@ This diagram shows how cardholder data flows through Keystone Civic Payments' sy
 - **Red boxes:** Cardholder Data Environment (CDE) components that store, process, or transmit PAN
 - **Orange boxes:** Connected-to systems that can affect CDE security but do not handle PAN (Session Manager bastion, CI/CD pipeline, backup service, and monitoring are listed in system-description.md but not shown in these payment data flows; they connect to CDE infrastructure, not payment transaction paths)
 - **Green boxes:** Out-of-scope systems with tested segmentation
-- **Solid lines:** Data flows containing or potentially containing PAN
-- **Dashed lines:** Data flows with tokens only, no PAN, or non-card data
+- **Solid lines:** Data flows containing or potentially containing PAN (including encrypted PAN)
+- **Dashed lines:** Data flows with tokens or non-card data only, no PAN
 
 ## Flow 1: Card Not Present (CNP) Transaction via Hosted Payment Page
 
@@ -46,13 +46,13 @@ graph TB
     I -->|"4. Authorization response"| D
     D -.->|"5. Token + auth result"| E
     E -.->|"6. Store token<br/>+ transaction record"| F
-    F -.->|"7. Token and truncated PAN written<br/>(pre-2025 rows: encrypted PAN)"| G
+    F -->|"7. Token and truncated PAN written<br/>(pre-2025 rows: encrypted PAN)"| G
     E -.->|"8. Return success + token"| B
     B -.->|"9. Confirmation page"| A
     H -.->|"Nightly: settlement file<br/>tokens only, no PAN"| I
     
-    classDef cdeNode fill:#ffcccb,stroke:#c0392b,stroke-width:2px,color:#000
-    classDef outOfScopeNode fill:#d5f4e6,stroke:#27ae60,stroke-width:2px,color:#000
+    classDef cdeNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
+    classDef outOfScopeNode fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
     classDef citizenNode fill:#f0f0f0,stroke:#7f8c8d,stroke-width:2px,color:#000
     
     class C,D,E,F,G,H cdeNode
@@ -98,8 +98,8 @@ graph LR
     C -.->|"3. Encrypted transfer"| D
     B -.->|"4. Post summary<br/>tokens only"| E
     
-    classDef cdeNode fill:#ffcccb,stroke:#c0392b,stroke-width:2px,color:#000
-    classDef outOfScopeNode fill:#d5f4e6,stroke:#27ae60,stroke-width:2px,color:#000
+    classDef cdeNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
+    classDef outOfScopeNode fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
     
     class A,B,C cdeNode
     class D,E outOfScopeNode
@@ -139,8 +139,8 @@ graph TB
     B -.->|"3. Store encrypted<br/>account number"| C
     B -.->|"4. Generate NACHA file<br/>nightly batch"| E
     
-    classDef cdeNode fill:#ffcccb,stroke:#c0392b,stroke-width:2px,color:#000
-    classDef outOfScopeNode fill:#d5f4e6,stroke:#27ae60,stroke-width:2px,color:#000
+    classDef cdeNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
+    classDef outOfScopeNode fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
     
     class B,C,D cdeNode
     class A,E outOfScopeNode
