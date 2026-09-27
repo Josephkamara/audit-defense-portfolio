@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keystone Program Operations | Joseph Kamara</title>
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="project-page">
+<header class="project-header"><a href="./">Back to Keystone program</a></header>
+<main>
+<h1>Keystone Program Operations</h1>
+<p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
+<div class="summary-block">
+<h3>Scenario</h3>
+<p>Day-to-day program operations for Keystone Civic Payments: DR and backup testing audited under BCP-01, BCP-02, OPS-01 and OPS-02, unified audit calendar and shared evidence request list across PCI DSS, SOC 1, SOC 2 and GovRAMP, GovRAMP Moderate roadmap (Security Snapshot to Authorized status), contract obligations tracker with five sample agency customers (fictional names), a one-page leadership dashboard showing control health and audit readiness, and a 30/60/90 plan for integrating an acquired company.</p>
+
+<h3>Frameworks</h3>
+<p>PCI DSS v4.0.1, SOC 1 Type 2, SOC 2 Type 2 (Security, Availability, Confidentiality), GovRAMP Moderate (NIST SP 800-53 Rev 5), IT general controls</p>
+
+<h3>Key Artifacts</h3>
+<p>DR test workpaper with one exception (reporting schema RPO, remediated and retested), 12-month unified calendar (October 2026 to September 2027), shared evidence table mapped to PCI, SOC 2 and NIST, GovRAMP phases and gap areas table, contract obligations for 5 sample agencies (fictional names), leadership dashboard with control health by framework, 30/60/90 acquisition onboarding plan</p>
+
+<h3>Takeaway</h3>
+<p>One audit calendar, one evidence request list, tested once by each assessor. One DR test satisfies BCP-02 and informs the SOC A1.3 availability testing. The same monthly authenticated internal scans (VUL-01) support PCI DSS 11.3.1 and the monthly GovRAMP continuous monitoring package. This page shows how those activities interlock without duplicating work, and how a dashboard keeps leadership and auditors aligned on what is ready and what is not.</p>
+</div>
+
+<span class="tag">DR Testing</span><span class="tag">GovRAMP</span><span class="tag">Audit Readiness</span><span class="tag">Program Operations</span>
+
+<hr />
+
+<p>Status as of September 30, 2026.</p>
+
+<h2>1. DR and BCP Audit Workpaper</h2>
+
+<p>Internal audit test of BCP-01, BCP-02, OPS-01 and OPS-02 for the September 2026 annual disaster recovery test. Objective: confirm that RTO and RPO targets are met, quarterly restore tests are performed with integrity checks, and backups exceed the minimum policy retention of 14 days.</p>
+
+<p>The following table shows the defined targets from BCP-01.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>System</th>
+<th>RTO Target</th>
+<th>RPO Target</th>
+<th>Backup Retention</th>
+</tr>
+<tr>
+<td>Payment platform (AWS)</td>
+<td>2 hours</td>
+<td>5 minutes</td>
+<td>35 days (exceeds policy minimum of 14 days)</td>
+</tr>
+<tr>
+<td>Legacy batch system (colocation)</td>
+<td>24 hours</td>
+<td>24 hours (nightly backup)</td>
+<td>35 days (exceeds policy minimum of 14 days)</td>
+</tr>
+</table>
+</div>
+
+<p>The 5-minute RPO applies to the payment platform only. The legacy batch system runs settlement once a day from a nightly backup with a 24-hour RPO.</p>
+
+<h3>Test Steps</h3>
+
+<p>The following table documents the procedure steps, expected evidence and controls tested.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Step</th>
+<th>Procedure</th>
+<th>Evidence Expected</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Inspect the approved BC/DR plan and confirm RTO and RPO targets are documented and the plan was reviewed and approved in December 2025.</td>
+<td>BC/DR plan with version history, approval signature, and December review sign-off (BCP-01).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Inspect AWS Backup plan settings and vault lock configuration to confirm daily schedule, 35-day retention, cross-region copy, and cryptographic protection are in place.</td>
+<td>AWS Backup plan configuration, Backup Audit Manager report, vault lock status (OPS-01).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Select the Q3 2026 restore test ticket and reperform the data integrity check comparison to confirm row counts and checksums match.</td>
+<td>ServiceNow restore test ticket with timestamps, row-count and checksum comparison, integrity validation results (OPS-02).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Inspect the DR test plan, scenario, and approvals to confirm the test was planned and authorized.</td>
+<td>DR test plan document, scenario description, test approvals, roles assigned (BCP-02).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Trace failover timestamps to compute actual RTO: outage declaration, DNS or traffic cutover, first successful synthetic payment in the DR region.</td>
+<td>DR test report showing timestamps, Route 53 health check failover log, synthetic transaction result with timestamp (BCP-02).</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Compare the last replicated transaction timestamp to the outage start timestamp to compute actual RPO for the payment platform.</td>
+<td>RDS replication lag metric at failover time, last transaction ID replicated, comparison to outage start (BCP-02).</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Confirm the legacy batch system was restored from the nightly backup and a settlement dry run was performed with control totals matching.</td>
+<td>Backup restore log with timestamps, settlement dry run output, control-total reconciliation showing match (BCP-02, OPS-01, OPS-02).</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Confirm issues identified during the DR test were logged with owners and retest dates assigned.</td>
+<td>Issue tickets with descriptions, risk ratings, owners, target dates, and validation evidence (GOV-07).</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Confirm the DR test results were reported to the CISO and IT Operations Manager with RTO and RPO results documented.</td>
+<td>DR test results report with approval signatures, executive summary, RTO and RPO comparison table, distribution list.</td>
+</tr>
+</table>
+</div>
+
+<h3>Test Results</h3>
+
+<p>The September 12, 2026 disaster recovery test results are summarized below.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Test</th>
+<th>Target</th>
+<th>Actual</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>Payment API regional failover (RTO)</td>
+<td>2 hours</td>
+<td>1 hour 38 minutes</td>
+<td>Met</td>
+</tr>
+<tr>
+<td>Payment database RPO (transaction ledger)</td>
+<td>5 minutes</td>
+<td>3 minutes</td>
+<td>Met</td>
+</tr>
+<tr>
+<td>Reporting schema RPO</td>
+<td>5 minutes</td>
+<td>11 minutes</td>
+<td>Not met (exception)</td>
+</tr>
+<tr>
+<td>Legacy batch restore (RTO)</td>
+<td>24 hours</td>
+<td>6 hours 40 minutes (including settlement dry run with matching control totals)</td>
+<td>Met</td>
+</tr>
+<tr>
+<td>Q3 2026 restore test of payment database</td>
+<td>Quarterly (OPS-02)</td>
+<td>Performed September 10, 2026; integrity checks matched</td>
+<td>Met</td>
+</tr>
+<tr>
+<td>Backup retention</td>
+<td>Policy minimum 14 days</td>
+<td>Configured 35 days</td>
+<td>Met</td>
+</tr>
+</table>
+</div>
+
+<h3>Exception</h3>
+
+<p>One exception was identified during the DR test and is documented below.</p>
+
+<p><strong>Condition:</strong> The reporting schema replicated on a separate asynchronous snapshot schedule, so measured RPO was 11 minutes against the 5-minute target.</p>
+
+<p><strong>Criteria:</strong> BCP-01 defines a 5-minute RPO for the payment platform. The reporting schema is part of the payment platform system boundary.</p>
+
+<p><strong>Cause:</strong> The reporting schema was added in a 2026 release and was not added to the continuous replication configuration at that time. The schema was copied to the DR region by a separate 10-minute asynchronous snapshot job instead of continuous cross-region replication.</p>
+
+<p><strong>Effect:</strong> Up to 11 minutes of reporting data could be lost in a regional failure. The transaction ledger itself met the 5-minute RPO, and transactions could still be rebuilt from GatewayCo settlement files using transaction-based recovery (NIST CP-10(2)).</p>
+
+<p><strong>Remediation:</strong> The reporting schema was moved into continuous cross-region replication through a Terraform configuration change. The Terraform pull request, with plan output attached, was peer reviewed under branch protection (CHG-02), linked to a ServiceNow change record approved by the change advisory board (CHG-01), and applied by the GitHub Actions deployment role (CHG-05). A replication-lag CloudWatch alarm was added to alert when lag exceeds the 5-minute target.</p>
+
+<p><strong>Retest:</strong> A targeted retest on September 25, 2026 measured RPO of 2 minutes for the reporting schema. The exception was closed. Because the exception was remediated and retested within the same period, it is not recorded as a new readiness gap and the gap count remains 15.</p>
+
+<h3>Framework Mapping</h3>
+
+<p>The following table shows how the DR and backup controls map to each framework and why.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Framework</th>
+<th>Reference</th>
+<th>How It Applies</th>
+</tr>
+<tr>
+<td>SOC 2</td>
+<td>A1.2</td>
+<td>Backup processes and recovery infrastructure support availability commitments. Applies to OPS-01 and BCP-01.</td>
+</tr>
+<tr>
+<td>SOC 2</td>
+<td>A1.3</td>
+<td>Recovery plan testing supports availability commitments. Applies to OPS-02 (quarterly restore tests) and BCP-02 (annual DR test).</td>
+</tr>
+<tr>
+<td>SOC 2</td>
+<td>CC9.1</td>
+<td>Risk of business disruptions is identified, analyzed, and managed. Applies to BCP-01 (BC/DR plan).</td>
+</tr>
+<tr>
+<td>PCI DSS v4.0.1</td>
+<td>N/A</td>
+<td>PCI DSS has no standalone disaster recovery test requirement. The unified control matrix marks BCP-01, BCP-02, OPS-01 and OPS-02 as PCI N/A. PCI DSS touches this area only indirectly: 12.10.1 requires the incident response plan to include business recovery and continuity procedures and data backup processes (IR-01), and 12.10.2 requires the incident response plan, including those elements, to be reviewed, updated and tested at least once every 12 months (IR-02). Requirement 12.10.2 does not require a DR failover test.</td>
+</tr>
+<tr>
+<td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
+<td>CP-4, CP-4(1)</td>
+<td>Contingency plan testing, coordinated with related plans. Applies to BCP-02.</td>
+</tr>
+<tr>
+<td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
+<td>CP-9</td>
+<td>System backup. Applies to OPS-01.</td>
+</tr>
+<tr>
+<td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
+<td>CP-9(1)</td>
+<td>Testing for reliability and integrity of backup information. Applies to OPS-02.</td>
+</tr>
+<tr>
+<td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
+<td>CP-9(8)</td>
+<td>Cryptographic protection of backup information. Applies to OPS-01: AWS Backup copies are encrypted with AWS KMS, and the legacy database is backed up to encrypted storage. Vault lock adds immutability but is not the CP-9(8) evidence.</td>
+</tr>
+<tr>
+<td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
+<td>CP-10</td>
+<td>System recovery and reconstitution. Applies to BCP-01 and BCP-02.</td>
+</tr>
+<tr>
+<td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
+<td>CP-10(2)</td>
+<td>Transaction recovery. Settlement files from GatewayCo provide a transaction-based recovery capability.</td>
+</tr>
+</table>
+</div>
+
+<p>All of the NIST controls listed are in the Moderate baseline.</p>
+
+<h2>2. Unified Audit Calendar and Shared Evidence Request List</h2>
+
+<p>Keystone runs one unified audit calendar from October 2026 to September 2027, matching the calendar documented at <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/07-continuous-compliance/compliance-calendar-and-kpis.md" target="_blank">compliance-calendar-and-kpis.md</a>.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Month</th>
+<th>PCI DSS</th>
+<th>SOC 1 / SOC 2</th>
+<th>GovRAMP</th>
+<th>Shared Activities</th>
+</tr>
+<tr>
+<td>October 2026</td>
+<td>ASV scan (Q4); ROC planning meeting</td>
+<td>SOC planning meeting</td>
+<td>ConMon</td>
+<td>Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
+</tr>
+<tr>
+<td>November 2026</td>
+<td>Annual cipher and protocol review (12.3.3)</td>
+<td></td>
+<td>ConMon</td>
+<td>Supplemental notification tabletop (GAP-013)</td>
+</tr>
+<tr>
+<td>December 2026</td>
+<td>ROC fieldwork begins; Q4 access review</td>
+<td>SOC interim testing</td>
+<td>Annual 3PAO assessment; ConMon</td>
+<td>Annual BC/DR plan review (BCP-01); H2 all-user access review (ACC-04); Q4 restore test (OPS-02)</td>
+</tr>
+<tr>
+<td>January 2027</td>
+<td>ASV scan (Q1)</td>
+<td></td>
+<td>Annual package due within 30 days of January anniversary; ConMon</td>
+<td>Annual risk assessment kickoff; Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
+</tr>
+<tr>
+<td>February 2027</td>
+<td>ROC and AOC issued; Segmentation test #1; Scope confirmation #1 (12.5.2.1)</td>
+<td></td>
+<td>ConMon</td>
+<td>Semiannual segmentation test</td>
+</tr>
+<tr>
+<td>March 2027</td>
+<td>Q1 access review</td>
+<td>SOC period ends March 31; Fieldwork begins; Annual IR tabletop (IR-02)</td>
+<td>ConMon</td>
+<td>Q1 restore test (OPS-02)</td>
+</tr>
+<tr>
+<td>April 2027</td>
+<td>ASV scan (Q2)</td>
+<td>SOC fieldwork continues</td>
+<td>ConMon</td>
+<td>Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
+</tr>
+<tr>
+<td>May 2027</td>
+<td></td>
+<td>SOC 1 and SOC 2 reports issued and delivered to agency customers</td>
+<td>ConMon</td>
+<td></td>
+</tr>
+<tr>
+<td>June 2027</td>
+<td>Policy annual review (12.1.2); Q2 access review</td>
+<td></td>
+<td>ConMon</td>
+<td>H1 all-user review (ACC-04); Q2 restore test (OPS-02)</td>
+</tr>
+<tr>
+<td>July 2027</td>
+<td>ASV scan (Q3); Annual technology end-of-life review (12.3.4)</td>
+<td></td>
+<td>ConMon</td>
+<td>Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
+</tr>
+<tr>
+<td>August 2027</td>
+<td>Segmentation test #2; Scope confirmation #2 (12.5.2.1)</td>
+<td></td>
+<td>ConMon</td>
+<td>Semiannual segmentation test</td>
+</tr>
+<tr>
+<td>September 2027</td>
+<td>Q3 access review</td>
+<td></td>
+<td>ConMon</td>
+<td>Annual penetration test (VUL-04); Annual DR test (BCP-02); Q3 restore test (OPS-02)</td>
+</tr>
+</table>
+</div>
+
+<p>All of these activities run from one shared evidence request list (the PBC list at <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/04-evidence/pbc-request-list.csv" target="_blank">pbc-request-list.csv</a>, 74 requests). Evidence is requested once and tested separately by the QSA, the SOC service auditor and the 3PAO. For example, the quarterly privileged access review export is requested once in the shared PBC list and tested by all three assessors against their own standards.</p>
+
+<h3>Shared Evidence Table</h3>
+
+<p>The following table shows examples of evidence items requested once and used by multiple assessors.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Evidence Item</th>
+<th>Control</th>
+<th>PCI DSS v4.0.1</th>
+<th>SOC 2</th>
+<th>NIST 800-53 (GovRAMP)</th>
+</tr>
+<tr>
+<td>Quarterly privileged and CDE access review export and sign-off</td>
+<td>ACC-04</td>
+<td>7.2.4</td>
+<td>CC6.2, CC6.3</td>
+<td>AC-2, AC-6(7)</td>
+</tr>
+<tr>
+<td>DR test report with RTO and RPO results</td>
+<td>BCP-02</td>
+<td>N/A</td>
+<td>A1.3</td>
+<td>CP-4, CP-4(1)</td>
+</tr>
+<tr>
+<td>Restore test ticket with integrity check</td>
+<td>OPS-02</td>
+<td>N/A</td>
+<td>A1.3, A1.2</td>
+<td>CP-9(1), CP-4</td>
+</tr>
+<tr>
+<td>Quarterly ASV passing scan reports</td>
+<td>VUL-02</td>
+<td>11.3.2, 11.3.2.1</td>
+<td>CC7.1</td>
+<td>RA-5</td>
+</tr>
+<tr>
+<td>Annual pen test report and retest letter</td>
+<td>VUL-04</td>
+<td>11.4.1 to 11.4.4</td>
+<td>CC4.1, CC7.1</td>
+<td>CA-8, CA-8(1)</td>
+</tr>
+<tr>
+<td>Background screening records</td>
+<td>HR-01</td>
+<td>12.7.1</td>
+<td>CC1.4</td>
+<td>PS-3</td>
+</tr>
+</table>
+</div>
+
+<p>Note that CA-8 is not in the NIST Moderate baseline, but GovRAMP expects annual penetration testing as part of the annual assessment.</p>
+
+<h2>3. GovRAMP Roadmap to Moderate</h2>
+
+<p>Keystone already holds GovRAMP Moderate Authorized status. This section presents the roadmap Keystone followed to Moderate and the reusable playbook for bringing an acquired business into scope (see section 6).</p>
+
+<p>GovRAMP is a nonprofit that verifies cloud security for state and local governments. Its baselines are built on NIST SP 800-53 Rev 5. GovRAMP was formerly StateRAMP. The rebrand was announced in February 2025 and the legal name remains StateRAMP, operating as GovRAMP.</p>
+
+<p>GovRAMP terminology and statuses:</p>
+
+<ul>
+<li><strong>Security Snapshot:</strong> An initial maturity scoring by the GovRAMP PMO.</li>
+<li><strong>Progressing Security Snapshot Program:</strong> A provider that is not yet verified can join this program, is re-scored quarterly, and appears on GovRAMP's Progressing Product List while it closes gaps.</li>
+<li><strong>Verified statuses:</strong> GovRAMP Core (a smaller focused control set assessed by the PMO, no 3PAO), Ready (3PAO readiness assessment), Provisionally Authorized, and Authorized (full 3PAO security assessment, PMO validation). Verified products appear on GovRAMP's published product list.</li>
+<li><strong>Continuous monitoring:</strong> Authorized providers submit continuous monitoring monthly (POA&amp;M, scan results, inventory) and complete an annual assessment by a 3PAO.</li>
+<li><strong>3PAO:</strong> A third-party assessment organization registered with GovRAMP and accredited by A2LA. GovRAMP adopted the same 3PAO accreditation standard FedRAMP uses.</li>
+</ul>
+
+<h3>Gap Areas</h3>
+
+<p>SOC 2 and PCI DSS cover a lot, but a NIST SP 800-53 Rev 5 Moderate baseline adds depth in specific families.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Family or Area</th>
+<th>What Moderate Adds Beyond SOC 2 and PCI</th>
+<th>Keystone Artifact</th>
+</tr>
+<tr>
+<td>CA (Assessment, Authorization and Monitoring)</td>
+<td>CA-2 and CA-2(1) independent assessment by a 3PAO; CA-5 POA&amp;M; CA-7 continuous monitoring (GOV-08).</td>
+<td>3PAO SAR, POA&amp;M workbook, monthly ConMon submissions</td>
+</tr>
+<tr>
+<td>CM (Configuration Management)</td>
+<td>CM-2 baseline configurations, CM-6 configuration settings, CM-7 least functionality, CM-8 component inventory. Tie to GAP-010, AWS Config conformance pack in the secondary account, due November 30, 2026.</td>
+<td>Configuration standard, Terraform baseline, AWS Config rules, inventory workbook</td>
+</tr>
+<tr>
+<td>IR (Incident Response)</td>
+<td>IR-3 and IR-3(2) incident response testing coordinated with related plans; IR-6 incident reporting. Tie to GAP-013, supplemental notification tabletop for agency customers.</td>
+<td>IR plan, annual tabletop documentation, breach notification procedures</td>
+</tr>
+<tr>
+<td>SC (System and Communications Protection)</td>
+<td>SC-7 boundary protection, SC-8 transmission confidentiality and integrity, SC-13 cryptographic protection (FIPS-validated cryptography expected), SC-28 protection of information at rest.</td>
+<td>Boundary diagram, TLS policy with cipher inventory, KMS FIPS validation, encryption-at-rest configuration</td>
+</tr>
+<tr>
+<td>SI (System and Information Integrity)</td>
+<td>SI-2 flaw remediation, SI-4 system monitoring, SI-5 security alerts and advisories.</td>
+<td>Vulnerability management policy with SLA timelines, SIEM correlation rules, patch compliance reports</td>
+</tr>
+<tr>
+<td>PL (Planning) and SR (Supply Chain Risk Management)</td>
+<td>PL-2 system security plan (SSP); SR-2, SR-3, SR-5, SR-6 supply chain risk management.</td>
+<td>SSP, SBOM, vendor due diligence files, supply chain risk register</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td>SSP, POA&amp;M, inventory workbook, continuous monitoring plan, boundary diagram (legacy colocation batch system excluded from the GovRAMP boundary).</td>
+<td>SSP, POA&amp;M, ConMon plan, inventory workbook, boundary diagram showing AWS and excluding the colocation site</td>
+</tr>
+</table>
+</div>
+
+<h3>Phases and Timeline</h3>
+
+<p>The following retrospective timeline shows how Keystone moved from Security Snapshot to Authorized status (fictional dates). The program was still named StateRAMP during the 2024 phases; current GovRAMP names are used throughout.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Phase</th>
+<th>Timing</th>
+<th>Outputs</th>
+</tr>
+<tr>
+<td>Phase 1: Security Snapshot and boundary decision</td>
+<td>First quarter 2024</td>
+<td>Initial Security Snapshot score, boundary decision (AWS in scope, legacy colocation batch system excluded), documented rationale for excluding the colocation system from the boundary</td>
+</tr>
+<tr>
+<td>Phase 2: Gap remediation against the Moderate baseline, SSP and POA&amp;M built (listed as progressing while gaps closed)</td>
+<td>Second and third quarters 2024</td>
+<td>SSP, initial POA&amp;M, control implementations, documented policies and procedures, evidence collection workflow, progressing status on GovRAMP site</td>
+</tr>
+<tr>
+<td>Phase 3: 3PAO full security assessment (SAR)</td>
+<td>Fourth quarter 2024</td>
+<td>Security assessment report (SAR), findings remediated or added to the POA&amp;M, security package (SSP, SAR, POA&amp;M) submitted to the PMO</td>
+</tr>
+<tr>
+<td>Phase 4: PMO review and Authorized status awarded</td>
+<td>January 2025</td>
+<td>GovRAMP Moderate Authorized status, authorization letter, published on GovRAMP verified products list. This January authorization anniversary drives the annual package due date.</td>
+</tr>
+<tr>
+<td>Phase 5: Continuous monitoring</td>
+<td>Monthly submissions, annual 3PAO assessment each December, POA&amp;M aging tracked</td>
+<td>Monthly ConMon packages (POA&amp;M, inventory, scans, executive summary), annual 3PAO assessment, annual package within 30 days of the January anniversary</td>
+</tr>
+</table>
+</div>
+
+<h3>GRC Platform Integration</h3>
+
+<p><strong>GovRAMP is set up in the GRC platform as a custom framework.</strong> Because GovRAMP baselines are built on NIST SP 800-53 Rev 5 and closely track FedRAMP, the team cloned the platform's FedRAMP Moderate (800-53 Rev 5) control mappings as the starting point, then adjusted for GovRAMP-specific requirements. This means one control and one evidence item still map to PCI DSS, SOC 2 and GovRAMP, and the GRC platform pulls automated evidence for all three programs from the same source (AWS Config, Okta, GitHub, ServiceNow).</p>
+
+<h2>4. Contract Obligations Tracker</h2>
+
+<p>This table tracks contract obligations for five of the roughly 50 agency customers Keystone serves (agency names are fictional): SOC 1 and SOC 2 report delivery, PCI AOC delivery, the agency's right to pen test, breach notification windows, data residency, background checks, and maintaining GovRAMP status.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Agency</th>
+<th>Obligation</th>
+<th>Due</th>
+<th>Owner</th>
+<th>Evidence</th>
+<th>Status</th>
+</tr>
+<tr>
+<td>Dunmerrow Department of Revenue</td>
+<td>Annual SOC 2 Type 2 report delivery</td>
+<td>Within 15 days of issuance (May 2027)</td>
+<td>Director of GRC</td>
+<td>Delivery confirmation, contract Exhibit B</td>
+<td>On track</td>
+</tr>
+<tr>
+<td>Dunmerrow Department of Revenue</td>
+<td>Annual PCI AOC delivery (VEN-04, 12.9.2)</td>
+<td>Within 30 days of issuance (February 2027)</td>
+<td>Director of GRC</td>
+<td>Delivery log, AOC, responsibility matrix</td>
+<td>On track</td>
+</tr>
+<tr>
+<td>Dunmerrow Department of Revenue</td>
+<td>Breach notification window</td>
+<td>Within 24 hours of confirmation (IR-01)</td>
+<td>CISO</td>
+<td>IR plan notification procedures, contact list</td>
+<td>Complete</td>
+</tr>
+<tr>
+<td>Brisvale Motor Vehicle Division</td>
+<td>Annual SOC 2 Type 2 report delivery</td>
+<td>Within 30 days of issuance (May 2027)</td>
+<td>Director of GRC</td>
+<td>Delivery confirmation, contract Section 7.3</td>
+<td>On track</td>
+</tr>
+<tr>
+<td>Brisvale Motor Vehicle Division</td>
+<td>State right to conduct penetration test with 30-day notice (PCI 11.4.7 multi-tenant service provider support)</td>
+<td>As requested</td>
+<td>CISO</td>
+<td>Pen test coordination procedures, state pen test request log</td>
+<td>Complete</td>
+</tr>
+<tr>
+<td>Brisvale Motor Vehicle Division</td>
+<td>Data residency: all customer data stored and processed in US regions only</td>
+<td>Continuous</td>
+<td>Cloud Platform Engineering Manager</td>
+<td>AWS Organizations SCP, account configuration, primary and DR regions both in US</td>
+<td>Complete</td>
+</tr>
+<tr>
+<td>Corrinth County Clerk Consortium</td>
+<td>Annual PCI AOC delivery (VEN-04, 12.9.2)</td>
+<td>Within 60 days of issuance (February 2027)</td>
+<td>Director of GRC</td>
+<td>Delivery log, AOC, responsibility matrix</td>
+<td>On track</td>
+</tr>
+<tr>
+<td>Corrinth County Clerk Consortium</td>
+<td>Background checks for staff with access to agency data (HR-01, 12.7.1)</td>
+<td>Before hire</td>
+<td>HR Director</td>
+<td>Background check completion report reconciled to new hire list, policy attestation</td>
+<td>Complete</td>
+</tr>
+<tr>
+<td>Ellisford Workforce Commission</td>
+<td>GovRAMP Moderate Authorized status maintained</td>
+<td>Continuous, monthly ConMon, annual 3PAO assessment December 2026</td>
+<td>Director of GRC</td>
+<td>Authorization letter, monthly ConMon submission confirmations, annual 3PAO SAR</td>
+<td>On track</td>
+</tr>
+<tr>
+<td>Ellisford Workforce Commission</td>
+<td>Breach notification window</td>
+<td>Within 72 hours of confirmation (IR-01)</td>
+<td>CISO</td>
+<td>IR plan notification procedures, contact list</td>
+<td>Complete</td>
+</tr>
+<tr>
+<td>Pellam Parks and Recreation Agency</td>
+<td>Annual SOC 1 Type 2 report delivery</td>
+<td>Within 30 days of issuance (May 2027)</td>
+<td>Director of GRC</td>
+<td>Delivery confirmation, contract rider</td>
+<td>On track</td>
+</tr>
+<tr>
+<td>Pellam Parks and Recreation Agency</td>
+<td>GovRAMP Moderate Authorized status maintained</td>
+<td>Continuous, monthly ConMon, annual 3PAO assessment December 2026</td>
+<td>Director of GRC</td>
+<td>Authorization letter, monthly ConMon submission confirmations, annual 3PAO SAR</td>
+<td>On track</td>
+</tr>
+</table>
+</div>
+
+<h3>Late Penalties</h3>
+
+<p>Contracts commonly set service credits or fee holdbacks for late report or AOC delivery, cure periods, and termination rights for repeated or material breach, plus cost recovery for breach notification. The specific amounts vary by contract and are tracked in the contract register, not on this page.</p>
+
+<p>Contract obligations are stored in the GRC platform or contract register and reviewed monthly by the Director of GRC.</p>
+
+<h2>5. Leadership Dashboard</h2>
+
+<p>One-page mock dashboard as of September 30, 2026. Numbers are exact from the existing matrix and tracker: 79 controls (38 key, 28 ITGC), 15 gaps (7 completed, 8 open), 0 overdue gaps.</p>
+
+<h3>Control Health</h3>
+
+<div class="dash-grid">
+<div class="dash-card">
+<div class="dash-value">79</div>
+<div class="dash-label">Controls in Scope</div>
+<div class="dash-label">38 key, 28 ITGC</div>
+</div>
+<div class="dash-card">
+<div class="dash-value">90%</div>
+<div class="dash-label">Control Health</div>
+<div class="dash-label">71 of 79 controls</div>
+</div>
+<div class="dash-card">
+<div class="dash-value">89%</div>
+<div class="dash-label">Key Controls</div>
+<div class="dash-label">34 of 38 key controls</div>
+</div>
+<div class="dash-card">
+<div class="dash-value">86%</div>
+<div class="dash-label">ITGC Health</div>
+<div class="dash-label">24 of 28 ITGCs</div>
+</div>
+<div class="dash-card">
+<div class="dash-value">8 of 15</div>
+<div class="dash-label">Open Gaps</div>
+<div class="dash-label">7 completed</div>
+</div>
+<div class="dash-card">
+<div class="dash-value status-ok">0</div>
+<div class="dash-label">Overdue Gaps</div>
+<div class="dash-label">All on track</div>
+</div>
+</div>
+
+<p><strong>Definition:</strong> Control health counts a control as healthy when no open remediation gap maps to it. The 8 open gaps map to 8 controls: GAP-001 to ACC-06, GAP-002 to LOG-03, GAP-005 to ACC-01, GAP-006 to OPS-04, GAP-010 to CHG-09, GAP-012 to CRY-04, GAP-013 to IR-02, GAP-014 to ACC-04. Four of those are key controls (ACC-01, ACC-04, ACC-06, LOG-03) and four are ITGCs (ACC-01, ACC-04, ACC-06, OPS-04).</p>
+
+<h3>Open Gaps by Severity and Due Date</h3>
+
+<p>The tracker records target dates, not open dates, so this table ages gaps by due date.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Severity</th>
+<th>Due October 2026</th>
+<th>Due November 2026</th>
+<th>Due December 2026</th>
+<th>Total</th>
+</tr>
+<tr>
+<td>High</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>1 (GAP-014)</td>
+<td>2 (GAP-002, GAP-010)</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>0</td>
+<td>2 (GAP-001, GAP-013)</td>
+<td>3 (GAP-005, GAP-006, GAP-012)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>8</td>
+</tr>
+</table>
+</div>
+
+<h3>Audit Readiness by Framework</h3>
+
+<p>The following table shows the next milestone for each framework and the current readiness status.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Framework</th>
+<th>Next Milestone</th>
+<th>Readiness</th>
+<th>Why</th>
+</tr>
+<tr>
+<td>PCI DSS v4.0.1</td>
+<td>ROC fieldwork December 2026</td>
+<td>Watch</td>
+<td>GAP-014 (7.2.4 OS and database accounts) due October 31, 2026 and GAP-002 (10.4.1.1) due November 30, 2026 must close before fieldwork.</td>
+</tr>
+<tr>
+<td>SOC 2 Type 2</td>
+<td>Period ends March 31, 2027</td>
+<td>On track</td>
+<td>GAP-005 and GAP-006 due in December 2026; DR test exception already remediated and retested.</td>
+</tr>
+<tr>
+<td>SOC 1 Type 2</td>
+<td>Period ends March 31, 2027</td>
+<td>On track</td>
+<td>GAP-014 affects the user access ITGC and closes October 31, 2026.</td>
+</tr>
+<tr>
+<td>GovRAMP Moderate</td>
+<td>Annual 3PAO assessment December 2026</td>
+<td>Watch</td>
+<td>GAP-010 (CM-2, CM-6) due November 30, 2026; monthly ConMon current.</td>
+</tr>
+</table>
+</div>
+
+<h3>Key Dates</h3>
+
+<p>The following table lists the next six key dates from the unified calendar.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Date</th>
+<th>Activity</th>
+</tr>
+<tr>
+<td>October 2026</td>
+<td>ASV scan (Q4)</td>
+</tr>
+<tr>
+<td>October 31, 2026</td>
+<td>GAP-014 due (ACC-04, standard Linux OS accounts and PostgreSQL users added to the access review)</td>
+</tr>
+<tr>
+<td>November 30, 2026</td>
+<td>GAP-001, GAP-002, GAP-010, GAP-013 due</td>
+</tr>
+<tr>
+<td>December 2026</td>
+<td>PCI ROC fieldwork begins; GovRAMP annual 3PAO assessment</td>
+</tr>
+<tr>
+<td>January 2027</td>
+<td>GovRAMP annual package due within 30 days of January authorization anniversary</td>
+</tr>
+<tr>
+<td>February 2027</td>
+<td>PCI ROC and AOC issued</td>
+</tr>
+</table>
+</div>
+
+<h2>6. Integrating an Acquired Company</h2>
+
+<p>A 30/60/90 compliance onboarding plan for bringing an acquired business into the Keystone compliance program. The acquired business (not named) must be scoped, controls mapped to the unified matrix, gaps tracked, auditors notified, and systems added to the recurring evidence collection cycle.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Days</th>
+<th>Focus</th>
+<th>Outputs</th>
+</tr>
+<tr>
+<td>Days 1 to 30</td>
+<td>Inventory systems, data flows and card data exposure; decide whether the acquired systems enter the PCI CDE, the SOC system description and the GovRAMP boundary, or stay separated; collect existing reports (AOC, SOC reports, pen tests); put Okta SSO and MFA and central logging in place first; freeze new connections to the Keystone CDE until segmentation is tested.</td>
+<td>System inventory, data flow diagrams, boundary decision memo, collected reports, Okta SSO and MFA rollout plan, logging integration plan, connection freeze policy</td>
+</tr>
+<tr>
+<td>Days 31 to 60</td>
+<td>Map the acquired business's controls to the unified control matrix; add gaps to the remediation tracker with owners and dates; notify the QSA, SOC auditor and GovRAMP PMO of significant change where required (scope confirmation 12.5.2.1 on significant change; GovRAMP significant change process); update contract obligations if agency customers move over.</td>
+<td>Control mapping workpaper, new gaps in the tracker, scope confirmation memos to QSA and SOC auditor, GovRAMP significant change notification, updated contract obligations register</td>
+</tr>
+<tr>
+<td>Days 61 to 90</td>
+<td>Run a readiness check, a segmentation test if connected, add the systems to the next ConMon inventory, the next access review and the PBC list; brief leadership using the section 5 dashboard.</td>
+<td>Readiness assessment, segmentation test report (if connected), updated inventory workbook, access review scope expansion, PBC list updates, leadership dashboard showing the expanded scope</td>
+</tr>
+</table>
+</div>
+
+<p>The controls count on this page does not change until the acquired systems are formally brought into scope. If the acquired business has separate compliance obligations, the unified calendar and shared evidence list remain the same until integration is complete.</p>
+
+<p>The GovRAMP roadmap in section 3 is the playbook if the acquired business has its own cloud product that needs GovRAMP status: Security Snapshot, gap remediation with a POA&amp;M, 3PAO assessment, PMO review, then continuous monitoring. If the acquired systems instead join Keystone's existing authorized boundary, they go through GovRAMP's significant change process: update the SSP, boundary diagram and inventory, have the 3PAO assess the change as required, add any findings to the POA&amp;M, and include the systems in the next monthly continuous monitoring submission.</p>
+
+</main>
+</body>
+</html>
