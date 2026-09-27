@@ -32,7 +32,7 @@ If you have three minutes:
 
 ## Program Operations (Add-on)
 
-Day-to-day program operations: [program-operations.html](program-operations.html) ([live](https://josephkamara.github.io/audit-defense-portfolio/projects/payment-processor-compliance-program/program-operations.html)). DR and backup testing audited under BCP-01, BCP-02, OPS-01 and OPS-02 with one exception (reporting schema RPO, remediated and retested), unified audit calendar (October 2026 to September 2027) showing how PCI, SOC and GovRAMP share evidence, GovRAMP roadmap from Security Snapshot to Authorized status, contract obligations tracker with five fictional state agencies, one-page leadership dashboard showing control health and audit readiness by framework, and a 30/60/90 plan for integrating an acquired company.
+Day-to-day program operations: [program-operations.html](program-operations.html) ([live](https://josephkamara.github.io/audit-defense-portfolio/projects/payment-processor-compliance-program/program-operations.html)). DR and backup testing audited under BCP-01, BCP-02, OPS-01 and OPS-02 with one exception (reporting schema RPO, remediated and retested), unified audit calendar (October 2026 to September 2027) showing how PCI, SOC and GovRAMP share evidence, GovRAMP roadmap from Security Snapshot to Authorized status, contract obligations tracker for five sample agency customers (fictional names), one-page leadership dashboard showing control health and audit readiness by framework, and a 30/60/90 plan for integrating an acquired company.
 
 ## Framework Versions Used
 

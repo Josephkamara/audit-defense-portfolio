@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body class="project-page">
-<header class="project-header"><a href="./">&larr; Back to Keystone program</a></header>
+<header class="project-header"><a href="./">Back to Keystone program</a></header>
 <main>
 <h1>Keystone Program Operations</h1>
 <p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
 <div class="summary-block">
 <h3>Scenario</h3>
-<p>Day-to-day program operations for Keystone Civic Payments: DR and backup testing audited under BCP-01, BCP-02, OPS-01 and OPS-02, unified audit calendar and shared evidence request list across PCI DSS, SOC 1/2 and GovRAMP, GovRAMP Moderate roadmap (Security Snapshot to Authorized status), contract obligations tracker with five fictional state agency customers, a one-page leadership dashboard showing control health and audit readiness, and a 30/60/90 plan for integrating an acquired company.</p>
+<p>Day-to-day program operations for Keystone Civic Payments: DR and backup testing audited under BCP-01, BCP-02, OPS-01 and OPS-02, unified audit calendar and shared evidence request list across PCI DSS, SOC 1, SOC 2 and GovRAMP, GovRAMP Moderate roadmap (Security Snapshot to Authorized status), contract obligations tracker with five sample agency customers (fictional names), a one-page leadership dashboard showing control health and audit readiness, and a 30/60/90 plan for integrating an acquired company.</p>
 
 <h3>Frameworks</h3>
 <p>PCI DSS v4.0.1, SOC 1 Type 2, SOC 2 Type 2 (Security, Availability, Confidentiality), GovRAMP Moderate (NIST SP 800-53 Rev 5), IT general controls</p>
@@ -22,7 +22,7 @@
 <p>DR test workpaper with one exception (reporting schema RPO, remediated and retested), 12-month unified calendar (October 2026 to September 2027), shared evidence table mapped to PCI, SOC 2 and NIST, GovRAMP phases and gap areas table, contract obligations by agency (5 fictional agencies), leadership dashboard with control health by framework, 30/60/90 acquisition onboarding plan</p>
 
 <h3>Takeaway</h3>
-<p>One audit calendar, one evidence request list, tested once by each assessor. One DR test satisfies BCP-02 and informs the SOC A1.3 availability testing. One monthly GovRAMP ConMon package reuses PCI ASV scans and internal vulnerability reports. This page shows how those activities interlock without duplicating work, and how a dashboard keeps leadership and auditors aligned on what is ready and what is not.</p>
+<p>One audit calendar, one evidence request list, tested once by each assessor. One DR test satisfies BCP-02 and informs the SOC A1.3 availability testing. The same monthly authenticated internal scans (VUL-01) support PCI DSS 11.3.1 and the monthly GovRAMP continuous monitoring package. This page shows how those activities interlock without duplicating work, and how a dashboard keeps leadership and auditors aligned on what is ready and what is not.</p>
 </div>
 
 <span class="tag">DR Testing</span><span class="tag">GovRAMP</span><span class="tag">Audit Readiness</span><span class="tag">Program Operations</span>
@@ -180,11 +180,11 @@
 
 <p><strong>Criteria:</strong> BCP-01 defines a 5-minute RPO for the payment platform. The reporting schema is part of the payment platform system boundary.</p>
 
-<p><strong>Cause:</strong> The reporting schema was added in a 2026 release and was not added to the continuous replication configuration at that time. The schema was replicating through the nightly snapshot job instead of continuous cross-region replication.</p>
+<p><strong>Cause:</strong> The reporting schema was added in a 2026 release and was not added to the continuous replication configuration at that time. The schema was copied to the DR region by a separate 10-minute asynchronous snapshot job instead of continuous cross-region replication.</p>
 
 <p><strong>Effect:</strong> Up to 11 minutes of reporting data could be lost in a regional failure. The transaction ledger itself met the 5-minute RPO, and transactions could still be rebuilt from GatewayCo settlement files using transaction-based recovery (NIST CP-10(2)).</p>
 
-<p><strong>Remediation:</strong> The reporting schema was moved into continuous cross-region replication through a Terraform configuration change. The change was approved in ServiceNow under CHG-01. A replication-lag CloudWatch alarm was added to alert when lag exceeds the 5-minute target.</p>
+<p><strong>Remediation:</strong> The reporting schema was moved into continuous cross-region replication through a Terraform configuration change. The change was approved through the CHG-01 change process (ServiceNow change record with CAB approval). A replication-lag CloudWatch alarm was added to alert when lag exceeds the 5-minute target.</p>
 
 <p><strong>Retest:</strong> A targeted retest on September 25, 2026 measured RPO of 2 minutes for the reporting schema. The exception was closed. Because the exception was remediated and retested within the same period, it is not recorded as a new readiness gap and the gap count remains 15.</p>
 
@@ -211,8 +211,8 @@
 </tr>
 <tr>
 <td>SOC 2</td>
-<td>CC9.1 (optional)</td>
-<td>Risk of business disruptions is identified, analyzed, and managed. Applies to BCP-01 (BC/DR plan with business impact analysis).</td>
+<td>CC9.1</td>
+<td>Risk of business disruptions is identified, analyzed, and managed. Applies to BCP-01 (BC/DR plan).</td>
 </tr>
 <tr>
 <td>PCI DSS v4.0.1</td>
@@ -237,7 +237,7 @@
 <tr>
 <td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
 <td>CP-9(8)</td>
-<td>Cryptographic protection of backup information. Applies to OPS-01 (vault lock).</td>
+<td>Cryptographic protection of backup information. Applies to OPS-01: AWS Backup copies are encrypted with AWS KMS, and the legacy database is backed up to encrypted storage. Vault lock adds immutability but is not the CP-9(8) evidence.</td>
 </tr>
 <tr>
 <td>NIST SP 800-53 Rev 5 (GovRAMP Moderate)</td>
@@ -272,7 +272,7 @@
 <td>ASV scan (Q4); ROC planning meeting</td>
 <td>SOC planning meeting</td>
 <td>ConMon</td>
-<td>Q4 ASV scan shared with GovRAMP</td>
+<td>Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
 </tr>
 <tr>
 <td>November 2026</td>
@@ -290,10 +290,10 @@
 </tr>
 <tr>
 <td>January 2027</td>
-<td>ASV scan (Q1); Annual risk assessment kickoff</td>
+<td>ASV scan (Q1)</td>
 <td></td>
 <td>Annual package due within 30 days of January anniversary; ConMon</td>
-<td>Q1 ASV scan shared with GovRAMP</td>
+<td>Annual risk assessment kickoff; Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
 </tr>
 <tr>
 <td>February 2027</td>
@@ -314,7 +314,7 @@
 <td>ASV scan (Q2)</td>
 <td>SOC fieldwork continues</td>
 <td>ConMon</td>
-<td>Q2 ASV scan shared with GovRAMP</td>
+<td>Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
 </tr>
 <tr>
 <td>May 2027</td>
@@ -335,7 +335,7 @@
 <td>ASV scan (Q3); Annual technology end-of-life review (12.3.4)</td>
 <td></td>
 <td>ConMon</td>
-<td>Q3 ASV scan shared with GovRAMP</td>
+<td>Monthly internal scans (VUL-01) reused for PCI 11.3.1 and ConMon</td>
 </tr>
 <tr>
 <td>August 2027</td>
@@ -426,9 +426,9 @@
 
 <ul>
 <li><strong>Security Snapshot:</strong> An initial maturity scoring by the GovRAMP PMO.</li>
-<li><strong>Progressing Security Snapshot Program:</strong> A provider that is not yet verified can be listed as progressing and is re-scored on a regular cadence while it closes gaps.</li>
+<li><strong>Progressing Security Snapshot Program:</strong> A provider that is not yet verified can be listed as progressing and is re-scored quarterly and listed on GovRAMP's Progressing Product List while it closes gaps.</li>
 <li><strong>Verified statuses:</strong> GovRAMP Core (a smaller focused control set assessed by the PMO, no 3PAO), Ready (3PAO readiness assessment), Provisionally Authorized, and Authorized (full 3PAO security assessment, PMO validation). Verified products appear on GovRAMP's published product list.</li>
-<li><strong>Continuous monitoring:</strong> Authorized providers submit continuous monitoring monthly (POA&M, scan results, inventory) and complete an annual assessment by a 3PAO.</li>
+<li><strong>Continuous monitoring:</strong> Authorized providers submit continuous monitoring monthly (POA&amp;M, scan results, inventory) and complete an annual assessment by a 3PAO.</li>
 <li><strong>3PAO:</strong> A third-party assessment organization registered with GovRAMP and accredited by A2LA. GovRAMP adopted the same 3PAO accreditation standard FedRAMP uses.</li>
 </ul>
 
@@ -445,8 +445,8 @@
 </tr>
 <tr>
 <td>CA (Assessment, Authorization and Monitoring)</td>
-<td>CA-2 and CA-2(1) independent assessment by a 3PAO; CA-5 POA&M; CA-7 continuous monitoring (GOV-08).</td>
-<td>3PAO SAR, POA&M workbook, monthly ConMon submissions</td>
+<td>CA-2 and CA-2(1) independent assessment by a 3PAO; CA-5 POA&amp;M; CA-7 continuous monitoring (GOV-08).</td>
+<td>3PAO SAR, POA&amp;M workbook, monthly ConMon submissions</td>
 </tr>
 <tr>
 <td>CM (Configuration Management)</td>
@@ -475,15 +475,15 @@
 </tr>
 <tr>
 <td>Documentation</td>
-<td>SSP, POA&M, inventory workbook, continuous monitoring plan, boundary diagram (legacy colocation batch system excluded from the GovRAMP boundary).</td>
-<td>SSP, POA&M, ConMon plan, inventory workbook, boundary diagram showing AWS and excluding the colocation site</td>
+<td>SSP, POA&amp;M, inventory workbook, continuous monitoring plan, boundary diagram (legacy colocation batch system excluded from the GovRAMP boundary).</td>
+<td>SSP, POA&amp;M, ConMon plan, inventory workbook, boundary diagram showing AWS and excluding the colocation site</td>
 </tr>
 </table>
 </div>
 
 <h3>Phases and Timeline</h3>
 
-<p>The following retrospective timeline shows how Keystone moved from Security Snapshot to Authorized status (fictional dates).</p>
+<p>The following retrospective timeline shows how Keystone moved from Security Snapshot to Authorized status (fictional dates). The program was still named StateRAMP during the 2024 phases; current GovRAMP names are used throughout.</p>
 
 <div class="table-wrap">
 <table>
@@ -495,17 +495,17 @@
 <tr>
 <td>Phase 1: Security Snapshot and boundary decision</td>
 <td>First quarter 2024</td>
-<td>Initial Security Snapshot score, boundary decision (AWS in scope, legacy colocation batch system excluded), risk acceptance for out-of-scope system</td>
+<td>Initial Security Snapshot score, boundary decision (AWS in scope, legacy colocation batch system excluded), documented rationale for excluding the colocation system from the boundary</td>
 </tr>
 <tr>
-<td>Phase 2: Gap remediation against the Moderate baseline, SSP and POA&M built (listed as progressing while gaps closed)</td>
+<td>Phase 2: Gap remediation against the Moderate baseline, SSP and POA&amp;M built (listed as progressing while gaps closed)</td>
 <td>Second and third quarters 2024</td>
-<td>SSP, initial POA&M, control implementations, documented policies and procedures, evidence collection workflow, progressing status on GovRAMP site</td>
+<td>SSP, initial POA&amp;M, control implementations, documented policies and procedures, evidence collection workflow, progressing status on GovRAMP site</td>
 </tr>
 <tr>
 <td>Phase 3: 3PAO full security assessment (SAR)</td>
 <td>Fourth quarter 2024</td>
-<td>Security assessment report (SAR), findings remediated or added to POA&M, readiness package submitted to PMO</td>
+<td>Security assessment report (SAR), findings remediated or added to the POA&amp;M, security package (SSP, SAR, POA&amp;M) submitted to the PMO</td>
 </tr>
 <tr>
 <td>Phase 4: PMO review and Authorized status awarded</td>
@@ -514,8 +514,8 @@
 </tr>
 <tr>
 <td>Phase 5: Continuous monitoring</td>
-<td>Monthly submissions, annual 3PAO assessment each December, POA&M aging tracked</td>
-<td>Monthly ConMon packages (POA&M, inventory, scans, executive summary), annual 3PAO assessment, annual package within 30 days of the January anniversary</td>
+<td>Monthly submissions, annual 3PAO assessment each December, POA&amp;M aging tracked</td>
+<td>Monthly ConMon packages (POA&amp;M, inventory, scans, executive summary), annual 3PAO assessment, annual package within 30 days of the January anniversary</td>
 </tr>
 </table>
 </div>
@@ -526,7 +526,7 @@
 
 <h2>4. Contract Obligations Tracker</h2>
 
-<p>Keystone serves five fictional state agency customers (fictional). The following table tracks contractual obligations by agency, covering SOC 2 and PCI AOC delivery, state right to pen test, breach notification windows, data residency, background checks and GovRAMP status maintenance.</p>
+<p>The tracker below shows five of the roughly 50 agency customers Keystone serves (agency names are fictional). The following table tracks contractual obligations by agency, covering SOC 2 and PCI AOC delivery, state right to pen test, breach notification windows, data residency, background checks and GovRAMP status maintenance.</p>
 
 <div class="table-wrap">
 <table>
@@ -783,7 +783,7 @@
 </tr>
 <tr>
 <td>October 31, 2026</td>
-<td>GAP-014 due (ACC-04, legacy system accounts in quarterly access review)</td>
+<td>GAP-014 due (ACC-04, standard Linux OS accounts and PostgreSQL users added to the access review)</td>
 </tr>
 <tr>
 <td>November 30, 2026</td>
@@ -835,7 +835,7 @@
 
 <p>The controls count on this page does not change until the acquired systems are formally brought into scope. If the acquired business has separate compliance obligations, the unified calendar and shared evidence list remain the same until integration is complete.</p>
 
-<p>The GovRAMP roadmap in section 3 serves as the reusable playbook: Security Snapshot, gap remediation with a POA&M, readiness assessment by a 3PAO if needed, and then continuous monitoring. The same phases apply when integrating an acquired business into an existing GovRAMP authorization.</p>
+<p>The GovRAMP roadmap in section 3 is the playbook if the acquired business has its own cloud product that needs GovRAMP status: Security Snapshot, gap remediation with a POA&amp;M, 3PAO assessment, PMO review, then continuous monitoring. If the acquired systems instead join Keystone's existing authorized boundary, they go through GovRAMP's significant change process: update the SSP, boundary diagram and inventory, have the 3PAO assess the change as required, add any findings to the POA&amp;M, and include the systems in the next monthly continuous monitoring submission.</p>
 
 </main>
 </body>

@@ -1,6 +1,6 @@
 # Projects
 
-Eleven case studies. Each one is a realistic scenario, built to show the reasoning behind a decision, not just a completed checklist.
+The Keystone Civic Payments compliance program plus eleven case studies. Each one is a realistic scenario, built to show the reasoning behind a decision, not just a completed checklist.
 
 - [Payment Processor Compliance Program](payment-processor-compliance-program/): Keystone Civic Payments' multi-framework program design. [Program operations add-on](payment-processor-compliance-program/program-operations.html): DR testing, unified audit calendar, GovRAMP roadmap, contract tracker, leadership dashboard.
 - [SOC 2 Evidence Automation](soc2-access-review-automation/): Keystone's quarterly ServiceNow review redesigned as a continuous control.
