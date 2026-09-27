@@ -7,23 +7,20 @@ This diagram shows how cardholder data flows through Keystone Civic Payments' sy
 ## Diagram Legend
 
 - **Red boxes:** Cardholder Data Environment (CDE) components that store, process, or transmit PAN
-- **Orange boxes:** Connected-to systems that can affect CDE security but do not handle PAN (Session Manager bastion, CI/CD pipeline, backup service, and monitoring are listed in system-description.md but not shown in these payment data flows; they connect to CDE infrastructure, not payment transaction paths)
+- **Connected-to systems (not shown):** Systems that can affect CDE security but do not handle PAN (Session Manager bastion, CI/CD pipeline, backup service, and monitoring are listed in system-description.md; they connect to CDE infrastructure, not payment transaction paths, so these payment data flows do not include them)
 - **Green boxes:** Out-of-scope systems with tested segmentation
+- **Gray box:** Citizen browser, outside Keystone's environment
 - **Solid lines:** Data flows containing or potentially containing PAN (including encrypted PAN)
-- **Dashed lines:** Data flows with tokens or non-card data only, no PAN
+- **Dashed lines:** Data flows with tokens, truncated PAN, amounts, confirmations, or non-card data (such as ACH) only, no full PAN
 
 ## Flow 1: Card Not Present (CNP) Transaction via Hosted Payment Page
 
 ```mermaid
-graph TB
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 4, "bottom": 14}}}}%%
+flowchart TB
     subgraph citizen["Citizen / Payer"]
         A["Browser: State Agency Portal"]
     end
-    
-    subgraph agency["Out of Scope: Agency Systems"]
-        B["Agency Web Server"]
-    end
-    
     subgraph cde["CDE: Keystone Systems"]
         C["Hosted Payment Page<br/>CloudFront + S3<br/>SAQ A-EP"]
         E["Payment API<br/>ECS Fargate"]
@@ -31,50 +28,42 @@ graph TB
         G["Payment Database<br/>RDS PostgreSQL<br/>Encrypted PAN"]
         H["Settlement Processor<br/>Lambda + Step Functions"]
     end
-    
+    subgraph agency["Out of Scope: Agency Systems"]
+        B["Agency Web Server"]
+    end
     subgraph gateway["CDE: Payment Gateway"]
         D["Payment Gateway<br/>GatewayCo (fictional)<br/>Subservice Org"]
     end
-    
     subgraph bank["Out of Scope: Financial Institution"]
         I["Acquiring Bank"]
     end
-    
+
+    A ~~~ B
+    B ~~~ C
+    G ~~~ H
     A -->|"1. Citizen enters card"| C
     C -->|"2. JavaScript posts PAN<br/>directly to gateway<br/>TLS 1.3"| D
     D -->|"3. Authorization request"| I
+    I -->|"4. Authorization response"| D
     D -.->|"5. Token + auth result"| E
     E -.->|"6. Store token<br/>+ transaction record"| F
     F -->|"7. Token and truncated PAN written<br/>(pre-2025 rows: encrypted PAN)"| G
-    
-    I -.->|"4. Authorization response"| D
     E -.->|"8. Return success + token"| B
     B -.->|"9. Confirmation page"| A
     H -.->|"Nightly: settlement file<br/>tokens only, no PAN"| I
-    
-    linkStyle 6 stroke:#c0392b,stroke-width:2px
-    
-    classDef cdeNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
-    classDef outOfScopeNode fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
-    classDef citizenNode fill:#f0f0f0,stroke:#7f8c8d,stroke-width:2px,color:#000
-    
+
+    linkStyle 3,4,5,6,7,8,9,10,11,12 stroke:#7f8c8d,stroke-width:1.5px
+    classDef cdeNode fill:#e74c3c,stroke:#a93226,stroke-width:2px,color:#ffffff
+    classDef oosNode fill:#2ecc71,stroke:#1e8449,stroke-width:2px,color:#ffffff
+    classDef citizenNode fill:#f5f5f5,stroke:#7f8c8d,stroke-width:2px,color:#1a1a1a
     class C,D,E,F,G,H cdeNode
-    class B,I outOfScopeNode
+    class B,I oosNode
     class A citizenNode
-    
-    classDef cdeSubgraph fill:#ffe6e6,stroke:#c0392b,stroke-width:3px
-    classDef outOfScopeSubgraph fill:#e8f8f5,stroke:#27ae60,stroke-width:3px
-    classDef citizenSubgraph fill:#f5f5f5,stroke:#7f8c8d,stroke-width:2px
-    
-    class cde,gateway cdeSubgraph
-    class agency,bank outOfScopeSubgraph
-    class citizen citizenSubgraph
-    
-    style citizen color:#1a1a1a
-    style agency color:#1a1a1a
-    style cde color:#1a1a1a
-    style gateway color:#1a1a1a
-    style bank color:#1a1a1a
+    style citizen fill:#f5f5f5,stroke:#7f8c8d,stroke-width:2px,color:#1a1a1a
+    style agency fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
+    style cde fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style gateway fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style bank fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
 ```
 
 **Key scoping notes for Flow 1:**
@@ -87,41 +76,33 @@ graph TB
 ## Flow 2: Settlement and Reconciliation
 
 ```mermaid
-graph LR
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 4, "bottom": 14}}}}%%
+flowchart TB
     subgraph cde2["CDE: Keystone Systems"]
         A["Payment Database<br/>Tokens + Transaction Log"]
         B["Settlement Processor<br/>Lambda + Step Functions<br/>Nightly 2 AM UTC"]
         C["SFTP Service<br/>Outbound Only"]
     end
-    
     subgraph bank2["Out of Scope: Financial Institution"]
         D["Acquiring Bank SFTP<br/>TLS 1.2, key auth"]
     end
-    
     subgraph agency2["Out of Scope: State Agency"]
         E["Agency Reconciliation<br/>Portal"]
     end
-    
+
     A -.->|"1. Query transaction totals<br/>by merchant + day"| B
     B -.->|"2. Generate settlement file<br/>tokens, amounts, no PAN"| C
     C -.->|"3. Encrypted transfer"| D
     B -.->|"4. Post summary<br/>tokens only"| E
-    
-    classDef cdeNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
-    classDef outOfScopeNode fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
-    
+
+    linkStyle 0,1,2,3 stroke:#7f8c8d,stroke-width:1.5px
+    classDef cdeNode fill:#e74c3c,stroke:#a93226,stroke-width:2px,color:#ffffff
+    classDef oosNode fill:#2ecc71,stroke:#1e8449,stroke-width:2px,color:#ffffff
     class A,B,C cdeNode
-    class D,E outOfScopeNode
-    
-    classDef cdeSubgraph fill:#ffe6e6,stroke:#c0392b,stroke-width:3px
-    classDef outOfScopeSubgraph fill:#e8f8f5,stroke:#27ae60,stroke-width:3px
-    
-    class cde2 cdeSubgraph
-    class bank2,agency2 outOfScopeSubgraph
-    
-    style cde2 color:#1a1a1a
-    style bank2 color:#1a1a1a
-    style agency2 color:#1a1a1a
+    class D,E oosNode
+    style cde2 fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style bank2 fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
+    style agency2 fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
 ```
 
 **Key scoping notes for Flow 2:**
@@ -132,47 +113,38 @@ graph LR
 ## Flow 3: Legacy ACH Batch System (Colocation)
 
 ```mermaid
-graph TB
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 4, "bottom": 14}}}}%%
+flowchart TB
     subgraph agency3["Out of Scope: State Agency"]
         A["Agency Treasury System"]
     end
-    
     subgraph colo["CDE: Colocation Legacy System"]
         D["Hardware Firewall<br/>Default Deny"]
         B["Legacy Batch Server<br/>Physical Server<br/>Cage Access: Badge + Bio"]
         C["Legacy Database<br/>PostgreSQL<br/>Column Encryption"]
     end
-    
     subgraph ach["Out of Scope: Financial Institution"]
         E["ACH Network<br/>NACHA File Format"]
     end
-    
+
     A -.->|"1. ACH payment request<br/>bank account + amount"| D
     D -.->|"2. Firewall allows<br/>specific IP only"| B
     B -.->|"3. Store encrypted<br/>account number"| C
     B -.->|"4. Generate NACHA file<br/>nightly batch"| E
-    
-    classDef cdeNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
-    classDef outOfScopeNode fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
-    
-    class B,C,D cdeNode
-    class A,E outOfScopeNode
-    
-    classDef cdeSubgraph fill:#ffe6e6,stroke:#c0392b,stroke-width:3px
-    classDef outOfScopeSubgraph fill:#e8f8f5,stroke:#27ae60,stroke-width:3px
-    
-    class colo cdeSubgraph
-    class agency3,ach outOfScopeSubgraph
-    
-    style agency3 color:#1a1a1a
-    style colo color:#1a1a1a
-    style ach color:#1a1a1a
-```
 
-**Why this system is in the CDE:** Per system-description.md: "Legacy batch server (physical server): Processes ACH files and **legacy card batch settlements** for two state agencies not yet migrated to the API platform." The card batch settlement processing makes this a CDE component. The ACH flow shown above uses dashed lines (ACH bank account numbers are not PCI account data). Card batch settlement flows would use solid lines with PAN, but those flows follow a similar path through the same infrastructure.
+    linkStyle 0,1,2,3 stroke:#7f8c8d,stroke-width:1.5px
+    classDef cdeNode fill:#e74c3c,stroke:#a93226,stroke-width:2px,color:#ffffff
+    classDef oosNode fill:#2ecc71,stroke:#1e8449,stroke-width:2px,color:#ffffff
+    class B,C,D cdeNode
+    class A,E oosNode
+    style agency3 fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
+    style colo fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style ach fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
+```
 
 **Key scoping notes for Flow 3:**
 
+- This system is in the CDE because it still processes legacy card batch settlements for two state agencies (see system-description.md), in addition to ACH files. ACH bank account numbers are not PCI account data, but they are confidential agency data protected under DAT-03 and SOC 2 Confidentiality. Shared management alone would not put a system in PCI scope; storing, processing, or transmitting account data, or connectivity to the CDE, would.
 - Physical security is tested as part of PCI DSS Requirement 9. The colocation facility provides badge and biometric access, video surveillance, and visitor logs. [See PHY-01 in the control matrix.](../02-control-matrix/)
 - This system is out of GovRAMP scope because the two state agencies using it are not GovRAMP participants.
 
