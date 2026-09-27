@@ -6,15 +6,15 @@ This project demonstrates how to build a Statement of Applicability from the act
 
 ## The Fictional Company
 
-**Streamline Workflow, Inc.** (fictional). About 75 employees. Remote-first SaaS company providing project management and collaboration software to small businesses (10 to 100 users per customer). Annual revenue about $8 million. Infrastructure entirely in AWS (ECS, RDS, S3, CloudFront, VPC). No physical office, no on-premises equipment. Customer data is project metadata, tasks, files, and user profiles (names, email addresses). ISO/IEC 27001:2022 certification pursuit underway, with an external consultant having delivered a draft Statement of Applicability marking all 93 Annex A controls applicable. This document rebuilds that SoA from the infrastructure up.
+A fictional remote-first SaaS company providing project management and collaboration software. No physical office, no on-premises equipment, infrastructure entirely in cloud hosting. A consultant delivered a Statement of Applicability marking all 93 Annex A controls applicable without checking what the company actually operates. This document rebuilds that SoA from the infrastructure up.
 
 ## Read This in 3 Minutes
 
 If you have three minutes:
 
-1. **The problem:** A consultant delivered a Statement of Applicability marking all 93 Annex A controls as applicable without checking what the company actually operates. The company has no physical office, no on-premises servers, no paper records, no datacenter to secure, and no utility services to protect. Twenty controls do not apply, and marking them applicable creates audit scope the company cannot satisfy.
+1. **The problem:** A consultant delivered a Statement of Applicability marking all 93 Annex A controls as applicable without checking what the company actually operates. The company has no physical office, no on-premises servers, no paper records, no datacenter to secure, and no utility services to protect. Controls that protect assets the company does not have cannot be marked applicable.
 2. **The method:** Rebuild the SoA from what the company really runs. Group controls by theme (Organizational, People, Physical, Technological). For each control, check whether the company operates the asset or process that control protects. If it does not, justify the exclusion with a statement an auditor can verify. If it does, mark it applicable and state how it is implemented.
-3. **The exclusions:** Physical security controls (7.4 physical monitoring, 7.5 asset security in areas, 7.7 clear desk, 7.8 unattended equipment, 7.10 storage media, 7.11 utilities, 7.13 equipment maintenance) do not apply because the company has no physical office or datacenter. Paper-based controls (8.30 physical media transfer) do not apply because the company uses no removable media or paper records. Supplier-facility controls (5.21 physical supplier security) do not apply because AWS is responsible for its own datacenter security under the shared responsibility model.
+3. **The exclusions:** Physical security controls for office monitoring, asset security in areas, clear desk, unattended equipment, storage media, utilities, and equipment maintenance do not apply because the company has no physical office or datacenter. Paper-based media transfer controls do not apply because the company uses no removable media or paper records. Supplier physical security controls do not apply because cloud providers are responsible for their own datacenter security under the shared responsibility model.
 
 ## Frameworks Covered
 

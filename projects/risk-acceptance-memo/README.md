@@ -6,15 +6,15 @@ This project demonstrates how to document a risk acceptance decision for a techn
 
 ## The Fictional Company
 
-**ClearPath Benefits Administration** (fictional). About 450 employees. Administers health and benefits plans for mid-sized employers (3,000 to 15,000 employees each). Claims processing, enrollment, and premium billing. Annual SOC 2 Type 2 attestation. HIPAA Business Associate for all clients. Legacy EDI gateway (ClaimStream, vendor end-of-life announced) processes about 40,000 claims per month, supports only TLS 1.0, vendor migration in progress with a target completion date.
+A fictional claims processor (Fenwray Claims Services in the case study) handling claims data exchange through a legacy EDI gateway. The gateway supports only TLS 1.0, a protocol version that no longer meets current encryption standards. The clearinghouse vendor cannot support TLS 1.2 or higher until its platform migration completes, expected in Q1 2027.
 
 ## Read This in 3 Minutes
 
 If you have three minutes:
 
-1. **The vulnerability:** The legacy EDI gateway (ClaimStream) supports only TLS 1.0. Modern browsers dropped TLS 1.0 in 2020. Known vulnerabilities (BEAST, downgrade attacks) exist. HIPAA Security Rule 164.312(e)(1) requires transmission security. SOC 2 CC6.7 requires encrypted data in transit. The vendor announced end-of-life, and no patch will bring TLS 1.2 or 1.3.
-2. **The compensating controls:** The gateway sits in a private VLAN with no internet routing, accessed only through a dedicated VPN tunnel from three trusted payer systems (Aetna, BCBS regional affiliate, UnitedHealthcare). No public internet exposure. Network-level access controls (firewall rules, VPN authentication) limit connections. The gateway logs all sessions, and the SIEM alerts on unexpected source IPs.
-3. **The residual risk and expiration:** Likelihood rated Low (no public exposure, private network, three known endpoints), Impact rated Moderate (ePHI exposure if an attacker gains VPN access). Overall risk: Medium. Accepted until March 31, 2027 (vendor migration target completion). After that date, the gateway must be decommissioned or the risk re-evaluated. The memo includes a recommendation that leadership approve with the forced expiration.
+1. **The vulnerability:** The legacy EDI gateway's TLS configuration is limited to TLS 1.0 and 1.1. Both versions have known cryptographic weaknesses (including BEAST and POODLE-class attacks) and are excluded from PCI DSS and most current security baselines. The clearinghouse vendor cannot support TLS 1.2 or higher until its platform migration completes.
+2. **The compensating controls:** The connection runs over a dedicated point-to-point circuit, not the open internet. Network access to the circuit endpoint is restricted to a named list of systems and reviewed monthly. All traffic is logged and forwarded to the SIEM, with alerts configured for any new source or destination address. The vendor contract has been amended to add liability for breaches during the transition period.
+3. **The residual risk and expiration:** Likelihood: Low (dedicated circuit, not public internet). Impact: High (PHI exposure would trigger HIPAA breach notification obligations). Overall risk: Medium. Accepted for 180 days under compensating controls, with a mandatory re-review at 90 days. If the vendor timeline slips past Q1 2027, the acceptance expires and the business must revisit immediate cutover.
 
 ## Frameworks Covered
 
