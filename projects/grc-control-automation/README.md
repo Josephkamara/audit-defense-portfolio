@@ -12,13 +12,13 @@ A fictional multi-tenant SaaS payment platform (Pellworth Commerce in the case s
 
 If you have three minutes:
 
-1. **The control crosswalk:** One MFA control mapped to SOC 2, ISO 27001, and PCI DSS. The GRC engineering team designed one automated check to satisfy all three frameworks: query the identity provider for MFA factors enrolled for each user, pass if every user has at least one MFA factor, fail if any user has zero. The check runs daily and feeds a dashboard showing MFA compliance.
+1. **The control crosswalk:** A shared MFA control mapped to SOC 2, ISO 27001, and PCI DSS. The GRC engineering team designed one automated check to satisfy all three frameworks: query the identity provider for MFA factors enrolled for each user, pass if every user has at least one MFA factor, fail if any user has zero. The check runs daily and feeds a dashboard showing MFA compliance.
 2. **What the check actually proved:** It proved enrollment. It did not prove per-session challenge. The identity provider's trusted-device feature allows a user to mark a device as trusted after one successful MFA challenge. During that window, logins from the trusted device require only a password. The automated check sees MFA enrolled and reports a pass. The user's actual login session into the cardholder data environment runs on a password alone.
 3. **Why two audits passed and one failed:** SOC 2 and ISO 27001 auditors tested the control by confirming MFA factors were configured and enrollment was enforced. PCI DSS requires MFA for all access to the CDE, not just enrollment, and specifies that MFA must authenticate each time the user accesses the CDE. The QSA tested a real login session and found it completed with only a password. The automated check passed. The real control failed.
 
 ## Frameworks Covered
 
-SOC 2 Trust Services Criteria (CC6.1 logical and physical access controls), ISO/IEC 27001:2022 (Annex A.8.5 secure authentication), PCI DSS v4.0.1 (Requirements 8.4.1, 8.4.2, 8.4.3, 8.5.1)
+SOC 2 Trust Services Criteria (logical and physical access controls), ISO/IEC 27001:2022 (secure authentication), PCI DSS v4.0.1 (MFA requirements)
 
 ## What Is in the Folder
 

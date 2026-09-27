@@ -6,15 +6,15 @@ This project demonstrates how to build a Statement of Applicability from the act
 
 ## The Fictional Company
 
-A fictional remote-first SaaS company providing project management and collaboration software. No physical office, no on-premises equipment, infrastructure entirely in cloud hosting. A consultant delivered a Statement of Applicability marking all 93 Annex A controls applicable without checking what the company actually operates. This document rebuilds that SoA from the infrastructure up.
+A fictional remote-first SaaS company providing project management and collaboration software. No physical office, no on-premises equipment, infrastructure entirely in cloud hosting. A consultant delivered a Statement of Applicability marking all 93 Annex A controls applicable without checking what the company actually operates. This document builds the SoA from the infrastructure up.
 
 ## Read This in 3 Minutes
 
 If you have three minutes:
 
-1. **The problem:** A consultant delivered a Statement of Applicability marking all 93 Annex A controls as applicable without checking what the company actually operates. The company has no physical office, no on-premises servers, no paper records, no datacenter to secure, and no utility services to protect. Controls that protect assets the company does not have cannot be marked applicable.
-2. **The method:** Rebuild the SoA from what the company really runs. Group controls by theme (Organizational, People, Physical, Technological). For each control, check whether the company operates the asset or process that control protects. If it does not, justify the exclusion with a statement an auditor can verify. If it does, mark it applicable and state how it is implemented.
-3. **The exclusions:** Physical security controls for office monitoring, asset security in areas, clear desk, unattended equipment, storage media, utilities, and equipment maintenance do not apply because the company has no physical office or datacenter. Paper-based media transfer controls do not apply because the company uses no removable media or paper records. Supplier physical security controls do not apply because cloud providers are responsible for their own datacenter security under the shared responsibility model.
+1. **The problem:** A consultant delivered a Statement of Applicability marking all 93 Annex A controls as applicable without checking what the company actually operates. The company has no physical office, no on-premises servers, no physical records, no datacenter to secure, and no utility services to protect. Controls that protect assets the company does not have cannot be marked applicable.
+2. **The method:** Build the SoA from what the company really runs. Sort controls by theme (Organizational, People, Physical, Technological). For each control, check whether the company operates the asset or process that control protects. If it does not, justify the exclusion with a statement an auditor can verify. If it does, mark it applicable and state how it is implemented.
+3. **The exclusions:** Physical security controls for office monitoring, asset security in areas, clear desk, unattended equipment, storage media, utilities, and equipment maintenance do not apply because the company has no physical office or datacenter. Media transfer controls do not apply because the company uses no removable media or physical records. Provider physical security controls do not apply because cloud providers are responsible for their own datacenter security under the shared responsibility model.
 
 ## Frameworks Covered
 

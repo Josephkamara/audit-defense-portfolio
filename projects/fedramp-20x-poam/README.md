@@ -12,13 +12,13 @@ A fictional cloud service provider holding an existing FedRAMP Moderate authoriz
 
 If you have three minutes:
 
-1. **The regulatory timeline:** FedRAMP 20x Consolidated Rules take mandatory effect on January 1, 2027. Existing authorizations under Rev5 remain valid but must transition by that date. Machine-readable compliance (OSCAL format) requires POA&Ms, System Security Plans, and Security Assessment Reports to be submitted in OSCAL format, not document format, starting with the first continuous monitoring submission after January 1, 2027.
+1. **The regulatory timeline:** FedRAMP 20x Consolidated Rules take mandatory effect on January 1, 2027. Existing authorizations under Rev5 remain valid but must transition by that date. Machine-readable compliance (OSCAL format) requires POA&Ms, SSPs, and SARs to be submitted in OSCAL format, not document format, starting with the first continuous monitoring submission after January 1, 2027.
 2. **The five gaps:** No OSCAL tooling (current documents need conversion to OSCAL). Continuous monitoring format (monthly submissions are Rev5 format, need 20x schema). POA&M auto-close logic (when a vulnerability is remediated and confirmed in a scan, the POA&M should auto-close, but the current system requires manual updates). Boundary documentation (scoping guidance changed in 20x, existing boundary document needs update). Evidence pipeline (Rev5 controls that are now continuous under 20x need automated evidence collection, not quarterly exports).
-3. **Sequencing against deadlines:** The gaps are sequenced by their published deadline, not by internal priority. OSCAL tooling must complete to allow testing before the January 1, 2027 mandatory date. Continuous monitoring format conversion must complete before the December submission. POA&M auto-close is medium priority. Boundary documentation is required for the annual assessment. Evidence pipeline phases in by control over several months.
+3. **Sequencing against deadlines:** The gaps are sequenced by their published deadline, not by internal priority. OSCAL tooling must complete to allow testing before the January 1, 2027 mandatory date. Continuous monitoring format conversion must complete before the next submission. POA&M auto-close is medium priority. Boundary documentation is required for the annual assessment. Evidence pipeline phases in by control over several months.
 
 ## Frameworks Covered
 
-FedRAMP 20x Consolidated Rules, NIST SP 800-53 Rev 5, FedRAMP RFC-0024 (machine-readable compliance, finalized as CR26), OSCAL (Open Security Controls Assessment Language)
+FedRAMP 20x Consolidated Rules, NIST SP 800-53 Rev 5, machine-readable compliance requirements (OSCAL format)
 
 ## What Is in the Folder
 

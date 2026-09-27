@@ -18,7 +18,7 @@ If you have three minutes:
 
 ## Frameworks Covered
 
-PCI DSS v4.0.1, Requirement 1.2.5 through 1.2.8 (network segmentation), Requirement 11.4.5 (annual segmentation penetration test), Requirement 11.4.6 (semiannual segmentation test for service providers), Requirement 11.4.7 (additional segmentation testing for multi-tenant providers)
+PCI DSS v4.0.1 (network segmentation and CDE scoping, segmentation penetration testing for service providers and multi-tenant providers)
 
 ## What Is in the Folder
 
@@ -29,4 +29,4 @@ PCI DSS v4.0.1, Requirement 1.2.5 through 1.2.8 (network segmentation), Requirem
 
 ## Key Findings
 
-Three boundaries passed: corporate network (no routes), analytics replica (no PAN, read-only), and bastion host (Systems Manager Session Manager with session recording, no standing SSH keys). One boundary failed: the SIEM ingestion path allowed raw application logs containing PAN to reach a shared S3 bucket before masking. Remediation moved the masking function upstream. The boundary was retested in October 2025 and passed. All findings were closed before the November 2026 readiness assessment.
+Three boundaries passed: corporate network (no routes), analytics replica (no card data, read-only), and bastion host (session manager with session recording, no standing SSH keys). One boundary failed: the SIEM ingestion path allowed raw application logs containing card data to reach a shared storage bucket before masking. Remediation moved the masking function upstream. The boundary was retested and passed. All findings were closed before the readiness assessment.

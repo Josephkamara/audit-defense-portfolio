@@ -1,12 +1,12 @@
-# Third-Party Risk Management Under NIST CSF 2.0
+# Building a Risk-Tiered Vendor Program
 
 **Fictional company, sample data, for portfolio demonstration only.**
 
-This project demonstrates how to build a risk-tiered vendor program under NIST CSF 2.0's supply chain risk category, with assessment depth, contract terms, and monitoring cadence scaled to the risk each vendor actually carries.
+This project demonstrates how to build a risk-tiered vendor program with assessment depth, contract terms, and monitoring cadence scaled to the risk each vendor actually carries.
 
 ## The Fictional Company
 
-A fictional benefits administrator (Orrindale Benefits Administration in the case study) managing COBRA administration, FSA and HSA claims, and dependent eligibility verification. Current vendor program treats every vendor the same: one security questionnaire, filed once, never revisited. This program redesigns vendor risk management under NIST CSF 2.0's supply chain risk category.
+A fictional benefits administrator (Orrindale Benefits Administration in the case study) managing COBRA administration, FSA and HSA claims, and dependent eligibility verification. Current vendor program treats every vendor the same: one security questionnaire, filed once, never revisited. This program redesigns vendor risk management with supply chain risk categories.
 
 ## Read This in 3 Minutes
 
@@ -18,7 +18,7 @@ If you have three minutes:
 
 ## Frameworks Covered
 
-NIST CSF 2.0, Govern Function, GV.SC (Cybersecurity Supply Chain Risk Management), NIST SP 1305 (Quick-Start Guide for Cybersecurity Supply Chain Risk Management), NIST IR 8179 (Criticality Analysis Process Model)
+NIST Cybersecurity Framework 2.0 supply chain risk management categories, NIST guidance documents
 
 ## What Is in the Folder
 
@@ -29,4 +29,4 @@ NIST CSF 2.0, Govern Function, GV.SC (Cybersecurity Supply Chain Risk Management
 
 ## Key Results
 
-The program classifies eight sample vendors into three tiers: Tier 1 (claims processor, payroll provider, cloud infrastructure), Tier 2 (COBRA administrator, identity provider), Tier 3 (office supplies, training platform, expense management). Tier 1 vendors now require annual SOC 2 review, breach notification within 24 hours, and audit rights. Tier 3 vendors get the basic questionnaire with no reassessment unless the relationship changes. The tiering model scales effort to risk, and the contract terms give CoreBenefits the legal foundation to act when a vendor fails an audit or loses certification.
+The program classifies eight sample vendors into three tiers: Tier 1 (claims processor, payroll provider, cloud infrastructure), Tier 2 (COBRA administrator, identity provider), Tier 3 (office supplies, training platform, expense management). Tier 1 vendors now require annual attestation review, breach notification, and audit rights. Tier 3 vendors get the basic questionnaire with no reassessment unless the relationship changes. The tiering model scales effort to risk, and the contract terms provide the legal foundation to act when a vendor fails an audit or loses certification.
