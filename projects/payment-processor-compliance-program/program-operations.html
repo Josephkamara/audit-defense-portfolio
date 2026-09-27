@@ -13,13 +13,13 @@
 <p class="fictional-label">Fictional scenario. Company names, people, and data are invented for demonstration.</p>
 <div class="summary-block">
 <h3>Scenario</h3>
-<p>Day-to-day program operations for Keystone Civic Payments: DR and backup testing audited under BCP-01, BCP-02, OPS-01 and OPS-02, unified audit calendar and shared evidence request list across PCI DSS, SOC 1, SOC 2 and GovRAMP, GovRAMP Moderate roadmap (Security Snapshot to Authorized status), contract obligations tracker with five sample agency customers (fictional names), a one-page leadership dashboard showing control health and audit readiness, and a 30/60/90 plan for integrating an acquired company.</p>
+<p>Day-to-day program operations for Keystone Civic Payments: DR and backup testing audited under BCP-01, BCP-02, OPS-01 and OPS-02, unified audit calendar and shared evidence request list across PCI DSS, SOC 1, SOC 2 and GovRAMP, GovRAMP Moderate roadmap (Security Snapshot to Authorized status), contract obligations tracker with five sample agency customers (fictional names), a one-page leadership dashboard showing control health and audit readiness, a 30/60/90 plan for integrating an acquired company, and a management testing and auditor reliance plan to reduce audit effort and fees.</p>
 
 <h3>Frameworks</h3>
 <p>PCI DSS v4.0.1, SOC 1 Type 2, SOC 2 Type 2 (Security, Availability, Confidentiality), GovRAMP Moderate (NIST SP 800-53 Rev 5), IT general controls</p>
 
 <h3>Key Artifacts</h3>
-<p>DR test workpaper with one exception (reporting schema RPO, remediated and retested), 12-month unified calendar (October 2026 to September 2027), shared evidence table mapped to PCI, SOC 2 and NIST, GovRAMP phases and gap areas table, contract obligations for 5 sample agencies (fictional names), leadership dashboard with control health by framework, 30/60/90 acquisition onboarding plan</p>
+<p>DR test workpaper with one exception (reporting schema RPO, remediated and retested), 12-month unified calendar (October 2026 to September 2027), shared evidence table mapped to PCI, SOC 2 and NIST, GovRAMP phases and gap areas table, contract obligations for 5 sample agencies (fictional names), leadership dashboard with control health by framework, 30/60/90 acquisition onboarding plan, quarterly management testing schedule, sample access review test workpaper, reliance plan for SOC, PCI and GovRAMP auditors, multi-year audit fee plan</p>
 
 <h3>Takeaway</h3>
 <p>One audit calendar, one evidence request list, tested once by each assessor. One DR test satisfies BCP-02 and informs the SOC A1.3 availability testing. The same monthly authenticated internal scans (VUL-01) support PCI DSS 11.3.1 and the monthly GovRAMP continuous monitoring package. This page shows how those activities interlock without duplicating work, and how a dashboard keeps leadership and auditors aligned on what is ready and what is not.</p>
@@ -33,7 +33,7 @@
 
 <h2>1. DR and BCP Audit Workpaper</h2>
 
-<p>Internal audit test of BCP-01, BCP-02, OPS-01 and OPS-02 for the September 2026 annual disaster recovery test. Objective: confirm that RTO and RPO targets are met, quarterly restore tests are performed with integrity checks, and backups exceed the minimum policy retention of 14 days.</p>
+<p>Management test (GRC team) of BCP-01, BCP-02, OPS-01 and OPS-02 for the September 2026 annual disaster recovery test. Objective: confirm that RTO and RPO targets are met, quarterly restore tests are performed with integrity checks, and backups exceed the minimum policy retention of 14 days.</p>
 
 <p>The following table shows the defined targets from BCP-01.</p>
 
@@ -836,6 +836,408 @@
 <p>The controls count on this page does not change until the acquired systems are formally brought into scope. If the acquired business has separate compliance obligations, the unified calendar and shared evidence list remain the same until integration is complete.</p>
 
 <p>The GovRAMP roadmap in section 3 is the playbook if the acquired business has its own cloud product that needs GovRAMP status: Security Snapshot, gap remediation with a POA&amp;M, 3PAO assessment, PMO review, then continuous monitoring. If the acquired systems instead join Keystone's existing authorized boundary, they go through GovRAMP's significant change process: update the SSP, boundary diagram and inventory, have the 3PAO assess the change as required, add any findings to the POA&amp;M, and include the systems in the next monthly continuous monitoring submission.</p>
+
+<h2>7. Management Testing and Auditor Reliance</h2>
+
+<p>Keystone's external auditors test the same key controls every year: the service auditor for SOC 1 and SOC 2, the QSA for PCI DSS, and the 3PAO for GovRAMP. Management testing means the GRC team tests those controls on a set schedule, using the same test procedures, sample sizes and evidence the auditors use, and keeps workpapers an auditor can re-perform. The goals are to find and fix exceptions before the auditors do, to hand auditors clean evidence, and, where the standards allow it, to have the auditors use Keystone's work so they test less and charge less. Management testing is performed by the IT auditor in the GRC team and reviewed by the Director of GRC. The GRC team reports to the CIO, and Keystone has no separate internal audit function. The reliance plan below is written with that limit in mind.</p>
+
+<h3>7.1 Quarterly Management Testing Schedule (October 2026 to September 2027)</h3>
+
+<p>Each quarter the IT auditor tests the key controls below in a test window in the month after the quarter ends. Sample sizes are set so that four quarters of management testing meet or exceed the annual sample an external auditor would pull under the sampling guidance in the control matrix README (quarterly: 2, monthly: 2, daily: 20 to 40, many times per day: 25 to 60, annual: 1). Automated controls are tested once per quarter by inspecting the configuration (TP-AUTO) and rely on the access and change ITGCs staying effective. Control owners never test their own controls.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Test window</th>
+<th>Period covered</th>
+<th>Main items</th>
+<th>Feeds</th>
+</tr>
+<tr>
+<td>October 2026</td>
+<td>July to September 2026</td>
+<td>Q3 2026 access review; Q3 restore test; September 2026 annual DR test (section 1 workpaper)</td>
+<td>PCI ROC fieldwork and GovRAMP annual 3PAO assessment (December 2026); SOC interim testing (December 2026)</td>
+</tr>
+<tr>
+<td>January 2027</td>
+<td>October to December 2026</td>
+<td>Q4 access review; Q4 restore test; H2 all-user review</td>
+<td>SOC fieldwork (March and April 2027)</td>
+</tr>
+<tr>
+<td>April 2027</td>
+<td>January to March 2027</td>
+<td>Q1 access review; Q1 restore test</td>
+<td>SOC fieldwork (April 2027) and the SOC period ending March 31, 2027</td>
+</tr>
+<tr>
+<td>July 2027</td>
+<td>April to June 2027</td>
+<td>Q2 access review; Q2 restore test; H1 all-user review</td>
+<td>First quarter of the next SOC period (April 2027 to March 2028); Year 2 reliance request; 2027 ROC planning</td>
+</tr>
+</table>
+</div>
+
+<p>Activity from July to September 2027, including the September 2027 annual DR test, is tested in the October 2027 window, which starts the next cycle.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Control ID</th>
+<th>Control</th>
+<th>Frequency</th>
+<th>Who tests</th>
+<th>Sample size per quarter</th>
+<th>Used by</th>
+</tr>
+<tr>
+<td>ACC-04</td>
+<td>Quarterly privileged and CDE access review in ServiceNow (TP-03)</td>
+<td>Quarterly</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>1 campaign per quarter; re-perform 25 accounts (all flagged accounts plus a random selection of approved accounts)</td>
+<td>SOC 1, SOC 2 (CC6.2, CC6.3), PCI (7.2.4), GovRAMP (AC-2, AC-6(7))</td>
+</tr>
+<tr>
+<td>ACC-01</td>
+<td>Access requests approved in ServiceNow before provisioning (TP-01)</td>
+<td>Recurring, many times per day</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>10 requests (40 per year)</td>
+<td>SOC 1, SOC 2 (CC6.2, CC6.3), PCI (7.2.1 to 7.2.3, 8.2.1), GovRAMP (AC-2, IA-4)</td>
+</tr>
+<tr>
+<td>ACC-02</td>
+<td>Terminations trigger Okta deactivation (TP-02)</td>
+<td>Recurring, event-driven</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>10 terminations, or all if fewer (40 per year)</td>
+<td>SOC 1, SOC 2 (CC6.2, CC6.3), PCI (8.2.5), GovRAMP (AC-2, PS-4)</td>
+</tr>
+<tr>
+<td>ACC-13</td>
+<td>Just-in-time privileged access to production AWS and legacy root/sudo</td>
+<td>Recurring, event-driven</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>Expiry configuration (TP-AUTO) plus 7 elevations (28 per year, meets the 25 in the matrix)</td>
+<td>SOC 1, SOC 2 (CC6.1 to CC6.3), PCI (7.2.1 to 7.2.3), GovRAMP (AC-6(1), AC-6(5))</td>
+</tr>
+<tr>
+<td>CHG-01</td>
+<td>Change ticket sample: approval, testing and CAB review before production (TP-04)</td>
+<td>Recurring, many times per day</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>12 changes (48 per year), including every emergency change in the quarter</td>
+<td>SOC 1, SOC 2 (CC8.1), PCI (6.5.1), GovRAMP (CM-3, CM-4)</td>
+</tr>
+<tr>
+<td>CHG-02</td>
+<td>GitHub branch protection on production repositories (TP-04)</td>
+<td>Continuous, automated</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>Settings export for all production repositories compared to the baseline (TP-AUTO)</td>
+<td>SOC 1, SOC 2 (CC8.1), PCI (6.2.3, 6.5.4), GovRAMP (CM-3, CM-5)</td>
+</tr>
+<tr>
+<td>CHG-05</td>
+<td>Only the GitHub Actions OIDC deployment role can change production (TP-04)</td>
+<td>Continuous, automated</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>IAM policy and permission set inspection (TP-AUTO) plus CloudTrail query for direct changes</td>
+<td>SOC 1, SOC 2 (CC8.1, CC6.1), PCI (6.5.4, 7.2.2), GovRAMP (CM-5, AC-5)</td>
+</tr>
+<tr>
+<td>OPS-01</td>
+<td>Daily AWS Backup jobs for production RDS and EBS (TP-05)</td>
+<td>Daily, automated</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>Backup plan configuration (TP-AUTO) plus 5 days of job reports (20 per year)</td>
+<td>SOC 1, SOC 2 (A1.2), GovRAMP (CP-9)</td>
+</tr>
+<tr>
+<td>OPS-02</td>
+<td>Backup restore test with integrity checks (TP-05)</td>
+<td>Quarterly</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>The 1 restore test in the quarter</td>
+<td>SOC 1, SOC 2 (A1.2, A1.3), GovRAMP (CP-9(1), CP-4)</td>
+</tr>
+<tr>
+<td>OPS-03</td>
+<td>Nightly settlement, remittance and ACH job monitoring (TP-06)</td>
+<td>Daily</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>10 days (40 per year)</td>
+<td>SOC 1, SOC 2 (CC7.2, CC7.4), GovRAMP (SI-4)</td>
+</tr>
+<tr>
+<td>BCP-02</td>
+<td>Annual DR test with regional failover</td>
+<td>Annual</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>1 test per year: the September 2026 test (section 1 workpaper), tested in the October 2026 window</td>
+<td>SOC 1, SOC 2 (A1.3), GovRAMP (CP-4)</td>
+</tr>
+<tr>
+<td>LOG-03</td>
+<td>Daily SIEM log review and alert triage (TP-07)</td>
+<td>Daily</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>10 days (40 per year)</td>
+<td>SOC 2 (CC7.2, CC7.3), PCI (10.4.1, 10.4.2), GovRAMP (AU-6)</td>
+</tr>
+<tr>
+<td>VUL-01</td>
+<td>Monthly authenticated internal vulnerability scans</td>
+<td>Monthly</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>1 month per quarter (4 per year)</td>
+<td>SOC 2 (CC7.1), PCI (11.3.1), GovRAMP (RA-5)</td>
+</tr>
+<tr>
+<td>VUL-03</td>
+<td>Monthly patching within risk-based timelines</td>
+<td>Monthly</td>
+<td>IT auditor (GRC); Director of GRC reviews</td>
+<td>1 month per quarter; trace 10 high or critical findings to closure</td>
+<td>SOC 2 (CC7.1, CC8.1), PCI (6.3.1, 6.3.3), GovRAMP (SI-2)</td>
+</tr>
+</table>
+</div>
+
+<p>Controls the GRC team operates itself, such as the quarterly PCI operational review (GOV-06, PCI DSS 12.4.2 and 12.4.2.1), deficiency tracking (GOV-07) and the monthly GovRAMP continuous monitoring package (GOV-08), are not on this schedule because that would be self-review. The external auditors test those directly. Every management test exception is logged in the GRC platform with an owner, risk rating and due date under GOV-07 and reported to the Risk Committee. A test exception that is remediated and retested is closed there; it is not added to the 15 readiness gaps unless it reveals a design gap.</p>
+
+<h3>7.2 Sample Management Test Workpaper: Quarterly CDE Access Review (ACC-04)</h3>
+
+<p>This is the pilot management test that set the method for the schedule above. It is written so the service auditor, QSA or 3PAO can pick up the same evidence and re-perform every step. It covers the Q2 2026 CDE access campaign. The Q2 2026 privileged account campaign is covered by the sample workpaper in <a href="https://github.com/Josephkamara/audit-defense-portfolio/blob/main/projects/payment-processor-compliance-program/03-itgc-test-procedures/03-periodic-and-privileged-access-review.md" target="_blank">TP-03</a>.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+<tr>
+<td>Workpaper</td>
+<td>MT-2026-Q2-ACC04-CDE</td>
+</tr>
+<tr>
+<td>Control</td>
+<td>ACC-04: privileged and CDE access is reviewed quarterly through ServiceNow review campaigns; flagged access is removed within 5 business days; the Director of IT Operations signs the campaign summary</td>
+</tr>
+<tr>
+<td>Control owner</td>
+<td>IAM Manager (process); system owners (reviewers)</td>
+</tr>
+<tr>
+<td>Frameworks</td>
+<td>PCI DSS 7.2.4; SOC 2 CC6.2, CC6.3; NIST SP 800-53 AC-2, AC-6(7)</td>
+</tr>
+<tr>
+<td>Test procedure</td>
+<td>TP-03, same attributes and exception definitions an external auditor uses</td>
+</tr>
+<tr>
+<td>Objective</td>
+<td>Confirm that the Q2 2026 CDE access review was complete, that every account received a dated decision from an appropriate reviewer, that flagged access was removed on time and actually removed, and that management signed off</td>
+</tr>
+<tr>
+<td>Period and campaign</td>
+<td>Q2 2026; ServiceNow campaign SN-ACCESSREV-2026-Q2-CDE, launched July 1, 2026, certifications completed July 9, 2026, campaign summary signed by the Director of IT Operations July 10, 2026</td>
+</tr>
+<tr>
+<td>Test performed</td>
+<td>August 10 to 14, 2026, by the IT auditor (GRC team)</td>
+</tr>
+<tr>
+<td>Population</td>
+<td>31 accounts with CDE access across Okta CDE groups, AWS IAM Identity Center assignments to CDE accounts, and payment database roles</td>
+</tr>
+<tr>
+<td>Population completeness</td>
+<td>Reconciled the 31 campaign accounts to system exports pulled by the IT auditor (not by the control owner) on the campaign start date: Okta CDE group membership report, AWS IAM Identity Center assignment export, payment database role listing. Result: 31 of 31 matched, no accounts missing or extra. Exports saved with query text, run date and row counts (IPE completeness and accuracy)</td>
+</tr>
+<tr>
+<td>Scope limit</td>
+<td>Standard Linux OS accounts and PostgreSQL users on the legacy batch server are not yet in the campaign. That is open gap GAP-014 (medium, due October 31, 2026), tracked separately. Legacy root and sudo accounts are in the privileged campaign</td>
+</tr>
+<tr>
+<td>Sample method and size</td>
+<td>25 of 31 accounts: all 4 flagged (remove) accounts plus 21 of 27 approved accounts chosen with a random number generator. The seed and the selection list are saved in the workpaper so the auditor can reproduce the selection</td>
+</tr>
+</table>
+</div>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Attribute</th>
+<th>Expected result</th>
+<th>How tested</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>Frequency</td>
+<td>Q2 campaign run for CDE access</td>
+<td>Inspected the ServiceNow campaign record and dates</td>
+<td>No exceptions</td>
+</tr>
+<tr>
+<td>Population completeness</td>
+<td>All CDE accounts included</td>
+<td>Reconciled the campaign list to the three system exports</td>
+<td>No exceptions (31 of 31)</td>
+</tr>
+<tr>
+<td>Reviewer certification</td>
+<td>Each sampled account has a decision and date stamp</td>
+<td>Inspected the decision and date for 25 of 25 sampled accounts</td>
+<td>No exceptions</td>
+</tr>
+<tr>
+<td>Appropriate reviewer</td>
+<td>Reviewer is the system owner and does not review their own access</td>
+<td>Compared reviewer names to the system owner list and to the accounts reviewed</td>
+<td>No exceptions</td>
+</tr>
+<tr>
+<td>Business need</td>
+<td>Approved CDE accounts tie to the role matrix or an ACC-01 approval ticket</td>
+<td>Traced the 21 approved sampled accounts to the role matrix or approval ticket</td>
+<td>No exceptions</td>
+</tr>
+<tr>
+<td>Removal ticket created</td>
+<td>Every flagged account has a removal ticket</td>
+<td>Traced 4 of 4 flagged accounts to ServiceNow tickets</td>
+<td>No exceptions</td>
+</tr>
+<tr>
+<td>Removal timely</td>
+<td>Ticket closed within 5 business days of certification</td>
+<td>Counted business days from July 9 to ticket closure; all 4 closed by July 16, 2026</td>
+<td>No exceptions</td>
+</tr>
+<tr>
+<td>Removal effective</td>
+<td>Access is actually gone in the source system</td>
+<td>Checked current access in Okta, AWS IAM Identity Center and the payment database for the 4 flagged accounts</td>
+<td>1 exception (see below)</td>
+</tr>
+<tr>
+<td>Management sign-off</td>
+<td>Director of IT Operations signed the campaign summary</td>
+<td>Inspected the signed summary dated July 10, 2026</td>
+<td>No exceptions</td>
+</tr>
+</table>
+</div>
+
+<p><strong>Exception MT-EX-01:</strong> For one flagged payment operations analyst account (fictional user ID KCP-0417), the removal ticket was closed on July 14, 2026 with evidence that the Okta CDE group membership was removed. The IT auditor found that the account still had a direct AWS IAM Identity Center permission set assignment to a CDE account, assigned outside the Okta group, so removing the group did not remove it.</p>
+
+<p><strong>Mitigating check:</strong> CloudTrail showed no sign-in or activity by the account after July 9, 2026. The person remains an employee in a non-CDE role.</p>
+
+<p><strong>Root cause:</strong> The removal ticket template covered Okta group membership only and did not include a check for direct AWS assignments.</p>
+
+<p><strong>Remediation:</strong> The IAM Manager removed the direct assignment on August 12, 2026, added a "direct AWS assignment check" step to the removal ticket template, and ran a one-time query of all CDE accounts for other direct assignments (none found).</p>
+
+<p><strong>Retest:</strong> On August 19, 2026 the IT auditor re-performed the "removal effective" attribute for all 4 flagged accounts in this campaign and the 1 flagged account in the Q2 privileged campaign, plus the direct assignment query. No exceptions.</p>
+
+<p><strong>Logged in the GRC platform under GOV-07 as MT-EX-01 (low), owner IAM Manager, closed August 19, 2026.</strong> It is a closed test exception, not a new readiness gap, so the gap count stays 15.</p>
+
+<p><strong>Conclusion:</strong> ACC-04 operated effectively for the Q2 2026 CDE campaign with one exception in removal effectiveness, which was remediated and retested with no further exceptions. The exception, root cause, fix and retest are disclosed to the auditors with this workpaper rather than left for them to find.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Role</th>
+<th>Name</th>
+<th>Date</th>
+</tr>
+<tr>
+<td>Preparer</td>
+<td>IT auditor (GRC team)</td>
+<td>August 14, 2026 (retest added August 19, 2026)</td>
+</tr>
+<tr>
+<td>Reviewer</td>
+<td>Director of GRC</td>
+<td>August 21, 2026</td>
+</tr>
+</table>
+</div>
+
+<h3>7.3 Reliance Plan by Audit</h3>
+
+<p>Each audit has different rules about whether an external auditor can use Keystone's own testing. The plan below asks each auditor for what their standards allow and nothing more.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Audit</th>
+<th>What the standards allow</th>
+<th>What Keystone asks for</th>
+<th>Expected effect</th>
+</tr>
+<tr>
+<td>SOC 1 and SOC 2 (service auditor)</td>
+<td>Under the AICPA attestation standards (AT-C section 205 for SOC 2 and AT-C section 320 for SOC 1, with AT-C section 105), the service auditor may use the work of an internal audit function, or use internal audit or management testers to provide direct assistance under the auditor's direction, supervision and review. First the auditor evaluates the testers' competence and objectivity (and, to use a function's work, whether it follows a systematic, disciplined approach). The auditor stays solely responsible for the opinion and re-performs some of the work.</td>
+<td>Direct assistance or use of management testing for routine, lower-risk controls: ACC-04, ACC-01, ACC-02, CHG-01, OPS-01, OPS-02, OPS-03.</td>
+<td>Fewer auditor samples and fieldwork hours on those controls, which supports a lower fee.</td>
+</tr>
+<tr>
+<td>PCI DSS (QSA)</td>
+<td>The QSA must verify every applicable requirement through its own testing and observation. PCI DSS has no formal process for the QSA to rely on Keystone's testing in place of its own. The QSA does test GOV-06 (PCI DSS 12.4.2 and 12.4.2.1, quarterly reviews that personnel follow security procedures), and management's quarterly test results are evidence for that requirement.</td>
+<td>An agreed evidence request list and sample approach at the October ROC planning meeting; management workpapers offered as supporting evidence.</td>
+<td>Shorter fieldwork and fewer follow-up requests. Not formal reliance, and no reduction in the QSA's required testing.</td>
+</tr>
+<tr>
+<td>GovRAMP (3PAO)</td>
+<td>The 3PAO must be independent of Keystone and tests the controls in its own security assessment plan. The annual assessment covers a subset of controls plus required items. Keystone's testing cannot replace 3PAO testing.</td>
+<td>Use of the monthly continuous monitoring deliverables (scans, POA&amp;M, inventory) and management test workpapers as supporting evidence when the 3PAO scopes and samples.</td>
+<td>Fewer surprises, faster evidence review and fewer follow-up requests during the December assessment.</td>
+</tr>
+</table>
+</div>
+
+<p><strong>Objectivity note.</strong> Management testing at Keystone is done by the IT auditor in the GRC team, which reports to the CIO, and there is no separate internal audit team reporting to the audit committee. An auditor will see the testers as less objective than an independent internal audit function. The realistic outcome is that the service auditor uses Keystone's work on routine, lower-risk controls such as access reviews, backups and change tickets, and still tests high-risk or judgment-heavy controls itself, such as the risk assessment (GOV-03), PAN protection (CRY-01), log review (LOG-03) and penetration testing (VUL-04). GRC-operated controls (GOV-06, GOV-07, GOV-08) are always tested directly by the auditors. To improve objectivity over time, the IT auditor does not operate any control being tested, workpapers are reviewed by the Director of GRC, and a summary of management test results goes to the Risk Committee each quarter.</p>
+
+<h3>7.4 Audit Fee Negotiation Plan</h3>
+
+<p>Auditors reduce their testing only after they trust the evidence. Year 1 builds that trust. Year 2 turns it into a formal request. Savings are shown qualitatively or as clearly labeled planning estimates, not as market fee figures.</p>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Year</th>
+<th>What Keystone does</th>
+<th>What Keystone asks for</th>
+<th>Expected result</th>
+</tr>
+<tr>
+<td>Year 1 (2026 to 2027 audit cycle: ROC fieldwork December 2026, SOC period April 1, 2026 to March 31, 2027)</td>
+<td>Agree sample sizes, periods and the shared evidence request list with each auditor at the October planning meetings. Deliver PBC items clean, complete and on time, with population exports that include query text and row counts. Share management test workpapers, including exceptions, and let the auditors re-perform the same samples so they can see the results match. Track PBC items accepted on first submission and follow-up requests per audit as the baseline.</td>
+<td>Agreement on sampling and the PBC list up front; no fee change yet.</td>
+<td>Fewer follow-up requests and a smoother fieldwork schedule; a baseline of auditor hours and requests to negotiate from.</td>
+</tr>
+<tr>
+<td>Year 2 (2027 to 2028 audit cycle: SOC period April 1, 2027 to March 31, 2028; ROC fieldwork December 2027)</td>
+<td>At the Year 1 SOC closing meeting (May 2027) and before the Year 2 engagement letter, formally ask the service auditor to use management testing or direct assistance for the named controls (ACC-04, ACC-01, ACC-02, CHG-01, OPS-01, OPS-02, OPS-03), supported by Year 1 results showing the auditors' re-performance matched. Ask the QSA and 3PAO to reflect the cleaner evidence in planned fieldwork hours.</td>
+<td>A lower fee or fewer fieldwork hours written into the engagement letter or statement of work.</td>
+<td>Illustrative planning estimate only, not a quote or market benchmark: if the service auditor relies on management testing for the 7 named controls, its testing hours on those controls could fall by roughly 10 to 20 percent. PCI and GovRAMP savings come from shorter fieldwork and fewer requests, not reduced testing scope.</td>
+</tr>
+<tr>
+<td>Year 3 and later</td>
+<td>Keep the schedule, keep exceptions low and closed quickly, add controls to the reliance list only when results stay clean, and revisit reporting lines if leadership wants greater reliance (for example an internal audit function reporting to the audit committee).</td>
+<td>Maintain the reduced hours and consider adding controls.</td>
+<td>Stable or lower audit effort each year; any savings measured against the Year 1 baseline and reported to the CFO.</td>
+</tr>
+</table>
+</div>
+
+<p>Management testing costs Keystone GRC time each quarter, so the plan is judged on total effort, not only on auditor fees: fewer late surprises in fieldwork, faster PBC turnaround and fewer repeat findings count as wins even in years when the fee does not move.</p>
 
 </main>
 </body>
