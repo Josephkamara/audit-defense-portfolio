@@ -43,13 +43,16 @@ graph TB
     A -->|"1. Citizen enters card"| C
     C -->|"2. JavaScript posts PAN<br/>directly to gateway<br/>TLS 1.3"| D
     D -->|"3. Authorization request"| I
-    I -->|"4. Authorization response"| D
     D -.->|"5. Token + auth result"| E
     E -.->|"6. Store token<br/>+ transaction record"| F
     F -->|"7. Token and truncated PAN written<br/>(pre-2025 rows: encrypted PAN)"| G
+    
+    I -.->|"4. Authorization response"| D
     E -.->|"8. Return success + token"| B
     B -.->|"9. Confirmation page"| A
     H -.->|"Nightly: settlement file<br/>tokens only, no PAN"| I
+    
+    linkStyle 6 stroke:#c0392b,stroke-width:2px
     
     classDef cdeNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
     classDef outOfScopeNode fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
@@ -66,6 +69,12 @@ graph TB
     class cde,gateway cdeSubgraph
     class agency,bank outOfScopeSubgraph
     class citizen citizenSubgraph
+    
+    style citizen color:#1a1a1a
+    style agency color:#1a1a1a
+    style cde color:#1a1a1a
+    style gateway color:#1a1a1a
+    style bank color:#1a1a1a
 ```
 
 **Key scoping notes for Flow 1:**
@@ -109,6 +118,10 @@ graph LR
     
     class cde2 cdeSubgraph
     class bank2,agency2 outOfScopeSubgraph
+    
+    style cde2 color:#1a1a1a
+    style bank2 color:#1a1a1a
+    style agency2 color:#1a1a1a
 ```
 
 **Key scoping notes for Flow 2:**
@@ -150,6 +163,10 @@ graph TB
     
     class colo cdeSubgraph
     class agency3,ach outOfScopeSubgraph
+    
+    style agency3 color:#1a1a1a
+    style colo color:#1a1a1a
+    style ach color:#1a1a1a
 ```
 
 **Why this system is in the CDE:** Per system-description.md: "Legacy batch server (physical server): Processes ACH files and **legacy card batch settlements** for two state agencies not yet migrated to the API platform." The card batch settlement processing makes this a CDE component. The ACH flow shown above uses dashed lines (ACH bank account numbers are not PCI account data). Card batch settlement flows would use solid lines with PAN, but those flows follow a similar path through the same infrastructure.
