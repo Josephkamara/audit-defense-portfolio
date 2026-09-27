@@ -7,56 +7,63 @@ This diagram shows how cardholder data flows through Keystone Civic Payments' sy
 ## Diagram Legend
 
 - **Red boxes:** Cardholder Data Environment (CDE) components that store, process, or transmit PAN
-- **Orange boxes:** Connected-to systems that can affect CDE security but do not handle PAN
+- **Connected-to systems (not shown):** Systems that can affect CDE security but do not handle PAN (Session Manager bastion, CI/CD pipeline, backup service, and monitoring are listed in system-description.md; they connect to CDE infrastructure, not payment transaction paths, so these payment data flows do not include them)
 - **Green boxes:** Out-of-scope systems with tested segmentation
-- **Solid lines:** Data flows containing or potentially containing PAN
-- **Dashed lines:** Data flows with tokens only, no PAN
+- **Gray box:** Citizen browser, outside Keystone's environment
+- **Solid lines:** Data flows containing or potentially containing PAN (including encrypted PAN)
+- **Dashed lines:** Data flows with tokens, truncated PAN, amounts, confirmations, or non-card data (such as ACH) only, no full PAN
 
 ## Flow 1: Card Not Present (CNP) Transaction via Hosted Payment Page
 
 ```mermaid
-graph TB
-    subgraph "Citizen / Payer"
-        A[Browser: State Agency Portal]
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 4, "bottom": 14}}}}%%
+flowchart TB
+    subgraph citizen["Citizen / Payer"]
+        A["Browser: State Agency Portal"]
     end
-    
-    subgraph "Out of Scope: Agency Systems"
-        B[Agency Web Server]
+    subgraph cde["CDE: Keystone Systems"]
+        C["Hosted Payment Page<br/>CloudFront + S3<br/>SAQ A-EP"]
+        E["Payment API<br/>ECS Fargate"]
+        F["Tokenization Service<br/>ECS Fargate"]
+        G["Payment Database<br/>RDS PostgreSQL<br/>Encrypted PAN"]
+        H["Settlement Processor<br/>Lambda + Step Functions"]
     end
-    
-    subgraph "CDE: Keystone Systems"
-        C[Hosted Payment Page<br/>CloudFront + S3<br/>SAQ A-EP]
-        D[Payment Gateway<br/>GatewayCo (fictional)<br/>Subservice Org]
-        E[Payment API<br/>ECS Fargate]
-        F[Tokenization Service<br/>ECS Fargate]
-        G[Payment Database<br/>RDS PostgreSQL<br/>Encrypted PAN]
-        H[Settlement Processor<br/>Lambda + Step Functions]
+    subgraph agency["Out of Scope: Agency Systems"]
+        B["Agency Web Server"]
     end
-    
-    subgraph "Out of Scope: Financial Institution"
-        I[Acquiring Bank]
+    subgraph gateway["CDE: Payment Gateway"]
+        D["Payment Gateway<br/>GatewayCo (fictional)<br/>Subservice Org"]
     end
-    
-    A -->|1. Citizen enters card| C
-    C -->|2. JavaScript posts PAN<br/>directly to gateway<br/>TLS 1.3| D
-    D -->|3. Authorization request| I
-    I -->|4. Authorization response| D
-    D -->|5. Token + auth result| E
-    E -->|6. Store token<br/>+ transaction record| F
-    F -->|7. Token and truncated PAN written<br/>(pre-2025 rows: encrypted PAN)| G
-    E -->|8. Return success + token| B
-    B -->|9. Confirmation page| A
-    
-    H -->|Nightly: settlement file<br/>tokens only, no PAN| I
-    
-    style C fill:#e74c3c,stroke:#c0392b,color:#fff
-    style D fill:#e74c3c,stroke:#c0392b,color:#fff
-    style E fill:#e74c3c,stroke:#c0392b,color:#fff
-    style F fill:#e74c3c,stroke:#c0392b,color:#fff
-    style G fill:#e74c3c,stroke:#c0392b,color:#fff
-    style H fill:#e74c3c,stroke:#c0392b,color:#fff
-    style B fill:#2ecc71,stroke:#27ae60,color:#fff
-    style I fill:#2ecc71,stroke:#27ae60,color:#fff
+    subgraph bank["Out of Scope: Financial Institution"]
+        I["Acquiring Bank"]
+    end
+
+    A ~~~ B
+    B ~~~ C
+    G ~~~ H
+    A -->|"1. Citizen enters card"| C
+    C -->|"2. JavaScript posts PAN<br/>directly to gateway<br/>TLS 1.3"| D
+    D -->|"3. Authorization request"| I
+    I -->|"4. Authorization response"| D
+    D -.->|"5. Token + auth result"| E
+    E -.->|"6. Store token<br/>+ transaction record"| F
+    F -->|"7. Token and truncated PAN written<br/>(pre-2025 rows: encrypted PAN)"| G
+    E -.->|"8. Return success + token"| B
+    B -.->|"9. Confirmation page"| A
+    H -.->|"Nightly: settlement file<br/>tokens only, no PAN"| I
+
+    linkStyle 3,4,5,6,7,8,9,10,11,12 stroke:#7f8c8d,stroke-width:1.5px
+    classDef cdeNode fill:#e74c3c,stroke:#a93226,stroke-width:2px,color:#ffffff
+    classDef oosNode fill:#2ecc71,stroke:#1e8449,stroke-width:2px,color:#ffffff
+    classDef citizenNode fill:#f5f5f5,stroke:#7f8c8d,stroke-width:2px,color:#1a1a1a
+    class C,D,E,F,G,H cdeNode
+    class B,I oosNode
+    class A citizenNode
+    style citizen fill:#f5f5f5,stroke:#7f8c8d,stroke-width:2px,color:#1a1a1a
+    style agency fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
+    style cde fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style gateway fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style bank fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
 ```
 
 **Key scoping notes for Flow 1:**
@@ -69,31 +76,33 @@ graph TB
 ## Flow 2: Settlement and Reconciliation
 
 ```mermaid
-graph LR
-    subgraph "CDE: Keystone Systems"
-        A[Payment Database<br/>Tokens + Transaction Log]
-        B[Settlement Processor<br/>Lambda + Step Functions<br/>Nightly 2 AM UTC]
-        C[SFTP Service<br/>Outbound Only]
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 4, "bottom": 14}}}}%%
+flowchart TB
+    subgraph cde2["CDE: Keystone Systems"]
+        A["Payment Database<br/>Tokens + Transaction Log"]
+        B["Settlement Processor<br/>Lambda + Step Functions<br/>Nightly 2 AM UTC"]
+        C["SFTP Service<br/>Outbound Only"]
     end
-    
-    subgraph "Out of Scope: Financial Institution"
-        D[Acquiring Bank SFTP<br/>TLS 1.2, key auth]
+    subgraph bank2["Out of Scope: Financial Institution"]
+        D["Acquiring Bank SFTP<br/>TLS 1.2, key auth"]
     end
-    
-    subgraph "Out of Scope: State Agency"
-        E[Agency Reconciliation<br/>Portal]
+    subgraph agency2["Out of Scope: State Agency"]
+        E["Agency Reconciliation<br/>Portal"]
     end
-    
-    A -->|1. Query transaction totals<br/>by merchant + day| B
-    B -->|2. Generate settlement file<br/>tokens, amounts, no PAN| C
-    C -->|3. Encrypted transfer| D
-    B -->|4. Post summary<br/>tokens only| E
-    
-    style A fill:#e74c3c,stroke:#c0392b,color:#fff
-    style B fill:#e74c3c,stroke:#c0392b,color:#fff
-    style C fill:#e74c3c,stroke:#c0392b,color:#fff
-    style D fill:#2ecc71,stroke:#27ae60,color:#fff
-    style E fill:#2ecc71,stroke:#27ae60,color:#fff
+
+    A -.->|"1. Query transaction totals<br/>by merchant + day"| B
+    B -.->|"2. Generate settlement file<br/>tokens, amounts, no PAN"| C
+    C -.->|"3. Encrypted transfer"| D
+    B -.->|"4. Post summary<br/>tokens only"| E
+
+    linkStyle 0,1,2,3 stroke:#7f8c8d,stroke-width:1.5px
+    classDef cdeNode fill:#e74c3c,stroke:#a93226,stroke-width:2px,color:#ffffff
+    classDef oosNode fill:#2ecc71,stroke:#1e8449,stroke-width:2px,color:#ffffff
+    class A,B,C cdeNode
+    class D,E oosNode
+    style cde2 fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style bank2 fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
+    style agency2 fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
 ```
 
 **Key scoping notes for Flow 2:**
@@ -104,31 +113,33 @@ graph LR
 ## Flow 3: Legacy ACH Batch System (Colocation)
 
 ```mermaid
-graph TB
-    subgraph "Out of Scope: State Agency"
-        A[Agency Treasury System]
+%%{init: {"flowchart": {"subGraphTitleMargin": {"top": 4, "bottom": 14}}}}%%
+flowchart TB
+    subgraph agency3["Out of Scope: State Agency"]
+        A["Agency Treasury System"]
     end
-    
-    subgraph "CDE: Colocation Legacy System"
-        B[Legacy Batch Server<br/>Physical Server<br/>Cage Access: Badge + Bio]
-        C[Legacy Database<br/>PostgreSQL<br/>Column Encryption]
-        D[Hardware Firewall<br/>Default Deny]
+    subgraph colo["CDE: Colocation Legacy System"]
+        D["Hardware Firewall<br/>Default Deny"]
+        B["Legacy Batch Server<br/>Physical Server<br/>Cage Access: Badge + Bio"]
+        C["Legacy Database<br/>PostgreSQL<br/>Column Encryption"]
     end
-    
-    subgraph "Out of Scope: Financial Institution"
-        E[ACH Network<br/>NACHA File Format]
+    subgraph ach["Out of Scope: Financial Institution"]
+        E["ACH Network<br/>NACHA File Format"]
     end
-    
-    A -->|1. ACH payment request<br/>bank account + amount| D
-    D -->|2. Firewall allows<br/>specific IP only| B
-    B -->|3. Store encrypted<br/>account number| C
-    B -->|4. Generate NACHA file<br/>nightly batch| E
-    
-    style B fill:#e74c3c,stroke:#c0392b,color:#fff
-    style C fill:#e74c3c,stroke:#c0392b,color:#fff
-    style D fill:#e74c3c,stroke:#c0392b,color:#fff
-    style A fill:#2ecc71,stroke:#27ae60,color:#fff
-    style E fill:#2ecc71,stroke:#27ae60,color:#fff
+
+    A -.->|"1. ACH payment request<br/>bank account + amount"| D
+    D -.->|"2. Firewall allows<br/>specific IP only"| B
+    B -.->|"3. Store encrypted<br/>account number"| C
+    B -.->|"4. Generate NACHA file<br/>nightly batch"| E
+
+    linkStyle 0,1,2,3 stroke:#7f8c8d,stroke-width:1.5px
+    classDef cdeNode fill:#e74c3c,stroke:#a93226,stroke-width:2px,color:#ffffff
+    classDef oosNode fill:#2ecc71,stroke:#1e8449,stroke-width:2px,color:#ffffff
+    class B,C,D cdeNode
+    class A,E oosNode
+    style agency3 fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
+    style colo fill:#ffe6e6,stroke:#c0392b,stroke-width:2px,color:#1a1a1a
+    style ach fill:#e8f8f5,stroke:#27ae60,stroke-width:2px,color:#1a1a1a
 ```
 
 **Key scoping notes for Flow 3:**
