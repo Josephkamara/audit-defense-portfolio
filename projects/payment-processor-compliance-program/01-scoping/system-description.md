@@ -127,7 +127,7 @@ The SOC 2 system description in Keystone's Type 2 report describes:
 - **System:** Payment processing platform and customer portal for state agencies
 - **Trust Services Categories:** Security (common criteria CC1 to CC9), Availability (A1.1 to A1.3), Confidentiality (cardholder data and citizen PII)
 - **Period:** 12 months (April 1 to March 31); the report is issued after the period ends
-- **Boundaries:** Same as the PCI CDE plus the customer-facing agency portal (authentication, user management, transaction reporting), which does not handle raw card data but is in scope for SOC 2 Availability
+- **Boundaries:** The AWS payment processing platform plus the customer-facing agency portal (authentication, user management, transaction reporting), which does not handle raw card data but is in scope for SOC 2 Availability. The SOC 2 boundary excludes the colocation legacy batch system.
 - **Carve-out subservice orgs:** GatewayCo (fictional) (gateway) and AWS (infrastructure) as described above
 
 ## GovRAMP Moderate Boundary
